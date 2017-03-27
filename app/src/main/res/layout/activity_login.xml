@@ -2,9 +2,9 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_update"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="projetoaplicado.vgoncalves.com.projetoaplicado.LoginActivity">
+    android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/editEmail"
@@ -14,7 +14,7 @@
         android:hint="E-mail"
         android:inputType="textEmailAddress"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="178dp" />
+        tools:layout_editor_absoluteY="261dp" />
 
     <EditText
         android:id="@+id/editSenha"
@@ -24,7 +24,7 @@
         android:hint="Senha"
         android:inputType="textPassword"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="244dp" />
+        tools:layout_editor_absoluteY="319dp" />
 
     <Button
         android:id="@+id/btnLogar"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:text="Logar"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="341dp" />
+        tools:layout_editor_absoluteY="422dp" />
 
     <Button
         android:id="@+id/btnCadastrar"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:text="Cadastrar"
         tools:layout_editor_absoluteX="192dp"
-        tools:layout_editor_absoluteY="341dp" />
+        tools:layout_editor_absoluteY="422dp" />
 
     <Button
         android:id="@+id/btnLinkedin"
@@ -51,6 +51,6 @@
         android:layout_height="wrap_content"
         android:text="Login com Linkedin"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="422dp" />
+        tools:layout_editor_absoluteY="503dp" />
 
 </android.support.constraint.ConstraintLayout>
