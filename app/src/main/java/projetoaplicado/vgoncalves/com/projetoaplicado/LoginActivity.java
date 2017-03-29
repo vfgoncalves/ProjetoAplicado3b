@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
 
     private Button btnLogar;
-    private Button btnCadastrar;
+    private TextView lnkCadastrar;
     private Button btnLinkedin;
     private EditText editEmail;
     private EditText editSenha;
@@ -21,18 +22,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //Receber controles da Activity
-        btnLogar = (Button) findViewById(R.id.btnLogar);
-        btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
-        btnLinkedin = (Button) findViewById(R.id.btnLinkedin);
-        editEmail = (EditText) findViewById(R.id.editEmail);
-        editSenha = (EditText) findViewById(R.id.editSenha);
+        btnLogar = (Button) findViewById(R.id.btnLogin);
+        lnkCadastrar = (TextView) findViewById(R.id.lnkCadastrar);
 
-        //Método de click no botão Cadastrar, levando à próxima activity
-        btnCadastrar.setOnClickListener(new View.OnClickListener() {
+        //Método de click no link Cadastrar, levando à próxima activity
+        lnkCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, CadastrarActivity.class);
-                setIntent(intent);
+                startActivity(intent);
             }
         });
 
