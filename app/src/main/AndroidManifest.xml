@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="projetoaplicado.vgoncalves.com.projetoaplicado">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".CadastrarActivity"></activity>
+        <activity android:name=".CadastrarActivity" />
+        <activity android:name=".ContextoActivity" />
+        <activity android:name=".CadastroEmpresaActivity"></activity>
     </application>
 
 </manifest>

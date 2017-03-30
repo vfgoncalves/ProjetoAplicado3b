@@ -17,28 +17,30 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
+import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Usuario;
 
-public class CadastrarActivity extends AppCompatActivity {
+public class CadastroEmpresaActivity extends AppCompatActivity {
     private EditText nome;
     private EditText email;
     private EditText senha;
+    private EditText telefone;
     private Button btnCadastrar;
-    private Usuario usuario;
+    private Empresa empresa;
     private FirebaseAuth autenticacao;
     private DatabaseReference firebaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastrar);
+        setContentView(R.layout.activity_cadastro_empresa);
 
         nome = (EditText) findViewById(R.id.editCadNome);
         email = (EditText) findViewById(R.id.editCadEmail);
+        telefone = (EditText) findViewById(R.id.editCadTel);
         senha = (EditText) findViewById(R.id.editCadSenha);
         btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
 
@@ -46,33 +48,33 @@ public class CadastrarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validarCampos()){
-                    usuario = new Usuario();
-                    //Receber campos da activity
-                    usuario.setEmail(email.getText().toString());
-                    usuario.setNome(nome.getText().toString());
-                    usuario.setSenha(senha.getText().toString());
+                    empresa = new Empresa();
+                    empresa.setEmail(email.getText().toString());
+                    empresa.setNome(nome.getText().toString());
+                    empresa.setSenha(senha.getText().toString());
+                    empresa.setTelefone(telefone.getText().toString());
                     cadastrarUsuario();
                 }
             }
         });
-
     }
+
     public void cadastrarUsuario(){
         autenticacao = ConfiguracaoFirebase.getAutenticador();
         autenticacao.createUserWithEmailAndPassword(
-                usuario.getEmail(),
-                usuario.getSenha()
-        ).addOnCompleteListener(CadastrarActivity.this, new OnCompleteListener<AuthResult>() {
+                empresa.getEmail(),
+                empresa.getSenha()
+        ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    mostraMensagem("Usuário cadastrado com sucesso");
+                    mostraMensagem("Empresa cadastrada com sucesso");
                     //salvar dados do usuário
-                    usuario.setID(task.getResult().getUser().getUid());
-                    usuario.salvar();
+                    empresa.setID(task.getResult().getUser().getUid());
+                    empresa.salvar();
 
                     //Navegar até tela main - Tela principal
-                    Intent intent = new Intent(CadastrarActivity.this, MainActivity.class);
+                    Intent intent = new Intent(CadastroEmpresaActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
 
@@ -93,6 +95,7 @@ public class CadastrarActivity extends AppCompatActivity {
         });
     }
 
+
     private boolean validarCampos(){
         if (TextUtils.isEmpty(nome.getText())){
             mostraMensagem("Favor preencher o campo nome!");
@@ -106,6 +109,10 @@ public class CadastrarActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(senha.getText())){
             mostraMensagem("Favor preencher o campo senha!");
+            return false;
+        }
+        if (TextUtils.isEmpty(telefone.getText())){
+            mostraMensagem("Favor preencher o campo telefone!");
             return false;
         }
 
