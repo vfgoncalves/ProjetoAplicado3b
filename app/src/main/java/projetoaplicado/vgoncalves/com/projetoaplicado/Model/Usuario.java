@@ -14,6 +14,15 @@ public class Usuario {
     private String email;
     private String senha;
     private String ID;
+    private String lnkPhotoPerfil;
+
+    public String getLnkPhotoPerfil() {
+        return lnkPhotoPerfil;
+    }
+
+    public void setLnkPhotoPerfil(String lnkPhotoPerfil) {
+        this.lnkPhotoPerfil = lnkPhotoPerfil;
+    }
 
     public Usuario() {
     }
