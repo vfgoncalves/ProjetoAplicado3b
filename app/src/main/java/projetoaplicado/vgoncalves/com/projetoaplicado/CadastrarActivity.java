@@ -73,6 +73,7 @@ public class CadastrarActivity extends AppCompatActivity {
 
                     //Navegar até tela main - Tela principal
                     Intent intent = new Intent(CadastrarActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
 

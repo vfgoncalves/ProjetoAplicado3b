@@ -74,7 +74,8 @@ public class CadastroEmpresaActivity extends AppCompatActivity {
                     empresa.salvar();
 
                     //Navegar até tela main - Tela principal
-                    Intent intent = new Intent(CadastroEmpresaActivity.this, MainActivity.class);
+                    Intent intent = new Intent(CadastroEmpresaActivity.this, MainEmpresaActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
 

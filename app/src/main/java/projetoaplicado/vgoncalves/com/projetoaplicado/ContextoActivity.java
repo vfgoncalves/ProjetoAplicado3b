@@ -23,7 +23,6 @@ public class ContextoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ContextoActivity.this, CadastrarActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -32,7 +31,6 @@ public class ContextoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ContextoActivity.this, CadastroEmpresaActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
