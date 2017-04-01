@@ -15,10 +15,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +50,10 @@ public class LoginActivity extends AppCompatActivity {
     private Usuario usuario;
     private Empresa empresa;
     private ProgressDialog progressDialog;
+    private SignInButton btnGoogle;
+    private GoogleApiClient mGoogleApiClient;
+    private static final int RC_SIGN_IN = 9001;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         //Receber controles da Activity
         lnkCadastrar = (TextView) findViewById(R.id.lnkCadastrar);
         btnLogar = (Button) findViewById(R.id.btnLogin);
+        btnGoogle = (SignInButton) findViewById(R.id.btnSigInGoogle);
 
 
         //Método de click no link Cadastrar, levando à próxima activity
@@ -90,6 +105,46 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        /*INÍCIO: LOGIN COM GOOOGLE*/
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+                    }
+                })
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        btnGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d("ProjetoAplicado", "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d("ProjetoAplicado", "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+
+        /*FIM: LOGIN COM GOOOGLE*/
     }
 
     private boolean validarCampos(){
@@ -116,6 +171,56 @@ public class LoginActivity extends AppCompatActivity {
             abrirTelaPrincipal();
         }else{
             Log.d("ProjetoAplicado", "Método - verificarUsuarioLogado - Usuário logado não identificado");
+        }
+    }
+
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("ProjetoAplicado", "Método onActivityResult");
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+
+        }
+    }
+    private void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.]
+            Log.d("ProjetoAplicado", "Método handleSignInResult - Sucesso");
+            GoogleSignInAccount acct = result.getSignInAccount();
+            firebaseAuthWithGoogle(acct);
+        } else {
+            // Signed out, show unauthenticated UI.
+            Log.d("ProjetoAplicado", "Método handleSignInResult - Falhou");
+            mostraMensagem("Erro ao logar com a conta Google");
+        }
+    }
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
+        try {
+            Log.d("ProjetoAplicado", "Método firebaseAuthWithGoogle");
+            AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+            autenticador.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        progressDialog.show();
+                        abrirTelaPrincipal();
+                        mostraMensagem("Login com a conta google efetuado com sucesso");
+                    } else {
+                        Log.d("ProjetoAplicado", "Erro ao logar");
+                        mostraMensagem("Erro ao logar com a conta google");
+                    }
+                }
+            });
+        }catch (Exception e){
+            Log.d("ProjetoAplicado", "Erro Método firebaseAuthWithGoogle - " + e.getMessage());
+            mostraMensagem("Erro ao efetuar login com conta Google: " + e.getMessage());
         }
     }
 

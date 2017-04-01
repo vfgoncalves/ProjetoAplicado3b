@@ -23,6 +23,7 @@
         <activity android:name=".ContextoActivity" />
         <activity android:name=".CadastroEmpresaActivity" />
         <activity android:name=".MainEmpresaActivity" />
+        <activity android:name=".EditarPerfilActivity"></activity>
     </application>
 
 </manifest>
