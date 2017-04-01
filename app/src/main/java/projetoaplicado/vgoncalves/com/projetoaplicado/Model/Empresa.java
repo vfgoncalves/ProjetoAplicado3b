@@ -15,8 +15,17 @@ public class Empresa {
     private String senha;
     private String telefone;
     private String ID;
+    private String photoUrl;
 
     public Empresa() {
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public String getNome() {

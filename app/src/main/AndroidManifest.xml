@@ -22,7 +22,7 @@
         <activity android:name=".CadastrarActivity" />
         <activity android:name=".ContextoActivity" />
         <activity android:name=".CadastroEmpresaActivity" />
-        <activity android:name=".MainEmpresaActivity"></activity>
+        <activity android:name=".MainEmpresaActivity" />
     </application>
 
 </manifest>

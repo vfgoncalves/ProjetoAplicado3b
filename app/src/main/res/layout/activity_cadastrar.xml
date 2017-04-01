@@ -54,4 +54,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cadastrar" />
+
+    <TextView android:id="@+id/textOu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dip"
+        android:text="Ou"
+        android:gravity="center"
+        android:textSize="15dip"
+        android:textColor="@android:color/black"/>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btnSigInGoogle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.google.android.gms.common.SignInButton>
 </LinearLayout>

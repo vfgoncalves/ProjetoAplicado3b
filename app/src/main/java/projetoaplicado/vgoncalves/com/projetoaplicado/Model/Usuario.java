@@ -1,5 +1,7 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.Model;
 
+import android.util.Log;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
@@ -14,17 +16,17 @@ public class Usuario {
     private String email;
     private String senha;
     private String ID;
-    private String lnkPhotoPerfil;
-
-    public String getLnkPhotoPerfil() {
-        return lnkPhotoPerfil;
-    }
-
-    public void setLnkPhotoPerfil(String lnkPhotoPerfil) {
-        this.lnkPhotoPerfil = lnkPhotoPerfil;
-    }
+    private String photoUrl;
 
     public Usuario() {
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public String getNome() {
@@ -60,7 +62,9 @@ public class Usuario {
     }
 
     public void salvar(){
+        Log.d("ProjetoAplicado", "Método Salvar");
         DatabaseReference databaseReference = ConfiguracaoFirebase.getReferenceFirebase();
         databaseReference.child("usuario").child(getID()).setValue(this);
     }
+
 }
