@@ -1,6 +1,7 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.Config;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -11,6 +12,8 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ConfiguracaoFirebase {
     private static DatabaseReference referenceFirebase;
     private static FirebaseAuth autenticador;
+    public static final String NODE_USUARIO = "USUARIO";
+    public static final String NODE_EMPRESA = "EMPRESA";
 
     public static DatabaseReference getReferenceFirebase(){
         if(referenceFirebase == null){

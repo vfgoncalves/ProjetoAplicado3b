@@ -2,8 +2,11 @@ package projetoaplicado.vgoncalves.com.projetoaplicado.Model;
 
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
+import com.google.firebase.database.ValueEventListener;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
 
@@ -64,7 +67,8 @@ public class Usuario {
     public void salvar(){
         Log.d("ProjetoAplicado", "Método Salvar");
         DatabaseReference databaseReference = ConfiguracaoFirebase.getReferenceFirebase();
-        databaseReference.child("usuario").child(getID()).setValue(this);
+        databaseReference.child(ConfiguracaoFirebase.NODE_USUARIO).child(getID()).setValue(this);
     }
+
 
 }

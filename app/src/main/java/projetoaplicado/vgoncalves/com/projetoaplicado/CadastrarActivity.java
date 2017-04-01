@@ -217,7 +217,7 @@ public class CadastrarActivity extends AppCompatActivity {
                     usuario = new Usuario();
                     usuario.setNome(acct.getDisplayName());
                     usuario.setEmail(acct.getEmail());
-                    usuario.setID(acct.getId());
+                    usuario.setID(autenticacao.getCurrentUser().getUid());
                     usuario.setPhotoUrl(acct.getPhotoUrl().toString());
                     usuario.salvar();
 

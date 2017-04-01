@@ -220,7 +220,7 @@ public class CadastroEmpresaActivity extends AppCompatActivity {
                         empresa = new Empresa();
                         empresa.setNome(acct.getDisplayName());
                         empresa.setEmail(acct.getEmail());
-                        empresa.setID(acct.getId());
+                        empresa.setID(autenticacao.getCurrentUser().getUid());
                         empresa.setPhotoUrl(acct.getPhotoUrl().toString());
                         empresa.salvar();
 

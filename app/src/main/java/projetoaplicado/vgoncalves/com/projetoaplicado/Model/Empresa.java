@@ -69,6 +69,6 @@ public class Empresa {
     }
     public void salvar(){
         DatabaseReference databaseReference = ConfiguracaoFirebase.getReferenceFirebase();
-        databaseReference.child("empresa").child(getID()).setValue(this);
+        databaseReference.child(ConfiguracaoFirebase.NODE_EMPRESA).child(getID()).setValue(this);
     }
 }
