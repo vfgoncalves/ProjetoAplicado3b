@@ -2,7 +2,6 @@ package projetoaplicado.vgoncalves.com.projetoaplicado;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -13,26 +12,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import java.util.List;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Config.Helper;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
@@ -154,15 +147,23 @@ public class EditarPerfilActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE){
                     try{
-
+                        String url = URL_API_CEP + editEmpCEP.getText().toString() + "/json/";
                         progressDialogCep.show();
-                        String url = URL_API_CEP + editEmpCEP.getText().toString() + "/json";
-
                         //CONSUMIR API PARA CONSULTAR CEP
-                        String json = getJSONFromAPI(url);
-                        lerJson(json);
+                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                progressDialogCep.show();
+                                preencherCamposEndereco(response);
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
 
-                        progressDialogCep.hide();
+                            }
+                        });
+                        queue.add(stringRequest);
                     }catch (Exception e){
                         progressDialogCep.hide();
                         Toast.makeText(getApplicationContext(), "Ocorreu erro ao buscar dados de endereço", Toast.LENGTH_LONG).show();
@@ -171,85 +172,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
-
-    //Responsavel por carregar o Objeto JSON
-    public static String getJSONFromAPI(String url){
-        String retorno = "";
-        try {
-            URL apiEnd = new URL(url);
-            int codigoResposta;
-            HttpURLConnection conexao;
-            InputStream is;
-
-            conexao = (HttpURLConnection) apiEnd.openConnection();
-            conexao.setRequestMethod("GET");
-            conexao.setReadTimeout(15000);
-            conexao.setConnectTimeout(15000);
-            conexao.connect();
-
-            codigoResposta = conexao.getResponseCode();
-            if(codigoResposta < HttpURLConnection.HTTP_BAD_REQUEST){
-                is = conexao.getInputStream();
-            }else{
-                is = conexao.getErrorStream();
-            }
-
-            retorno = converterInputStreamToString(is);
-            is.close();
-            conexao.disconnect();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
-        return retorno;
-    }
-
-    private static String converterInputStreamToString(InputStream is){
-        StringBuffer buffer = new StringBuffer();
-        try{
-            BufferedReader br;
-            String linha;
-
-            br = new BufferedReader(new InputStreamReader(is));
-            while((linha = br.readLine())!=null){
-                buffer.append(linha);
-            }
-
-            br.close();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-
-        return buffer.toString();
-    }
-
-    private void lerJson(String json){
-        try {
-            JSONObject jsonObj = new JSONObject(json);
-            JSONArray array = jsonObj.getJSONArray("results");
-
-            JSONObject objArray = array.getJSONObject(0);
-
-            editEmpCEP.setText(objArray.getString("cep").toString());
-            editEmpRua.setText(objArray.getString("logradouro").toString());
-            editEmpCompl.setText(objArray.getString("complemento").toString());
-            editEmpBairro.setText(objArray.getString("bairro").toString());
-            editEmpCid.setText(objArray.getString("localidade").toString());
-            editEmpEst.setText(objArray.getString("uf").toString());
-            //Atribui os objetos que estão nas camadas mais altas
-                    /*"logradouro": "Praça da Sé",
-                    "complemento": "lado ímpar",
-                    "bairro": "Sé",
-                    "localidade": "São Paulo",
-                    "uf": "SP",*/
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-
     }
 
     private void preencherCampos(){
@@ -264,6 +186,23 @@ public class EditarPerfilActivity extends AppCompatActivity {
         editEmpTel.setText(empresa.getTelefone());
         editEmpEmail.setText(empresa.getEmail());
         editEmpNome.setText(empresa.getNome());
+    }
+
+    private void preencherCamposEndereco(String json){
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+
+            editEmpRua.setText(jsonObject.getString("logradouro"));
+            editEmpBairro.setText(jsonObject.getString("bairro"));
+            editEmpCid.setText(jsonObject.getString("localidade"));
+            editEmpEst.setText(jsonObject.getString("uf"));
+            editEmpCompl.setText(jsonObject.getString("complemento"));
+            editEmpPais.setText("Brasil");
+
+            progressDialogCep.hide();
+        }catch (Exception e){
+
+        }
     }
 
 }
