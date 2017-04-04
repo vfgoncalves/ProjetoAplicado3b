@@ -74,6 +74,27 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
+        <ImageButton
+            android:id="@+id/imgVagas"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/ic_vagas"
+            android:layout_alignTop="@+id/imgEditPerfil"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:textSize="19dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:text="Vagas"
+            android:layout_below="@+id/imgVagas"
+            android:layout_alignLeft="@+id/textView9"
+            android:layout_alignStart="@+id/textView9" />
+
     </RelativeLayout>
 
 

@@ -14,6 +14,7 @@ public class ConfiguracaoFirebase {
     private static FirebaseAuth autenticador;
     public static final String NODE_USUARIO = "USUARIO";
     public static final String NODE_EMPRESA = "EMPRESA";
+    public static final String NODE_VAGA = "VAGAS";
 
     public static DatabaseReference getReferenceFirebase(){
         if(referenceFirebase == null){

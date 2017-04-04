@@ -23,7 +23,9 @@
         <activity android:name=".ContextoActivity" />
         <activity android:name=".CadastroEmpresaActivity" />
         <activity android:name=".MainEmpresaActivity" />
-        <activity android:name=".EditarPerfilActivity"></activity>
+        <activity android:name=".EditarPerfilActivity" />
+        <activity android:name=".VagasEmpresaActivity" />
+        <activity android:name=".CadastrarVagaActivity"></activity>
     </application>
 
 </manifest>

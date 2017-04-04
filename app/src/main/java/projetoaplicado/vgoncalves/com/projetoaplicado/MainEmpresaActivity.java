@@ -3,6 +3,8 @@ package projetoaplicado.vgoncalves.com.projetoaplicado;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -37,6 +42,8 @@ public class MainEmpresaActivity extends AppCompatActivity {
     private ImageButton imgPerfil;
     private ImageButton imgLogout;
     private FirebaseAuth autenticador;
+    private Bitmap imagemPerfil;
+    private ImageButton imgVagas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +60,11 @@ public class MainEmpresaActivity extends AppCompatActivity {
         txtTitulo = (TextView) findViewById(R.id.txtTitulo);
         imgPerfil = (ImageButton) findViewById(R.id.imgEditPerfil);
         imgLogout= (ImageButton) findViewById(R.id.imgLogout);
+        imgVagas = (ImageButton) findViewById(R.id.imgVagas);
         autenticador = ConfiguracaoFirebase.getAutenticador();
 
         //Armazenar id do usuário logado
-        Helper helper = new Helper();
+        final Helper helper = new Helper();
         SharedPreferences sharedPreferences = getSharedPreferences(helper.NOME_ARQUIVO,0);
         helper.sharedPreferences = sharedPreferences;
         idUsuario = helper.getIdUsuario();
@@ -76,7 +84,11 @@ public class MainEmpresaActivity extends AppCompatActivity {
                 txtTitulo.setText("Bem vindo " + empresa.getNome().toString());
                 if (!TextUtils.isEmpty(empresa.getPhotoUrl())){
                     //Carregar Imagem de perfil
-                }
+                    Helper helperPerfil = new Helper();
+                    imagemPerfil = helperPerfil.baixarImagem(empresa.getPhotoUrl());
+                    if (imagemPerfil != null)
+                        imgPerfil.setImageBitmap(imagemPerfil);
+                    }
                 progressDialog.hide();
             }
 
@@ -107,8 +119,18 @@ public class MainEmpresaActivity extends AppCompatActivity {
         imgPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Navegar até tela de login
+                //Navegar até tela de edição de perfil
                 Intent intent = new Intent(MainEmpresaActivity.this, EditarPerfilActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //Evento de Click para tela de Vagas
+        imgVagas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Navegar até tela de cadastro de vagas
+                Intent intent = new Intent(MainEmpresaActivity.this, VagasEmpresaActivity.class);
                 startActivity(intent);
             }
         });
