@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dip">
+    android:padding="10dip"
+    android:focusable="true">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -28,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="textCapSentences" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -42,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="textCapSentences" />
 
             <TextView
                 android:id="@+id/textView3"

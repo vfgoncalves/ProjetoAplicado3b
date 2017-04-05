@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dip"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:focusable="true">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="468dp"
@@ -83,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="textCapSentences" />
 
             <TextView
                 android:id="@+id/txtEst"
@@ -97,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="textCapSentences" />
 
             <TextView
                 android:id="@+id/txtCid"
@@ -111,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="textCapSentences" />
 
             <TextView
                 android:id="@+id/txtBairro"
@@ -125,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="textCapSentences" />
 
             <TextView
                 android:id="@+id/txtRua"
@@ -139,7 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="textCapSentences" />
 
             <TextView
                 android:id="@+id/txtNumero"
@@ -167,7 +168,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="textCapSentences" />
 
         </LinearLayout>
     </ScrollView>
