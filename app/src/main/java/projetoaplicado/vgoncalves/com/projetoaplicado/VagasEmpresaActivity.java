@@ -47,12 +47,14 @@ public class VagasEmpresaActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //limpar lista
+                tituloVaga.clear();
 
-                /*for(DataSnapshot dados: dataSnapshot.getChildren()){
+                for(DataSnapshot dados: dataSnapshot.getChildren()){
                     Vaga vaga = dados.getValue(Vaga.class);
                     tituloVaga.add(vaga.getTitulo());
                 }
-                adapter.notifyDataSetChanged();*/
+                adapter.notifyDataSetChanged();
             }
 
             @Override
