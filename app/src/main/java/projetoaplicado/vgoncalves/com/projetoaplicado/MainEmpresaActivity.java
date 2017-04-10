@@ -2,48 +2,29 @@ package projetoaplicado.vgoncalves.com.projetoaplicado;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.provider.ContactsContract;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ThemedSpinnerAdapter;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Scanner;
-
+import projetoaplicado.vgoncalves.com.projetoaplicado.Adapter.TabAdapter;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.Helper;
-import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
+import projetoaplicado.vgoncalves.com.projetoaplicado.Config.SlidingTabLayout;
 
 public class MainEmpresaActivity extends AppCompatActivity {
-    private String idUsuario;
-    private DatabaseReference databaseReference;
-    private Empresa empresa;
-    private TextView txtTitulo;
+
+    private Toolbar toolbar;
+    private SlidingTabLayout slidingTabLayout;
+    private ViewPager viewPager;
     private ProgressDialog progressDialog;
-    private ImageButton imgPerfil;
-    private ImageButton imgLogout;
     private FirebaseAuth autenticador;
-    private Bitmap imagemPerfil;
-    private ImageButton imgVagas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,83 +38,58 @@ public class MainEmpresaActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
         //Inicializar controles
-        txtTitulo = (TextView) findViewById(R.id.txtTitulo);
-        imgPerfil = (ImageButton) findViewById(R.id.imgEditPerfil);
-        imgLogout= (ImageButton) findViewById(R.id.imgLogout);
-        imgVagas = (ImageButton) findViewById(R.id.imgVagas);
+        toolbar = (Toolbar) findViewById(R.id.toolbarEmpresa);
+        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sltl_abas);
+        viewPager = (ViewPager) findViewById(R.id.vp_pagina);
         autenticador = ConfiguracaoFirebase.getAutenticador();
 
+        //Configurar Toolbar
+        toolbar.setTitle("UNAJob");
+        toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.branco));
+        setSupportActionBar(toolbar); //Método de suporte ao ActionBar
+
+        //configurar adapter e tabs
+        TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(tabAdapter);
+        //configura sliding tab
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
+        slidingTabLayout.setViewPager(viewPager);
+
         //Armazenar id do usuário logado
-        final Helper helper = new Helper();
+        /*final Helper helper = new Helper();
         SharedPreferences sharedPreferences = getSharedPreferences(helper.NOME_ARQUIVO,0);
         helper.sharedPreferences = sharedPreferences;
-        idUsuario = helper.getIdUsuario();
+        idUsuario = helper.getIdUsuario();*/
+    }
 
-        //Recuperar instância do Firebase
-        databaseReference = ConfiguracaoFirebase.getReferenceFirebase();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main_empresa, menu);
+        return true;
+    }
 
-        //Recuperar dados do usuário logado
-        databaseReference
-                .child(ConfiguracaoFirebase.NODE_EMPRESA)
-                .child(idUsuario)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                progressDialog.show();
-                empresa = dataSnapshot.getValue(Empresa.class);
-                txtTitulo.setText("Bem vindo " + empresa.getNome().toString());
-                if (!TextUtils.isEmpty(empresa.getPhotoUrl())){
-                    //Carregar Imagem de perfil
-                    Helper helperPerfil = new Helper();
-                    imagemPerfil = helperPerfil.baixarImagem(empresa.getPhotoUrl());
-                    if (imagemPerfil != null)
-                        imgPerfil.setImageBitmap(imagemPerfil);
-                    }
-                progressDialog.hide();
-            }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_sair:
+                deslogarUsuario();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+    private void deslogarUsuario(){
+        progressDialog.show();
 
-            }
-        });
+        autenticador.signOut();
+        //Navegar até tela de login
+        Intent intent = new Intent(MainEmpresaActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
 
-        //Evento de logout
-        imgLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressDialog.show();
-
-                autenticador.signOut();
-                //Navegar até tela de login
-                Intent intent = new Intent(MainEmpresaActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
-
-                progressDialog.hide();
-            }
-        });
-
-        //Evento para navegação até tela de edição de perfil
-        imgPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Navegar até tela de edição de perfil
-                Intent intent = new Intent(MainEmpresaActivity.this, EditarPerfilActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        //Evento de Click para tela de Vagas
-        imgVagas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Navegar até tela de cadastro de vagas
-                Intent intent = new Intent(MainEmpresaActivity.this, VagasEmpresaActivity.class);
-                startActivity(intent);
-            }
-        });
-
+        progressDialog.hide();
     }
 }

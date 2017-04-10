@@ -1,0 +1,43 @@
+package projetoaplicado.vgoncalves.com.projetoaplicado.Adapter;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+
+import projetoaplicado.vgoncalves.com.projetoaplicado.fragments.EmpresaPerfilFragment;
+import projetoaplicado.vgoncalves.com.projetoaplicado.fragments.VagasEmpresaFragment;
+
+public class TabAdapter extends FragmentStatePagerAdapter {
+
+    private String[] titulosAbas = {"PERFIL","VAGAS"};
+
+    public TabAdapter(FragmentManager fm) {
+        super(fm);
+    }
+
+    @Override
+    public Fragment getItem(int i) {
+        Fragment fragment = null;
+
+        switch (i){
+            case 0:
+                fragment = new EmpresaPerfilFragment();
+                break;
+            case 1:
+                fragment = new VagasEmpresaFragment();
+                break;
+        }
+
+        return fragment;
+    }
+
+    @Override
+    public int getCount() {
+        return titulosAbas.length;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titulosAbas[position];
+    }
+}

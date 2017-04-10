@@ -1,101 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dip">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txtTitulo"
+    <include android:id="@+id/toolbarEmpresa" layout="@layout/toolbar_empresa"/>
+
+    <projetoaplicado.vgoncalves.com.projetoaplicado.Config.SlidingTabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Título Bem vindo"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="30dp" />
+        android:id="@+id/sltl_abas"
+        android:background="@color/colorPrimary"
+        android:theme="@style/corAbas"/>
 
-    <ImageButton
-        android:id="@+id/imgEmpresaMain"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
-        android:layout_gravity="center"
-        android:background="@drawable/ic_business"
-        />
-
-    <RelativeLayout
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageButton
-            android:id="@+id/imgEditPerfil"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_above="@+id/txtPerfil"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/ic_perfil" />
-
-        <TextView
-            android:id="@+id/txtPerfil"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="23dp"
-            android:layout_marginStart="23dp"
-            android:text="Editar Perfil"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="19dp" />
-
-        <ImageButton
-            android:id="@+id/imgLogout"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/txtPerfil"
-            android:background="@drawable/ic_logout" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="21dp"
-            android:layout_marginRight="21dp"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="19dp"
-            android:text="SignOut"
-            android:layout_below="@+id/imgLogout"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <ImageButton
-            android:id="@+id/imgVagas"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="@drawable/ic_vagas"
-            android:layout_alignTop="@+id/imgEditPerfil"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:textSize="19dp"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:text="Vagas"
-            android:layout_below="@+id/imgVagas"
-            android:layout_alignLeft="@+id/textView9"
-            android:layout_alignStart="@+id/textView9" />
-
-    </RelativeLayout>
-
+        android:layout_height="0dp"
+        android:id="@+id/vp_pagina"
+        android:layout_weight="1"></android.support.v4.view.ViewPager>
 
 </LinearLayout>
