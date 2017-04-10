@@ -11,13 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".LoginActivity"></activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".CadastrarActivity" />
         <activity android:name=".ContextoActivity" />
@@ -25,7 +19,14 @@
         <activity android:name=".MainEmpresaActivity" />
         <activity android:name=".EditarPerfilActivity" />
         <activity android:name=".VagasEmpresaActivity" />
-        <activity android:name=".CadastrarVagaActivity"></activity>
+        <activity android:name=".CadastrarVagaActivity" />
+        <activity android:name=".HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

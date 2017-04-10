@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -41,7 +42,7 @@ public class CadastrarActivity extends AppCompatActivity {
     private Button btnCadastrar;
     private Usuario usuario;
     private FirebaseAuth autenticacao;
-    private SignInButton btnGoogle;
+    private ImageButton imgSignGoogle;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -55,7 +56,7 @@ public class CadastrarActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.editCadEmail);
         senha = (EditText) findViewById(R.id.editCadSenha);
         btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
-        btnGoogle = (SignInButton) findViewById(R.id.btnSigInGoogle);
+        imgSignGoogle = (ImageButton) findViewById(R.id.imgSignGoogle);
         autenticacao = ConfiguracaoFirebase.getAutenticador();
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -91,9 +92,7 @@ public class CadastrarActivity extends AppCompatActivity {
                 .build();
         /*FIM: LOGIN COM GOOOGLE*/
 
-
-
-        btnGoogle.setOnClickListener(new View.OnClickListener() {
+        imgSignGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private Usuario usuario;
     private Empresa empresa;
     private ProgressDialog progressDialog;
-    private SignInButton btnGoogle;
+    private ImageButton imgLoginGoogle;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -72,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         //Receber controles da Activity
         lnkCadastrar = (TextView) findViewById(R.id.lnkCadastrar);
         btnLogar = (Button) findViewById(R.id.btnLogin);
-        btnGoogle = (SignInButton) findViewById(R.id.btnSigInGoogle);
+        imgLoginGoogle = (ImageButton) findViewById(R.id.imgLoginGoogle);
 
 
         //Método de click no link Cadastrar, levando à próxima activity
@@ -124,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        btnGoogle.setOnClickListener(new View.OnClickListener() {
+        imgLoginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signIn();

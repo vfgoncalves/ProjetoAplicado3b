@@ -85,7 +85,7 @@ public class MainEmpresaActivity extends AppCompatActivity {
 
         autenticador.signOut();
         //Navegar até tela de login
-        Intent intent = new Intent(MainEmpresaActivity.this, LoginActivity.class);
+        Intent intent = new Intent(MainEmpresaActivity.this, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

@@ -6,66 +6,47 @@
     android:padding="10dip"
     android:focusable="true">
 
-
-    <TextView
-        android:id="@+id/textView"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#372c24"
-        android:text="Nome da Empresa" />
+        android:layout_weight="1"
+        android:background="@drawable/ic_logo"/>
 
     <EditText
         android:id="@+id/editCadNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:hint="Nome da Empresa"
+        android:textColorHint="@color/colorPrimaryDark"
         android:inputType="textPersonName" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#372c24"
-        android:text="E-mail do Contato" />
 
     <EditText
         android:id="@+id/editCadEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:hint="E-mail do Contato"
+        android:textColorHint="@color/colorPrimaryDark"
         android:inputType="textEmailAddress" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#372c24"
-        android:text="Telefone do Contato" />
 
     <EditText
         android:id="@+id/editCadTel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:hint="Telefone do Contato"
+        android:textColorHint="@color/colorPrimaryDark"
         android:inputType="phone" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#372c24"
-        android:text="Senha" />
 
     <EditText
         android:id="@+id/editCadSenha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:hint="Senha"
+        android:textColorHint="@color/colorPrimaryDark"
         android:inputType="textPassword" />
 
     <Button
         android:id="@+id/btnCadastrar"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/BtnVermelho"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cadastrar" />
@@ -77,10 +58,24 @@
         android:text="Ou"
         android:gravity="center"
         android:textSize="15dip"
-        android:textColor="@android:color/black"/>
+        android:textColor="@color/colorPrimaryDark"/>
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btnSigInGoogle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.google.android.gms.common.SignInButton>
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/ic_linkedin_red"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/ic_googleplus_red"
+            android:id="@+id/imgSignGoogleEmp"/>
+    </LinearLayout>
 </LinearLayout>
