@@ -201,7 +201,8 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
             progressDialogCep.hide();
         }catch (Exception e){
-
+            Toast.makeText(getApplicationContext(), "Erro ao recuperar cep", Toast.LENGTH_LONG).show();
+            progressDialogCep.hide();
         }
     }
 

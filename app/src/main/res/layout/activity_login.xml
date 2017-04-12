@@ -17,12 +17,14 @@
     <EditText android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="E-mail"
-        android:textColorHint="@color/branco"/>
+        android:textColorHint="@color/branco"
+        android:id="@+id/editLoginEmail"/>
 
     <EditText android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="Senha"
-        android:textColorHint="@color/branco"/>
+        android:textColorHint="@color/branco"
+        android:id="@+id/editLoginSenha"/>
 
     <Button
         android:id="@+id/btnLogin"
@@ -31,6 +33,13 @@
         android:layout_height="wrap_content"
         android:text="Login" />
 
+ <Switch
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:text="Manter conectado"
+     android:textColor="@color/branco"
+     android:textAlignment="viewEnd"
+     android:id="@+id/manterConectado"/>
 
     <TextView android:id="@+id/lnkCadastrar"
         android:layout_width="fill_parent"

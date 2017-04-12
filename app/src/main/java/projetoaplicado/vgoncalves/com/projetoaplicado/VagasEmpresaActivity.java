@@ -31,46 +31,10 @@ public class VagasEmpresaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vagas_empresa);
 
-        btnCadastrarVaga = (FloatingActionButton) findViewById(R.id.btnCadastrarVaga);
-        databaseReference = ConfiguracaoFirebase.getReferenceFirebase().child(ConfiguracaoFirebase.NODE_VAGA);
 
-        //Iniciar listview para mostrar vagas
-        listVagas = (ListView) findViewById(R.id.listaVagas);
-        tituloVaga = new ArrayList<>();
-        adapter = new ArrayAdapter(
-                getApplicationContext(),
-                R.layout.lista_vagas,
-                tituloVaga
-        );
-        listVagas.setAdapter(adapter);
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //limpar lista
-                tituloVaga.clear();
 
-                for(DataSnapshot dados: dataSnapshot.getChildren()){
-                    Vaga vaga = dados.getValue(Vaga.class);
-                    tituloVaga.add(vaga.getTitulo());
-                }
-                adapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        btnCadastrarVaga.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Navegar até tela de edição de perfil
-                Intent intent = new Intent(VagasEmpresaActivity.this, CadastrarVagaActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 }

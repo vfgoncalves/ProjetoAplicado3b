@@ -17,10 +17,12 @@
     <style name="BtnVermelho">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
 
     <style name="BtnBranco">
         <item name="android:background">@android:color/white</item>
         <item name="android:textColor">@color/colorPrimary</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
 </resources>

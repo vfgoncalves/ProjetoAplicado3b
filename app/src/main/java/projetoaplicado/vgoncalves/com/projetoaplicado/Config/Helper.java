@@ -17,6 +17,7 @@ public class Helper {
     public SharedPreferences sharedPreferences;
     public static final String NOME_ARQUIVO = "projetoaplicado.pref";
     private final String CHAVE_IDENTIFICADOR = "idUsuarioLogado";
+    private final String CHAVE_MANTER_CONECTADO = "idUsuarioLogado";
 
     public Helper() {
     }
@@ -25,7 +26,13 @@ public class Helper {
         editor.putString(CHAVE_IDENTIFICADOR, idUsuario);
         editor.commit();
     }
+
+    public void salvarPreferencia(Boolean manterConectado){
+        editor.putBoolean(CHAVE_MANTER_CONECTADO, manterConectado);
+        editor.commit();
+    }
     public String getIdUsuario(){
+
         return sharedPreferences.getString(CHAVE_IDENTIFICADOR, "");
     }
     public Bitmap baixarImagem(String url) {

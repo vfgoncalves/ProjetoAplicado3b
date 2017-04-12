@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,21 +62,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        autenticador = ConfiguracaoFirebase.getAutenticador();
         databaseReference = ConfiguracaoFirebase.getReferenceFirebase();
-        //Configurar Progress Dialog
-        progressDialog = new ProgressDialog(LoginActivity.this);
-        progressDialog.setTitle("Identificando usuário logado");
-        progressDialog.setMessage("Por favor aguarde, estamos identificando o usuário logado");
-        progressDialog.setCancelable(false);
-
-        verificarUsuarioLogado();
+        autenticador = ConfiguracaoFirebase.getAutenticador();
 
         //Receber controles da Activity
         lnkCadastrar = (TextView) findViewById(R.id.lnkCadastrar);
         btnLogar = (Button) findViewById(R.id.btnLogin);
         imgLoginGoogle = (ImageButton) findViewById(R.id.imgLoginGoogle);
-
+        email = (EditText) findViewById(R.id.editLoginEmail);
+        senha = (EditText) findViewById(R.id.editLoginSenha);
 
         //Método de click no link Cadastrar, levando à próxima activity
         lnkCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -165,17 +160,6 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
     }
 
-    private void verificarUsuarioLogado(){
-        Log.d("ProjetoAplicado", "Método - verificarUsuarioLogado");
-        if (autenticador.getCurrentUser() != null){
-            progressDialog.show();
-            Log.d("ProjetoAplicado", "Método - verificarUsuarioLogado - Usuário logado identificado");
-            abrirTelaPrincipal();
-        }else{
-            Log.d("ProjetoAplicado", "Método - verificarUsuarioLogado - Usuário logado não identificado");
-        }
-    }
-
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -233,7 +217,6 @@ public class LoginActivity extends AppCompatActivity {
         Log.d("ProjetoAplicado", "Método - abrirTelaPrincipal - salvarPreferencia");
         SharedPreferences sharedPreferences = getSharedPreferences(helper.NOME_ARQUIVO,0);
         helper.editor = sharedPreferences.edit();
-        helper.salvarPreferencia(autenticador.getCurrentUser().getUid());
 
         Log.d("ProjetoAplicado", "Método - abrirTelaPrincipal - verificar usuario ou empresa");
         //Verificar se o usuário logado é uma empresa ou um candidato
