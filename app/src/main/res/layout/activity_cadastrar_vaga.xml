@@ -17,54 +17,36 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Título da Vaga" />
-
             <EditText
                 android:id="@+id/editVagaTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:hint="Título da Vaga"
                 android:inputType="textCapSentences" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Cidade" />
 
             <EditText
                 android:id="@+id/editVagaCidade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:hint="Cidade"
                 android:inputType="textCapSentences" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="E-mail do Contato" />
 
             <EditText
                 android:id="@+id/editVagaEmailContato"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:hint="E-mail do Contato"
                 android:inputType="textEmailAddress" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/spn_ramo"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Descrição da vaga" />
+                >
+            </Spinner>
 
             <EditText
                 android:id="@+id/editVagaDescricao"
@@ -72,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.56"
                 android:ems="10"
+                android:hint="Descrição da vaga"
                 android:inputType="textMultiLine"
                 android:lines="13"/>
 

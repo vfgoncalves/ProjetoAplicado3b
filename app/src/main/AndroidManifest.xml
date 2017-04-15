@@ -11,16 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".CadastrarActivity" />
-        <activity android:name=".ContextoActivity" />
-        <activity android:name=".CadastroEmpresaActivity" />
-        <activity android:name=".MainEmpresaActivity" />
-        <activity android:name=".EditarPerfilActivity" />
-        <activity android:name=".VagasEmpresaActivity" />
-        <activity android:name=".CadastrarVagaActivity" />
-        <activity android:name=".HomeActivity">
+        <activity android:name=".view.activity.LoginActivity"></activity>
+        <activity android:name=".view.activity.MainActivity" />
+        <activity android:name=".view.activity.CadastrarActivity" />
+        <activity android:name=".view.activity.ContextoActivity" />
+        <activity android:name=".view.activity.CadastroEmpresaActivity" />
+        <activity android:name=".view.activity.MainEmpresaActivity" />
+        <activity android:name=".view.activity.EditarPerfilActivity" />
+        <activity android:name=".view.activity.VagasEmpresaActivity" />
+        <activity android:name=".view.activity.CadastrarVagaActivity" />
+        <activity android:name=".view.activity.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

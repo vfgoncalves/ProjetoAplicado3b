@@ -3,11 +3,9 @@ package projetoaplicado.vgoncalves.com.projetoaplicado.Model;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
+import java.util.ResourceBundle;
 
-/**
- * Created by vgoncalves on 29/03/2017.
- */
+import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 
 public class Empresa {
     private String nome;
@@ -24,8 +22,10 @@ public class Empresa {
     private String Rua;
     private String Numero;
     private String Complemento;
+    private Controller controller;
 
     public Empresa() {
+        controller = new Controller();
     }
 
     public String getPhotoUrl() {
@@ -140,7 +140,7 @@ public class Empresa {
         this.ID = ID;
     }
     public void salvar(){
-        DatabaseReference databaseReference = ConfiguracaoFirebase.getReferenceFirebase();
-        databaseReference.child(ConfiguracaoFirebase.NODE_EMPRESA).child(getID()).setValue(this);
+        DatabaseReference databaseReference = controller.getDatabaseReference();
+        databaseReference.child(controller.NODE_EMPRESA).child(getID()).setValue(this);
     }
 }

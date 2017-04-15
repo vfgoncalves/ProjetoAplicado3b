@@ -1,10 +1,12 @@
-package projetoaplicado.vgoncalves.com.projetoaplicado;
+package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+
+import projetoaplicado.vgoncalves.com.projetoaplicado.R;
 
 public class ContextoActivity extends AppCompatActivity {
     private ImageButton imgCandidato;

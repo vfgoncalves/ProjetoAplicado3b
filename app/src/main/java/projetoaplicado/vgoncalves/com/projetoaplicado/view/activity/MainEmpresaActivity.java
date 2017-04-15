@@ -1,4 +1,4 @@
-package projetoaplicado.vgoncalves.com.projetoaplicado;
+package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,13 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import projetoaplicado.vgoncalves.com.projetoaplicado.Adapter.TabAdapter;
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.SlidingTabLayout;
+import projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter.TabAdapter;
+import projetoaplicado.vgoncalves.com.projetoaplicado.componente.tabs.SlidingTabLayout;
+import projetoaplicado.vgoncalves.com.projetoaplicado.R;
+import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 
 public class MainEmpresaActivity extends AppCompatActivity {
 
@@ -25,6 +25,7 @@ public class MainEmpresaActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private ProgressDialog progressDialog;
     private FirebaseAuth autenticador;
+    private Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,9 @@ public class MainEmpresaActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbarEmpresa);
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sltl_abas);
         viewPager = (ViewPager) findViewById(R.id.vp_pagina);
-        autenticador = ConfiguracaoFirebase.getAutenticador();
+
+        controller = new Controller(MainEmpresaActivity.this);
+        autenticador = controller.getAutenticador();
 
         //Configurar Toolbar
         toolbar.setTitle("UNAJob");
@@ -82,8 +85,9 @@ public class MainEmpresaActivity extends AppCompatActivity {
 
     private void deslogarUsuario(){
         progressDialog.show();
-
         autenticador.signOut();
+        controller.limpaIdUsuario();
+
         //Navegar até tela de login
         Intent intent = new Intent(MainEmpresaActivity.this, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

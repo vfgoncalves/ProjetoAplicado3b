@@ -6,7 +6,7 @@
 
     <include android:id="@+id/toolbarEmpresa" layout="@layout/toolbar_empresa"/>
 
-    <projetoaplicado.vgoncalves.com.projetoaplicado.Config.SlidingTabLayout
+    <projetoaplicado.vgoncalves.com.projetoaplicado.componente.tabs.SlidingTabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/sltl_abas"

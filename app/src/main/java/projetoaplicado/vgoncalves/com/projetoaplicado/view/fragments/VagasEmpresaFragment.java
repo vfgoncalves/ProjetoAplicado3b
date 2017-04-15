@@ -1,13 +1,10 @@
-package projetoaplicado.vgoncalves.com.projetoaplicado.fragments;
+package projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +17,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
-import projetoaplicado.vgoncalves.com.projetoaplicado.CadastrarVagaActivity;
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.Helper;
+import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
+import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.CadastrarVagaActivity;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Vaga;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
-import projetoaplicado.vgoncalves.com.projetoaplicado.VagasEmpresaActivity;
 
 public class VagasEmpresaFragment extends Fragment {
 
@@ -37,6 +31,7 @@ public class VagasEmpresaFragment extends Fragment {
     private ArrayList<String> tituloVaga;
     private DatabaseReference databaseReference;
     private String idUsuarioLogado;
+    private Controller controller;
 
     public VagasEmpresaFragment() {
     }
@@ -48,13 +43,11 @@ public class VagasEmpresaFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_vagas_empresa, container, false);
         //Recuperar instancia do firebase
-        databaseReference = ConfiguracaoFirebase.getReferenceFirebase();
+        controller = new Controller(getContext());
+        databaseReference = controller.getDatabaseReference();
 
         //Armazenar id do usuário logado
-        Helper helper = new Helper();
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(helper.NOME_ARQUIVO,0);
-        helper.sharedPreferences = sharedPreferences;
-        idUsuarioLogado = helper.getIdUsuario();
+        idUsuarioLogado = controller.getIdUsuario();
 
         //Instanciar objetos
         tituloVaga = new ArrayList<>();
@@ -67,9 +60,7 @@ public class VagasEmpresaFragment extends Fragment {
         //Instanciar lista
         listVagas.setAdapter(adapter);
 
-        databaseReference
-                .child(ConfiguracaoFirebase.NODE_VAGA)
-                .addValueEventListener(new ValueEventListener() {
+        databaseReference.child(controller.NODE_VAGA).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         tituloVaga.clear();

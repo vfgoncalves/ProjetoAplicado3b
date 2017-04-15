@@ -1,4 +1,4 @@
-package projetoaplicado.vgoncalves.com.projetoaplicado;
+package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -9,11 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.Helper;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Vaga;
+import projetoaplicado.vgoncalves.com.projetoaplicado.R;
+import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 
 public class CadastrarVagaActivity extends AppCompatActivity {
 
@@ -24,6 +22,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
     private Button btnVagaCadastrar;
     private Vaga vaga;
     private String idUsuario;
+    private Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +36,8 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         editVagaDescricao = (EditText) findViewById(R.id.editVagaDescricao);
         btnVagaCadastrar = (Button) findViewById(R.id.btnVagaCadastrar);
 
-        final Helper helper = new Helper();
-        SharedPreferences sharedPreferences = getSharedPreferences(helper.NOME_ARQUIVO,0);
-        helper.sharedPreferences = sharedPreferences;
-        idUsuario = helper.getIdUsuario();
+        controller = new Controller(CadastrarVagaActivity.this);
+        idUsuario = controller.getIdUsuario();
 
         btnVagaCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override

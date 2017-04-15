@@ -1,11 +1,11 @@
-package projetoaplicado.vgoncalves.com.projetoaplicado.Adapter;
+package projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import projetoaplicado.vgoncalves.com.projetoaplicado.fragments.EmpresaPerfilFragment;
-import projetoaplicado.vgoncalves.com.projetoaplicado.fragments.VagasEmpresaFragment;
+import projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments.EmpresaPerfilFragment;
+import projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments.VagasEmpresaFragment;
 
 public class TabAdapter extends FragmentStatePagerAdapter {
 

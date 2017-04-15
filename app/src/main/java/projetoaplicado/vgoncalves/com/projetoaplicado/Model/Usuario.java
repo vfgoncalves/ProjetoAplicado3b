@@ -2,13 +2,10 @@ package projetoaplicado.vgoncalves.com.projetoaplicado.Model;
 
 import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
-import com.google.firebase.database.ValueEventListener;
 
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
+import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 
 /**
  * Created by vgoncalves on 29/03/2017.
@@ -20,8 +17,10 @@ public class Usuario {
     private String senha;
     private String ID;
     private String photoUrl;
+    private Controller controller;
 
     public Usuario() {
+        controller = new Controller();
     }
 
     public String getPhotoUrl() {
@@ -66,8 +65,8 @@ public class Usuario {
 
     public void salvar(){
         Log.d("ProjetoAplicado", "Método Salvar");
-        DatabaseReference databaseReference = ConfiguracaoFirebase.getReferenceFirebase();
-        databaseReference.child(ConfiguracaoFirebase.NODE_USUARIO).child(getID()).setValue(this);
+        DatabaseReference databaseReference = controller.getDatabaseReference();
+        databaseReference.child(controller.NODE_USUARIO).child(getID()).setValue(this);
     }
 
 

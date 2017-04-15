@@ -1,16 +1,13 @@
-package projetoaplicado.vgoncalves.com.projetoaplicado.fragments;
+package projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,16 +15,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import projetoaplicado.vgoncalves.com.projetoaplicado.CadastrarVagaActivity;
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.Helper;
-import projetoaplicado.vgoncalves.com.projetoaplicado.EditarPerfilActivity;
+import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
+import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.EditarPerfilActivity;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class EmpresaPerfilFragment extends Fragment {
 
     private EditText editEmpCompl;
@@ -45,6 +37,7 @@ public class EmpresaPerfilFragment extends Fragment {
     private String idEmpresa;
     private Empresa empresa;
     private FloatingActionButton editarPerfilEmpresa;
+    private Controller controller;
 
     public EmpresaPerfilFragment() {
         // Required empty public constructor
@@ -56,14 +49,12 @@ public class EmpresaPerfilFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_empresa_perfil, container, false);
 
+        controller = new Controller(getContext());
         //Receber instância do Firebase
-        databaseReference = ConfiguracaoFirebase.getReferenceFirebase();
+        databaseReference = controller.getDatabaseReference();
 
         //Armazenar id do usuário logado
-        Helper helper = new Helper();
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(helper.NOME_ARQUIVO,0);
-        helper.sharedPreferences = sharedPreferences;
-        idEmpresa = helper.getIdUsuario();
+        idEmpresa = controller.getIdUsuario();
 
         //Inicializar controle
         editEmpCompl = (EditText) view.findViewById(R.id.editEmpCompl);
@@ -79,10 +70,7 @@ public class EmpresaPerfilFragment extends Fragment {
         editEmpNome= (EditText) view.findViewById(R.id.editEmpNome);
         editarPerfilEmpresa = (FloatingActionButton) view.findViewById(R.id.editarPerfilEmpresa);
 
-        databaseReference
-                .child(ConfiguracaoFirebase.NODE_EMPRESA)
-                .child(idEmpresa)
-                .addValueEventListener(new ValueEventListener() {
+        databaseReference.child(controller.NODE_EMPRESA).child(idEmpresa).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         empresa = dataSnapshot.getValue(Empresa.class);

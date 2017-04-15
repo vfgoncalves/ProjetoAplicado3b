@@ -14,13 +14,13 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="BtnVermelho">
+    <style name="BtnVermelho" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
 
-    <style name="BtnBranco">
+    <style name="BtnBranco" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@android:color/white</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="colorControlHighlight">@color/colorAccent</item>

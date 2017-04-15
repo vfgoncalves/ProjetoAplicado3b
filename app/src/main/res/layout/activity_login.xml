@@ -33,13 +33,13 @@
         android:layout_height="wrap_content"
         android:text="Login" />
 
- <Switch
+ <!--<Switch
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
      android:text="Manter conectado"
      android:textColor="@color/branco"
      android:textAlignment="viewEnd"
-     android:id="@+id/manterConectado"/>
+     android:id="@+id/manterConectado"/>-->
 
     <TextView android:id="@+id/lnkCadastrar"
         android:layout_width="fill_parent"

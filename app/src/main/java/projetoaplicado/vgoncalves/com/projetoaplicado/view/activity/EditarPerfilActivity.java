@@ -1,4 +1,4 @@
-package projetoaplicado.vgoncalves.com.projetoaplicado;
+package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -25,10 +25,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
-import java.util.List;
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.Helper;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
+import projetoaplicado.vgoncalves.com.projetoaplicado.R;
+import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 
 public class EditarPerfilActivity extends AppCompatActivity {
 
@@ -51,6 +50,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private ProgressDialog progressDialogCep;
     private Button btnSalvar;
     private final String URL_API_CEP = "https://viacep.com.br/ws/";
+    private Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,8 @@ public class EditarPerfilActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editar_perfil);
 
         //Receber instância do Firebase
-        databaseReference = ConfiguracaoFirebase.getReferenceFirebase();
+        controller = new Controller(EditarPerfilActivity.this);
+        databaseReference = controller.getDatabaseReference();
 
         //Configurar Progress Dialog
         progressDialog = new ProgressDialog(EditarPerfilActivity.this);
@@ -77,10 +78,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         progressDialogCep.setCancelable(false);
 
         //Armazenar id do usuário logado
-        Helper helper = new Helper();
-        SharedPreferences sharedPreferences = getSharedPreferences(helper.NOME_ARQUIVO,0);
-        helper.sharedPreferences = sharedPreferences;
-        idEmpresa = helper.getIdUsuario();
+        idEmpresa = controller.getIdUsuario();
 
         //Inicializar controle
         editEmpCompl = (EditText) findViewById(R.id.editEmpCompl);
@@ -97,10 +95,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         editEmpNome= (EditText) findViewById(R.id.editEmpNome);
         btnSalvar = (Button) findViewById(R.id.btnSalvarPerfil);
 
-        databaseReference
-                .child(ConfiguracaoFirebase.NODE_EMPRESA)
-                .child(idEmpresa)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(controller.NODE_EMPRESA).child(idEmpresa).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         progressDialog.show();
@@ -187,7 +182,6 @@ public class EditarPerfilActivity extends AppCompatActivity {
         editEmpEmail.setText(empresa.getEmail());
         editEmpNome.setText(empresa.getNome());
     }
-
     private void preencherCamposEndereco(String json){
         try {
             JSONObject jsonObject = new JSONObject(json);

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="projetoaplicado.vgoncalves.com.projetoaplicado.HomeActivity"
+    tools:context="projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.HomeActivity"
     android:orientation="vertical"
     android:gravity="bottom"
     android:weightSum="1">
@@ -28,12 +28,13 @@
             style="@style/BtnVermelho"
             android:id="@+id/btnHomeLogar"/>
 
-        <Button android:layout_width="0dp"
+        <Button
+            android:id="@+id/btnHomeCadastrar"
+            style="@style/BtnBranco"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="CADASTRAR"
-            style="@style/BtnBranco"
-            android:id="@+id/btnHomeCadastrar"/>
+            android:text="CADASTRAR" />
     </LinearLayout>
 
 </LinearLayout>

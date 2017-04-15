@@ -1,22 +1,16 @@
-package projetoaplicado.vgoncalves.com.projetoaplicado;
+package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
-import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Vaga;
+import projetoaplicado.vgoncalves.com.projetoaplicado.R;
 
 public class VagasEmpresaActivity extends AppCompatActivity {
 

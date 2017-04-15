@@ -1,10 +1,8 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.Model;
 
-import android.widget.EditText;
-
 import com.google.firebase.database.DatabaseReference;
 
-import projetoaplicado.vgoncalves.com.projetoaplicado.Config.ConfiguracaoFirebase;
+import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 
 /**
  * Created by vgoncalves on 04/04/2017.
@@ -16,8 +14,10 @@ public class Vaga {
     private String emailContato;
     private String descricao;
     private String idEmpresa;
+    private Controller controller;
 
     public Vaga() {
+        controller = new Controller();
     }
 
     public String getTitulo() {
@@ -61,7 +61,7 @@ public class Vaga {
     }
 
     public void salvar(){
-        DatabaseReference databaseReference = ConfiguracaoFirebase.getReferenceFirebase();
-        databaseReference.child(ConfiguracaoFirebase.NODE_VAGA).push().setValue(this);
+        DatabaseReference databaseReference = controller.getDatabaseReference();
+        databaseReference.child(controller.NODE_VAGA).push().setValue(this);
     }
 }

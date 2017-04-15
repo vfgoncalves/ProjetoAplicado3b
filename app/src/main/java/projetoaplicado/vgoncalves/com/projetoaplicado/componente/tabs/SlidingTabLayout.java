@@ -1,4 +1,4 @@
-package projetoaplicado.vgoncalves.com.projetoaplicado.Config;
+package projetoaplicado.vgoncalves.com.projetoaplicado.componente.tabs;
 
 
 import android.content.Context;
