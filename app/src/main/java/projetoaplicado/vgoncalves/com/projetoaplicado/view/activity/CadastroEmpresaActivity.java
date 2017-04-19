@@ -194,7 +194,7 @@ public class CadastroEmpresaActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Log.d("ProjetoAplicado", "Login sucesso");
-                        empresa = new Empresa();
+                        empresa = new Empresa(CadastroEmpresaActivity.this);
                         empresa.setNome(acct.getDisplayName());
                         empresa.setEmail(acct.getEmail());
                         empresa.setID(autenticacao.getCurrentUser().getUid());

@@ -1,5 +1,6 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.Model;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
@@ -17,10 +18,112 @@ public class Usuario {
     private String senha;
     private String ID;
     private String photoUrl;
+    private String telefoneCel;
+    private String telefoneResidencial;
+    private String CEP;
+    private String Pais;
+    private String Estado;
+    private String Cidade;
+    private String Bairro;
+    private String Rua;
+    private String Numero;
+    private String Complemento;
+
     private Controller controller;
 
     public Usuario() {
         controller = new Controller();
+    }
+    public Usuario(Context context) {
+        controller = new Controller(context);
+    }
+
+    public String getTelefoneCel() {
+        return telefoneCel;
+    }
+
+    public void setTelefoneCel(String telefoneCel) {
+        this.telefoneCel = telefoneCel;
+    }
+
+    public String getTelefoneResidencial() {
+        return telefoneResidencial;
+    }
+
+    public void setTelefoneResidencial(String telefoneResidencial) {
+        this.telefoneResidencial = telefoneResidencial;
+    }
+
+    public String getCEP() {
+        return CEP;
+    }
+
+    public void setCEP(String CEP) {
+        this.CEP = CEP;
+    }
+
+    public String getPais() {
+        return Pais;
+    }
+
+    public void setPais(String pais) {
+        Pais = pais;
+    }
+
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String estado) {
+        Estado = estado;
+    }
+
+    public String getCidade() {
+        return Cidade;
+    }
+
+    public void setCidade(String cidade) {
+        Cidade = cidade;
+    }
+
+    public String getBairro() {
+        return Bairro;
+    }
+
+    public void setBairro(String bairro) {
+        Bairro = bairro;
+    }
+
+    public String getRua() {
+        return Rua;
+    }
+
+    public void setRua(String rua) {
+        Rua = rua;
+    }
+
+    public String getNumero() {
+        return Numero;
+    }
+
+    public void setNumero(String numero) {
+        Numero = numero;
+    }
+
+    public String getComplemento() {
+        return Complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        Complemento = complemento;
+    }
+
+    public Controller getController() {
+        return controller;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     public String getPhotoUrl() {

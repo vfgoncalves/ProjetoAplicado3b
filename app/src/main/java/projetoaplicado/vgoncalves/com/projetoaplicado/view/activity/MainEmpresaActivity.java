@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
+import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Usuario;
 import projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter.TabAdapter;
 import projetoaplicado.vgoncalves.com.projetoaplicado.componente.tabs.SlidingTabLayout;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
@@ -70,6 +71,18 @@ public class MainEmpresaActivity extends AppCompatActivity {
 
         //Armazenar id do usuário logado
         idUsuario = controller.getIdUsuario();
+        databaseReference.child(controller.NODE_EMPRESA).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                empresa = dataSnapshot.getValue(Empresa.class);
+                toolbar.setTitle("UNAJob - Bem Vindo " + empresa.getNome());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

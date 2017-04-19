@@ -9,7 +9,7 @@ import projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments.VagasEmpres
 
 public class TabAdapter extends FragmentStatePagerAdapter {
 
-    private String[] titulosAbas = {"PERFIL EMPRESA","VAGAS CADASTRADAS"};
+    private String[] titulosAbas = {"PERFIL","VAGAS"};
 
     public TabAdapter(FragmentManager fm) {
         super(fm);

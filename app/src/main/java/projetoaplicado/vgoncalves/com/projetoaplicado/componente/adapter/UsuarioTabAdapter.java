@@ -11,7 +11,7 @@ import projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments.VagasUsuari
 
 public class UsuarioTabAdapter extends FragmentStatePagerAdapter {
 
-    private String[] titulosAbas = {"PERFIL CANDIDATO","VAGAS DISPONÍVEIS"};
+    private String[] titulosAbas = {"PERFIL","VAGAS"};
 
     public UsuarioTabAdapter(FragmentManager fm) {
         super(fm);

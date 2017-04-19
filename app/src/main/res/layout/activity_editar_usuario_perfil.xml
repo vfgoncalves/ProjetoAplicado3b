@@ -1,18 +1,15 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments.UsuarioPerfilFragment">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+    android:orientation="vertical"
+    android:padding="10dip"
+    android:weightSum="1"
+    android:focusable="true">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="468dp"
+        android:layout_weight="0.56">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,11 +24,10 @@
                 android:text="Nome" />
 
             <EditText
-                android:id="@+id/editUserNome"
+                android:id="@+id/editUserEditNome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="textPersonName" />
 
             <TextView
@@ -42,11 +38,10 @@
                 android:text="E-mail" />
 
             <EditText
-                android:id="@+id/editUserEmail"
+                android:id="@+id/editUserEditEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="textEmailAddress" />
 
             <TextView
@@ -57,11 +52,10 @@
                 android:text="Telefone Celular" />
 
             <EditText
-                android:id="@+id/editUserTelCel"
+                android:id="@+id/editUserEditTelCel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="phone" />
 
             <TextView
@@ -72,11 +66,10 @@
                 android:text="Telefone Residencial" />
 
             <EditText
-                android:id="@+id/editUserTelRes"
+                android:id="@+id/editUserEditTelRes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="phone" />
 
             <TextView
@@ -87,11 +80,10 @@
                 android:text="CEP" />
 
             <EditText
-                android:id="@+id/editUserCEP"
+                android:id="@+id/editUserEditCEP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="number" />
 
             <TextView
@@ -102,11 +94,10 @@
                 android:text="País" />
 
             <EditText
-                android:id="@+id/editUserPais"
+                android:id="@+id/editUserEditPais"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="textCapSentences" />
 
             <TextView
@@ -114,15 +105,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#372c24"
-                android:enabled="false"
                 android:text="Estado" />
 
             <EditText
-                android:id="@+id/editUserEst"
+                android:id="@+id/editUserEditEst"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="textCapSentences" />
 
             <TextView
@@ -133,11 +122,10 @@
                 android:textColor="#372c24" />
 
             <EditText
-                android:id="@+id/editUserCid"
+                android:id="@+id/editUserEditCid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="textCapSentences" />
 
             <TextView
@@ -148,11 +136,10 @@
                 android:text="Bairro" />
 
             <EditText
-                android:id="@+id/editUserBairro"
+                android:id="@+id/editUserEditBairro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="textCapSentences" />
 
             <TextView
@@ -163,11 +150,10 @@
                 android:text="Rua" />
 
             <EditText
-                android:id="@+id/editUserRua"
+                android:id="@+id/editUserEditRua"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="textCapSentences" />
 
             <TextView
@@ -178,11 +164,10 @@
                 android:text="Número" />
 
             <EditText
-                android:id="@+id/editUserNumero"
+                android:id="@+id/editUserEditNumero"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="number" />
 
             <TextView
@@ -193,30 +178,22 @@
                 android:text="Complemento" />
 
             <EditText
-                android:id="@+id/editUserCompl"
+                android:id="@+id/editUserEditCompl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:enabled="false"
                 android:inputType="textCapSentences" />
 
         </LinearLayout>
     </ScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/editarPerfilUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:clickable="true"
-        app:fabSize="normal"
-        app:srcCompat="@android:drawable/ic_menu_edit"
-        android:elevation="@dimen/cardview_default_elevation"
-        android:layout_marginRight="23dp"
-        android:layout_marginEnd="23dp"
-        android:layout_marginBottom="21dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-    </RelativeLayout>
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnSalvarPerfilUsuario"
+            style="@style/BtnVermelho"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salvar" />
+    </LinearLayout>
+</LinearLayout>
