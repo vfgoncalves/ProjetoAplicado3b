@@ -7,6 +7,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
+
 public class Controller {
     //Atributos privados
     private DatabaseReference databaseReference;

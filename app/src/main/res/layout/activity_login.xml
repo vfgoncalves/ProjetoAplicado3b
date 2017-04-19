@@ -14,17 +14,23 @@
         android:layout_weight="1"
         android:background="@drawable/ic_logo"/>
 
-    <EditText android:layout_width="fill_parent"
+    <EditText
+        android:id="@+id/editLoginEmail"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="E-mail"
+        android:inputType="textEmailAddress"
         android:textColorHint="@color/branco"
-        android:id="@+id/editLoginEmail"/>
+        android:textColor="@color/branco"/>
 
-    <EditText android:layout_width="fill_parent"
+    <EditText
+        android:id="@+id/editLoginSenha"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="Senha"
+        android:inputType="textPassword"
         android:textColorHint="@color/branco"
-        android:id="@+id/editLoginSenha"/>
+        android:textColor="@color/branco"/>
 
     <Button
         android:id="@+id/btnLogin"

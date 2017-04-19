@@ -12,7 +12,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
+import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
 import projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter.TabAdapter;
 import projetoaplicado.vgoncalves.com.projetoaplicado.componente.tabs.SlidingTabLayout;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
@@ -26,6 +31,9 @@ public class MainEmpresaActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private FirebaseAuth autenticador;
     private Controller controller;
+    private String idUsuario;
+    private Empresa empresa;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +53,7 @@ public class MainEmpresaActivity extends AppCompatActivity {
 
         controller = new Controller(MainEmpresaActivity.this);
         autenticador = controller.getAutenticador();
+        databaseReference = controller.getDatabaseReference();
 
         //Configurar Toolbar
         toolbar.setTitle("UNAJob");
@@ -60,10 +69,21 @@ public class MainEmpresaActivity extends AppCompatActivity {
         slidingTabLayout.setViewPager(viewPager);
 
         //Armazenar id do usuário logado
-        /*final Helper helper = new Helper();
-        SharedPreferences sharedPreferences = getSharedPreferences(helper.NOME_ARQUIVO,0);
-        helper.sharedPreferences = sharedPreferences;
-        idUsuario = helper.getIdUsuario();*/
+        idUsuario = controller.getIdUsuario();
+
+        databaseReference.child(controller.NODE_EMPRESA).child(idUsuario).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                empresa = dataSnapshot.getValue(Empresa.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     @Override

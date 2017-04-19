@@ -181,8 +181,10 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.show();
                         abrirTelaPrincipal();
                         mostraMensagem("Login com a conta google efetuado com sucesso");
+                        progressDialog.hide();
                     } else {
                         mostraMensagem("Erro ao logar com a conta google");
+                        progressDialog.hide();
                     }
                 }
             });

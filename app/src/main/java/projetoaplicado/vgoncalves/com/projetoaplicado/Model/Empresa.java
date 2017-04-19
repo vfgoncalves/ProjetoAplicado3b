@@ -1,7 +1,10 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.Model;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ResourceBundle;
 
@@ -142,5 +145,6 @@ public class Empresa {
     public void salvar(){
         DatabaseReference databaseReference = controller.getDatabaseReference();
         databaseReference.child(controller.NODE_EMPRESA).child(getID()).setValue(this);
+        controller.salvarPrefIdUsuario(getID());
     }
 }

@@ -67,6 +67,7 @@ public class Usuario {
         Log.d("ProjetoAplicado", "Método Salvar");
         DatabaseReference databaseReference = controller.getDatabaseReference();
         databaseReference.child(controller.NODE_USUARIO).child(getID()).setValue(this);
+        controller.salvarPrefIdUsuario(getID());
     }
 
 
