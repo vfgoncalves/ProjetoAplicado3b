@@ -1,5 +1,7 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.Model;
 
+import android.content.Context;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +31,9 @@ public class Empresa {
 
     public Empresa() {
         controller = new Controller();
+    }
+    public Empresa(Context context) {
+        controller = new Controller(context);
     }
 
     public String getPhotoUrl() {

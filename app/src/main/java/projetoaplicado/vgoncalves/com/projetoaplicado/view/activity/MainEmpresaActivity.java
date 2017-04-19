@@ -70,20 +70,6 @@ public class MainEmpresaActivity extends AppCompatActivity {
 
         //Armazenar id do usuário logado
         idUsuario = controller.getIdUsuario();
-
-        databaseReference.child(controller.NODE_EMPRESA).child(idUsuario).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                empresa = dataSnapshot.getValue(Empresa.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
     }
 
     @Override

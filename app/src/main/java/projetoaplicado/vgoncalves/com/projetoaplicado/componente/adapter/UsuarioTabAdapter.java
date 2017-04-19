@@ -5,13 +5,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments.EmpresaPerfilFragment;
+import projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments.UsuarioPerfilFragment;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments.VagasEmpresaFragment;
+import projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments.VagasUsuarioFragment;
 
-public class TabAdapter extends FragmentStatePagerAdapter {
+public class UsuarioTabAdapter extends FragmentStatePagerAdapter {
 
-    private String[] titulosAbas = {"PERFIL EMPRESA","VAGAS CADASTRADAS"};
+    private String[] titulosAbas = {"PERFIL CANDIDATO","VAGAS DISPONÍVEIS"};
 
-    public TabAdapter(FragmentManager fm) {
+    public UsuarioTabAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -21,10 +23,10 @@ public class TabAdapter extends FragmentStatePagerAdapter {
 
         switch (i){
             case 0:
-                fragment = new EmpresaPerfilFragment();
+                fragment = new UsuarioPerfilFragment();
                 break;
             case 1:
-                fragment = new VagasEmpresaFragment();
+                fragment = new VagasUsuarioFragment();
                 break;
         }
 

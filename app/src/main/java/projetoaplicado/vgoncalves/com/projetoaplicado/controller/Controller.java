@@ -42,9 +42,13 @@ public class Controller {
         return autenticador;
     }
     public void salvarPrefIdUsuario(String idUsuario){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(CHAVE_IDENTIFICADOR, idUsuario);
-        editor.commit();
+        try{
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(CHAVE_IDENTIFICADOR, idUsuario);
+            editor.commit();
+        } catch (Exception e){
+            throw e;
+        }
     }
     public String getIdUsuario(){
         return sharedPreferences.getString(CHAVE_IDENTIFICADOR, "");
@@ -52,5 +56,6 @@ public class Controller {
     public void limpaIdUsuario(){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
+        editor.commit();
     }
 }

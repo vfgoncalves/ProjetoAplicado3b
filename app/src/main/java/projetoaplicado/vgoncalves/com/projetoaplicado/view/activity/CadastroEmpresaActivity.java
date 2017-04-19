@@ -74,7 +74,7 @@ public class CadastroEmpresaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validarCampos()){
-                    empresa = new Empresa();
+                    empresa = new Empresa(CadastroEmpresaActivity.this);
                     empresa.setEmail(email.getText().toString());
                     empresa.setNome(nome.getText().toString());
                     empresa.setSenha(senha.getText().toString());
@@ -118,6 +118,7 @@ public class CadastroEmpresaActivity extends AppCompatActivity {
                     progressDialog.hide();
                 }else{
                     try{
+                        progressDialog.hide();
                         throw task.getException();
                     }catch (FirebaseAuthWeakPasswordException e){
                         mostraMensagem("Digite uma senha mais forte e longa!");
