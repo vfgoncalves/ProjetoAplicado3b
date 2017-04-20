@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nome da Empresa"
-        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorHint="@android:color/black"
         android:inputType="textPersonName" />
 
     <EditText
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="E-mail do Contato"
-        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorHint="@android:color/black"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Telefone do Contato"
-        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorHint="@android:color/black"
         android:inputType="phone" />
 
     <EditText
@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Senha"
-        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorHint="@android:color/black"
         android:inputType="textPassword" />
 
     <Button

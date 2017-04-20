@@ -95,6 +95,14 @@ public class EditarPerfilActivity extends AppCompatActivity {
         editEmpNome= (EditText) findViewById(R.id.editEmpNome);
         btnSalvar = (Button) findViewById(R.id.btnSalvarPerfil);
 
+        //Mascaras
+        //MaskEditTextChangedListener maskTel = new MaskEditTextChangedListener("(##)#####-####",editEmpTel);
+        //MaskEditTextChangedListener maskCEP = new MaskEditTextChangedListener("#####-###",editEmpCEP);
+
+        //Aplica mascaras aos devidos controles
+        //editEmpTel.addTextChangedListener(maskTel);
+        //editEmpCEP.addTextChangedListener(maskCEP);
+
         databaseReference.child(controller.NODE_EMPRESA).child(idEmpresa).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -129,6 +137,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
                 empresa.setEmail(editEmpEmail.getText().toString());
                 empresa.setNome(editEmpNome.getText().toString());
                 progressDialogSalvar.show();
+                empresa.setController(controller);
                 empresa.salvar();
                 progressDialogSalvar.hide();
 
@@ -142,7 +151,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE){
                     try{
-                        String url = URL_API_CEP + editEmpCEP.getText().toString() + "/json/";
+                        String url = URL_API_CEP + editEmpCEP.getText().toString().replace("-","") + "/json/";
                         progressDialogCep.show();
                         //CONSUMIR API PARA CONSULTAR CEP
                         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());

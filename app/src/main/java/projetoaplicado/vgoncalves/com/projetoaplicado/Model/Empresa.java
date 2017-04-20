@@ -1,6 +1,7 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.Model;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -144,12 +145,20 @@ public class Empresa {
         Complemento = complemento;
     }
 
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
     public void setID(String ID) {
         this.ID = ID;
     }
     public void salvar(){
-        DatabaseReference databaseReference = controller.getDatabaseReference();
-        databaseReference.child(controller.NODE_EMPRESA).child(getID()).setValue(this);
-        controller.salvarPrefIdUsuario(getID());
+        try{
+            DatabaseReference databaseReference = controller.getDatabaseReference();
+            databaseReference.child(controller.NODE_EMPRESA).child(getID()).setValue(this);
+            controller.salvarPrefIdUsuario(getID());
+        }catch (Exception e){
+            Log.d("ProjetoAplicado", e.getMessage());
+        }
     }
 }

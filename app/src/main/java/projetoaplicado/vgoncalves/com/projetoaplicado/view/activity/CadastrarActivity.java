@@ -72,7 +72,7 @@ public class CadastrarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validarCampos()){
-                    usuario = new Usuario();
+                    usuario = new Usuario(getApplicationContext());
                     //Receber campos da activity
                     usuario.setEmail(email.getText().toString());
                     usuario.setNome(nome.getText().toString());

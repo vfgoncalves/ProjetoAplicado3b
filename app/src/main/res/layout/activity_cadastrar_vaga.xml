@@ -15,6 +15,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:forceHasOverlappingRendering="false"
             android:orientation="vertical">
 
             <EditText
@@ -44,9 +47,7 @@
             <Spinner
                 android:id="@+id/spn_ramo"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                >
-            </Spinner>
+                android:layout_height="wrap_content"></Spinner>
 
             <EditText
                 android:id="@+id/editVagaDescricao"
@@ -56,7 +57,7 @@
                 android:ems="10"
                 android:hint="Descrição da vaga"
                 android:inputType="textMultiLine"
-                android:lines="13"/>
+                android:lines="13" />
 
         </LinearLayout>
     </ScrollView>

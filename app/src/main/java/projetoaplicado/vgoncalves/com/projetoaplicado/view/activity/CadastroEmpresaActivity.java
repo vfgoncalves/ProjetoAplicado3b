@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -60,6 +62,13 @@ public class CadastroEmpresaActivity extends AppCompatActivity {
         senha = (EditText) findViewById(R.id.editCadSenha);
         btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
         imgSignGoogleEmp = (ImageButton) findViewById(R.id.imgSignGoogleEmp);
+
+        //Mascaras
+        SimpleMaskFormatter maskTel = new SimpleMaskFormatter("(NN)NNNN-NNNN");
+        MaskTextWatcher watcherTel = new MaskTextWatcher(telefone, maskTel);
+
+        //Aplica mascaras aos devidos controles
+        telefone.addTextChangedListener(watcherTel);
 
         //Configurando progressDialog
         progressDialog = new ProgressDialog(CadastroEmpresaActivity.this);

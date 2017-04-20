@@ -117,7 +117,7 @@ public class Usuario {
     public void setComplemento(String complemento) {
         Complemento = complemento;
     }
-
+    @Exclude
     public Controller getController() {
         return controller;
     }
@@ -167,10 +167,13 @@ public class Usuario {
     }
 
     public void salvar(){
-        Log.d("ProjetoAplicado", "Método Salvar");
-        DatabaseReference databaseReference = controller.getDatabaseReference();
-        databaseReference.child(controller.NODE_USUARIO).child(getID()).setValue(this);
-        controller.salvarPrefIdUsuario(getID());
+        try{
+            DatabaseReference databaseReference = controller.getDatabaseReference();
+            databaseReference.child(controller.NODE_USUARIO).child(getID()).setValue(this);
+            controller.salvarPrefIdUsuario(getID());
+        }catch (Exception e){
+            Log.d("ProjetoAplicado", e.getMessage());
+        }
     }
 
 

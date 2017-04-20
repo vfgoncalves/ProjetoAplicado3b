@@ -7,7 +7,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:forceHasOverlappingRendering="false">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -23,8 +26,8 @@
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#372c24"
-                    android:text="Nome da Empresa" />
+                    android:text="Nome da Empresa"
+                    android:textColor="#372c24" />
 
                 <EditText
                     android:id="@+id/editEmpNome"
@@ -38,8 +41,8 @@
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#372c24"
-                    android:text="E-mail do Contato" />
+                    android:text="E-mail do Contato"
+                    android:textColor="#372c24" />
 
                 <EditText
                     android:id="@+id/editEmpEmail"
@@ -53,8 +56,8 @@
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#372c24"
-                    android:text="Telefone do Contato" />
+                    android:text="Telefone do Contato"
+                    android:textColor="#372c24" />
 
                 <EditText
                     android:id="@+id/editEmpTel"
@@ -68,8 +71,8 @@
                     android:id="@+id/txtCep"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#372c24"
-                    android:text="CEP" />
+                    android:text="CEP"
+                    android:textColor="#372c24" />
 
                 <EditText
                     android:id="@+id/editEmpCEP"
@@ -83,8 +86,8 @@
                     android:id="@+id/txtPais"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#372c24"
-                    android:text="País" />
+                    android:text="País"
+                    android:textColor="#372c24" />
 
                 <EditText
                     android:id="@+id/editEmpPais"
@@ -98,9 +101,9 @@
                     android:id="@+id/txtEst"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#372c24"
                     android:enabled="false"
-                    android:text="Estado" />
+                    android:text="Estado"
+                    android:textColor="#372c24" />
 
                 <EditText
                     android:id="@+id/editEmpEst"
@@ -129,8 +132,8 @@
                     android:id="@+id/txtBairro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#372c24"
-                    android:text="Bairro" />
+                    android:text="Bairro"
+                    android:textColor="#372c24" />
 
                 <EditText
                     android:id="@+id/editEmpBairro"
@@ -144,8 +147,8 @@
                     android:id="@+id/txtRua"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#372c24"
-                    android:text="Rua" />
+                    android:text="Rua"
+                    android:textColor="#372c24" />
 
                 <EditText
                     android:id="@+id/editEmpRua"
@@ -159,8 +162,8 @@
                     android:id="@+id/txtNumero"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#372c24"
-                    android:text="Número" />
+                    android:text="Número"
+                    android:textColor="#372c24" />
 
                 <EditText
                     android:id="@+id/editEmpNumero"
@@ -174,8 +177,8 @@
                     android:id="@+id/txtCompl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#372c24"
-                    android:text="Complemento" />
+                    android:text="Complemento"
+                    android:textColor="#372c24" />
 
                 <EditText
                     android:id="@+id/editEmpCompl"
@@ -192,17 +195,17 @@
             android:id="@+id/editarPerfilEmpresa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="21dp"
+            android:layout_marginEnd="23dp"
+            android:layout_marginRight="23dp"
             android:backgroundTint="@color/colorPrimaryDark"
             android:clickable="true"
-            app:fabSize="normal"
-            app:srcCompat="@android:drawable/ic_menu_edit"
             android:elevation="@dimen/cardview_default_elevation"
-            android:layout_marginRight="23dp"
-            android:layout_marginEnd="23dp"
-            android:layout_marginBottom="21dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            app:fabSize="normal"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
 
     </RelativeLayout>
 

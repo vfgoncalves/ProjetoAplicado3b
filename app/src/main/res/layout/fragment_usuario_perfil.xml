@@ -7,216 +7,219 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <ScrollView
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:forceHasOverlappingRendering="false">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nome"
+                    android:textColor="#372c24" />
+
+                <EditText
+                    android:id="@+id/editUserNome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="textPersonName" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="E-mail"
+                    android:textColor="#372c24" />
+
+                <EditText
+                    android:id="@+id/editUserEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="textEmailAddress" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Telefone Celular"
+                    android:textColor="#372c24" />
+
+                <EditText
+                    android:id="@+id/editUserTelCel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="phone" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Telefone Residencial"
+                    android:textColor="#372c24" />
+
+                <EditText
+                    android:id="@+id/editUserTelRes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="phone" />
+
+                <TextView
+                    android:id="@+id/txtCep"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CEP"
+                    android:textColor="#372c24" />
+
+                <EditText
+                    android:id="@+id/editUserCEP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/txtPais"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="País"
+                    android:textColor="#372c24" />
+
+                <EditText
+                    android:id="@+id/editUserPais"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="textCapSentences" />
+
+                <TextView
+                    android:id="@+id/txtEst"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="Estado"
+                    android:textColor="#372c24" />
+
+                <EditText
+                    android:id="@+id/editUserEst"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="textCapSentences" />
+
+                <TextView
+                    android:id="@+id/txtCid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cidade"
+                    android:textColor="#372c24" />
+
+                <EditText
+                    android:id="@+id/editUserCid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="textCapSentences" />
+
+                <TextView
+                    android:id="@+id/txtBairro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bairro"
+                    android:textColor="#372c24" />
+
+                <EditText
+                    android:id="@+id/editUserBairro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="textCapSentences" />
+
+                <TextView
+                    android:id="@+id/txtRua"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rua"
+                    android:textColor="#372c24" />
+
+                <EditText
+                    android:id="@+id/editUserRua"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="textCapSentences" />
+
+                <TextView
+                    android:id="@+id/txtNumero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Número"
+                    android:textColor="#372c24" />
+
+                <EditText
+                    android:id="@+id/editUserNumero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/txtCompl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Complemento"
+                    android:textColor="#372c24" />
+
+                <EditText
+                    android:id="@+id/editUserCompl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="textCapSentences" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/editarPerfilUsuario"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Nome" />
-
-            <EditText
-                android:id="@+id/editUserNome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="textPersonName" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="E-mail" />
-
-            <EditText
-                android:id="@+id/editUserEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="textEmailAddress" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Telefone Celular" />
-
-            <EditText
-                android:id="@+id/editUserTelCel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="phone" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Telefone Residencial" />
-
-            <EditText
-                android:id="@+id/editUserTelRes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="phone" />
-
-            <TextView
-                android:id="@+id/txtCep"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="CEP" />
-
-            <EditText
-                android:id="@+id/editUserCEP"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="number" />
-
-            <TextView
-                android:id="@+id/txtPais"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="País" />
-
-            <EditText
-                android:id="@+id/editUserPais"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="textCapSentences" />
-
-            <TextView
-                android:id="@+id/txtEst"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:enabled="false"
-                android:text="Estado" />
-
-            <EditText
-                android:id="@+id/editUserEst"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="textCapSentences" />
-
-            <TextView
-                android:id="@+id/txtCid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cidade"
-                android:textColor="#372c24" />
-
-            <EditText
-                android:id="@+id/editUserCid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="textCapSentences" />
-
-            <TextView
-                android:id="@+id/txtBairro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Bairro" />
-
-            <EditText
-                android:id="@+id/editUserBairro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="textCapSentences" />
-
-            <TextView
-                android:id="@+id/txtRua"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Rua" />
-
-            <EditText
-                android:id="@+id/editUserRua"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="textCapSentences" />
-
-            <TextView
-                android:id="@+id/txtNumero"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Número" />
-
-            <EditText
-                android:id="@+id/editUserNumero"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="number" />
-
-            <TextView
-                android:id="@+id/txtCompl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Complemento" />
-
-            <EditText
-                android:id="@+id/editUserCompl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:enabled="false"
-                android:inputType="textCapSentences" />
-
-        </LinearLayout>
-    </ScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/editarPerfilUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:clickable="true"
-        app:fabSize="normal"
-        app:srcCompat="@android:drawable/ic_menu_edit"
-        android:elevation="@dimen/cardview_default_elevation"
-        android:layout_marginRight="23dp"
-        android:layout_marginEnd="23dp"
-        android:layout_marginBottom="21dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="21dp"
+            android:layout_marginEnd="23dp"
+            android:layout_marginRight="23dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:clickable="true"
+            android:elevation="@dimen/cardview_default_elevation"
+            app:fabSize="normal"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
     </RelativeLayout>
 </FrameLayout>

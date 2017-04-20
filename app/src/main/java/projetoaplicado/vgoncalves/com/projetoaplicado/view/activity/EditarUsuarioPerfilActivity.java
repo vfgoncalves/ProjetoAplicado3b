@@ -17,6 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,12 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
-import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Usuario;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
-
-import static projetoaplicado.vgoncalves.com.projetoaplicado.R.id.editEmpCEP;
 
 public class EditarUsuarioPerfilActivity extends AppCompatActivity {
 
@@ -87,6 +86,22 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
         editComplemento = (EditText) findViewById(R.id.editUserEditCompl);
         btnSalvar = (Button) findViewById(R.id.btnSalvarPerfilUsuario);
 
+        //Mascaras
+        SimpleMaskFormatter maskTel = new SimpleMaskFormatter("(NN)NNNNN-NNNN");
+        SimpleMaskFormatter maskTelRes = new SimpleMaskFormatter("(NN)NNNN-NNNN");
+        SimpleMaskFormatter maskCep = new SimpleMaskFormatter("NNNNN-NNN");
+
+        //Watcher para edição do texto do controle
+        MaskTextWatcher watcherTel = new MaskTextWatcher(editrelefoneCel, maskTel);
+        MaskTextWatcher watcherTelRes = new MaskTextWatcher(editTelefoneResidencial, maskTelRes);
+        MaskTextWatcher watcherCEP = new MaskTextWatcher(editCEP, maskCep);
+
+        //Aplica mascaras aos devidos controles
+        editrelefoneCel.addTextChangedListener(watcherTel);
+        editTelefoneResidencial.addTextChangedListener(watcherTelRes);
+        editCEP.addTextChangedListener(watcherCEP);
+
+
         //Configurar Progress Dialog
         progressDialog = new ProgressDialog(EditarUsuarioPerfilActivity.this);
         progressDialog.setTitle("Carregando");
@@ -126,7 +141,7 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE){
                     try{
-                        String url = URL_API_CEP + editCEP.getText().toString() + "/json/";
+                        String url = URL_API_CEP + editCEP.getText().toString().replace("-","") + "/json/";
                         progressDialogCep.show();
                         //CONSUMIR API PARA CONSULTAR CEP
                         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
@@ -170,6 +185,7 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
                 usuario.setNumero(editNumero.getText().toString());
                 usuario.setComplemento(editComplemento.getText().toString());
                 //Salvar dados do usuario
+                usuario.setController(controller);
                 usuario.salvar();
                 progressDialogSalvar.hide();
 
