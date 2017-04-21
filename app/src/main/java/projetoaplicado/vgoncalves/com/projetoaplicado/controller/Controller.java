@@ -3,9 +3,23 @@ package projetoaplicado.vgoncalves.com.projetoaplicado.controller;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.RequestFuture;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.json.JSONObject;
+
+import java.util.Queue;
+import java.util.concurrent.ExecutionException;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
 
@@ -23,6 +37,10 @@ public class Controller {
     public static final String NODE_USUARIO = "USUARIO";
     public static final String NODE_EMPRESA = "EMPRESA";
     public static final String NODE_VAGA = "VAGAS";
+    public static final String CODIGO_BRASIL = "3469034";//código do brasil para busca na api GeoNames
+
+    //URL API GEONAMES
+    public static final String URL_API_GEONAMES = "http://www.geonames.org/childrenJSON?geonameId=";
 
     public Controller(Context context) {
         contexto = context;
@@ -58,4 +76,11 @@ public class Controller {
         editor.clear();
         editor.commit();
     }
+    public String montarUrlBuscaEstados(){
+        return URL_API_GEONAMES + CODIGO_BRASIL;
+    }
+    public String montarUrlBuscaCidades(String codEst){
+        return URL_API_GEONAMES + codEst;
+    }
+
 }

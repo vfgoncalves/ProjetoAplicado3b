@@ -18,6 +18,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -96,12 +98,16 @@ public class EditarPerfilActivity extends AppCompatActivity {
         btnSalvar = (Button) findViewById(R.id.btnSalvarPerfil);
 
         //Mascaras
-        //MaskEditTextChangedListener maskTel = new MaskEditTextChangedListener("(##)#####-####",editEmpTel);
-        //MaskEditTextChangedListener maskCEP = new MaskEditTextChangedListener("#####-###",editEmpCEP);
+        SimpleMaskFormatter maskTel = new SimpleMaskFormatter("(NN)NNNN-NNNN");
+        SimpleMaskFormatter maskCep = new SimpleMaskFormatter("NNNNN-NNN");
+
+        //Watcher para edição do texto do controle
+        MaskTextWatcher watcherTel = new MaskTextWatcher(editEmpTel, maskTel);
+        MaskTextWatcher watcherCEP = new MaskTextWatcher(editEmpCEP, maskCep);
 
         //Aplica mascaras aos devidos controles
-        //editEmpTel.addTextChangedListener(maskTel);
-        //editEmpCEP.addTextChangedListener(maskCEP);
+        editEmpTel.addTextChangedListener(watcherTel);
+        editEmpCEP.addTextChangedListener(watcherCEP);
 
         databaseReference.child(controller.NODE_EMPRESA).child(idEmpresa).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -151,8 +157,8 @@ public class EditarPerfilActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE){
                     try{
-                        String url = URL_API_CEP + editEmpCEP.getText().toString().replace("-","") + "/json/";
                         progressDialogCep.show();
+                        String url = URL_API_CEP + editEmpCEP.getText().toString().replace("-","") + "/json/";
                         //CONSUMIR API PARA CONSULTAR CEP
                         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

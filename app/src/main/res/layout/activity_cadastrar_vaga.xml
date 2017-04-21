@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dip"
-    android:focusable="true">
+    android:padding="10dip">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="468dp"
-        android:layout_weight="0.56">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:forceHasOverlappingRendering="false"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:forceHasOverlappingRendering="true"
             android:orientation="vertical">
 
             <EditText
@@ -29,14 +28,6 @@
                 android:inputType="textCapSentences" />
 
             <EditText
-                android:id="@+id/editVagaCidade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Cidade"
-                android:inputType="textCapSentences" />
-
-            <EditText
                 android:id="@+id/editVagaEmailContato"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,9 +36,22 @@
                 android:inputType="textEmailAddress" />
 
             <Spinner
-                android:id="@+id/spn_ramo"
+                android:id="@+id/spnCargo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingBottom="3dp"></Spinner>
+
+            <Spinner
+                android:id="@+id/spnEstado"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"></Spinner>
+                android:layout_height="40dp"
+                android:paddingBottom="3dp"></Spinner>
+
+            <Spinner
+                android:id="@+id/spnCidade"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:paddingBottom="3dp"></Spinner>
 
             <EditText
                 android:id="@+id/editVagaDescricao"
@@ -61,7 +65,25 @@
 
         </LinearLayout>
     </ScrollView>
-    <LinearLayout
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatCadastrarVaga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="21dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginRight="23dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:clickable="true"
+        android:elevation="@dimen/cardview_default_elevation"
+        app:backgroundTint="@color/cardview_dark_background"
+        app:fabSize="normal"
+        app:srcCompat="?android:attr/textCheckMark" />
+
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
@@ -70,6 +92,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cadastrar Vaga" />
-    </LinearLayout>
+    </LinearLayout>-->
 
-</LinearLayout>
+</RelativeLayout>

@@ -8,9 +8,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:forceHasOverlappingRendering="false">
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:forceHasOverlappingRendering="true">
 
         <ScrollView
             android:layout_width="match_parent"

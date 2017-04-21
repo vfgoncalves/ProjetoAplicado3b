@@ -4,4 +4,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_editar_perfil_usuario">EditarPerfilUsuarioActivity</string>
+
+    <string-array name="cargos">
+        <item>Selecione um cargo</item>
+        <item>Estágio</item>
+        <item>Desenvolvedor</item>
+        <item>Analista</item>
+        <item>Arquiteto</item>
+        <item>DBA</item>
+        <item>Gestão</item>
+    </string-array>
+
 </resources>
