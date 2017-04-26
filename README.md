@@ -12,3 +12,11 @@ Dados do projeto:
 <br />
 -Autenticação: Email e Senha / Google(Firebase) / Linkedin(API)
 <br />
+<br />
+-Integrações: <br />
+    Serviço de autenticação Firebase <br />
+    Serviço de RealTimeDataBase Firebase <br />
+    API de autenticação Linkedin <br />
+    API viacep para busca de endereços pelo CEP <br />
+    API GeoNames para busca de cidades e estados <br />
+<br />
