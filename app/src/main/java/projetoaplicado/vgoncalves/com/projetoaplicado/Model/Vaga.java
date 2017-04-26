@@ -14,6 +14,10 @@ public class Vaga {
     private String emailContato;
     private String descricao;
     private String idEmpresa;
+    private String estado;
+    private String cargo;
+    private String idVaga;
+
     private Controller controller;
 
     public Vaga() {
@@ -60,8 +64,36 @@ public class Vaga {
         this.idEmpresa = idEmpresa;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public String getIdVaga() {
+        return idVaga;
+    }
+
+    public void setIdVaga(String idVaga) {
+        this.idVaga = idVaga;
+    }
+
     public void salvar(){
-        DatabaseReference databaseReference = controller.getDatabaseReference();
-        databaseReference.child(controller.NODE_VAGA).push().setValue(this);
+        try {
+            DatabaseReference databaseReference = controller.getDatabaseReference();
+            databaseReference.child(controller.NODE_VAGA).child(getEstado()).child(getCidade()).child(getCargo()).child(getIdVaga()).setValue(this);
+        }catch (Exception e){
+            e.getMessage();
+        }
     }
 }

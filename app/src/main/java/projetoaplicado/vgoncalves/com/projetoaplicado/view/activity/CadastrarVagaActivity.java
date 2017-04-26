@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -42,7 +43,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
     private Controller controller;
     private Spinner spnCargos;
     private Spinner spnEstados;
-    private Spinner spnCidades;
+    private AutoCompleteTextView txtCidades;
 
     private ArrayList<String> codigoEstado;
     private ArrayList<String> nomeEstado;
@@ -50,8 +51,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
     private ArrayList<String> codigoCidade;
     private ArrayList<String> nomeCidade;
 
-    ProgressDialog progressDialogEstados;
-    ProgressDialog progressDialogCidades;
+    private ProgressDialog progressDialogCidades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,14 +68,9 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         floatCadastrarVaga = (FloatingActionButton) findViewById(R.id.floatCadastrarVaga);
         spnCargos = (Spinner) findViewById(R.id.spnCargo);
         spnEstados = (Spinner) findViewById(R.id.spnEstado);
-        spnCidades = (Spinner) findViewById(R.id.spnCidade);
+        txtCidades = (AutoCompleteTextView) findViewById(R.id.textCidade);
 
         //Configurar ProgressDialogs
-        progressDialogEstados = new ProgressDialog(CadastrarVagaActivity.this);
-        progressDialogEstados.setTitle("Buscando estados");
-        progressDialogEstados.setMessage("Carregando estados brasileiros...");
-        progressDialogEstados.setCancelable(false);
-
         progressDialogCidades = new ProgressDialog(CadastrarVagaActivity.this);
         progressDialogCidades.setTitle("Buscando cidades");
         progressDialogCidades.setMessage("Carregando cidades...");
@@ -90,7 +85,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         preencherEstados();
 
         //Desabilitar spinner de cidades até a seleção de um estado
-        spnCidades.setEnabled(false);
+        txtCidades.setEnabled(false);
 
         floatCadastrarVaga.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +99,10 @@ public class CadastrarVagaActivity extends AppCompatActivity {
                         vaga.setEmailContato(editVagaEmailContato.getText().toString());
                         vaga.setDescricao(editVagaDescricao.getText().toString());
                         vaga.setIdEmpresa(idUsuario);
+                        vaga.setCidade(txtCidades.getText().toString());
+                        vaga.setEstado(nomeEstado.get(spnEstados.getSelectedItemPosition()).toString());
+                        vaga.setCargo(spnCargos.getSelectedItem().toString());
+                        vaga.setIdVaga(controller.getUUID());
                         vaga.salvar();
                         mostraMensagem("Vaga cadastrada com sucesso");
                         finish();
@@ -119,10 +118,12 @@ public class CadastrarVagaActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0 ){
-                    spnCidades.setEnabled(false);
+                    txtCidades.setText("");
+                    txtCidades.setEnabled(false);
                 }else{
                     //preencher spinner de cidades
                     preencherCidade(position);
+                    txtCidades.setText("");
                 }
             }
 
@@ -151,7 +152,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
             mostraMensagem("Favor selecionar o estado em que a vaga está disponível");
             return false;
         }
-        if (spnCidades.getSelectedItemPosition() == 0){
+        if (TextUtils.isEmpty(txtCidades.getText())){
             mostraMensagem("Favor selecionar a cidade em que a vaga está disponível");
             return false;
         }
@@ -167,55 +168,99 @@ public class CadastrarVagaActivity extends AppCompatActivity {
     }
     private void preencherEstados(){
         try {
-            progressDialogEstados.show();
-            String url = controller.montarUrlBuscaEstados();
-
-            //CONSUMIR API PARA CONSULTAR CEP
-            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    montaSpinnerEstado(response);
-                    progressDialogEstados.hide();
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    progressDialogEstados.hide();
-                    mostraMensagem("Não foi possível recuperar os estados!");
-                }
-            });
-            queue.add(stringRequest);
-
-        }catch (Exception e){
-            mostraMensagem("Não foi possível recuperar os estados!");
-        }
-    }
-    private void montaSpinnerEstado(String estados){
-        try{
-            JSONObject jsonObject = new JSONObject(estados);
-            JSONArray jsonEstados = jsonObject.getJSONArray("geonames");
-            JSONObject estado;
-
             codigoEstado = new ArrayList<>();
             nomeEstado = new ArrayList<>();
 
             //Adicionar primeira linha
             codigoEstado.add("0");
             nomeEstado.add("Selecione um estado");
+            //Acre	AC
+            codigoEstado.add("AC");
+            nomeEstado.add("Acre");
+            //Alagoas	AL
+            codigoEstado.add("AL");
+            nomeEstado.add("Alagoas");
+            //Amapá	AP
+            codigoEstado.add("AP");
+            nomeEstado.add("Amapá");
+            //Amazonas	AM
+            codigoEstado.add("AM");
+            nomeEstado.add("Amazonas");
+            //Bahia	BA
+            codigoEstado.add("BA");
+            nomeEstado.add("Bahia");
+            //Ceará	CE
+            codigoEstado.add("CE");
+            nomeEstado.add("Ceará");
+            //Distrito Federal	DF
+            codigoEstado.add("DF");
+            nomeEstado.add("Distrito Federal");
+            //Espírito Santo	ES
+            codigoEstado.add("ES");
+            nomeEstado.add("Espírito Santo");
+            //Goiás	GO
+            codigoEstado.add("GO");
+            nomeEstado.add("Goiás");
+            //Maranhão	MA
+            codigoEstado.add("MA");
+            nomeEstado.add("Maranhão");
+            //Mato Grosso	MT
+            codigoEstado.add("MT");
+            nomeEstado.add("Mato Grosso");
+            //Mato Grosso do Sul	MS
+            codigoEstado.add("MS");
+            nomeEstado.add("Mato Grosso do Sul");
+            //Minas Gerais	MG
+            codigoEstado.add("MG");
+            nomeEstado.add("Minas Gerais");
+            //Pará	PA
+            codigoEstado.add("PA");
+            nomeEstado.add("Pará");
+            //Paraíba	PB
+            codigoEstado.add("PB");
+            nomeEstado.add("Paraíba");
+            //Paraná	PR
+            codigoEstado.add("PR");
+            nomeEstado.add("Paraná");
+            //Pernambuco	PE
+            codigoEstado.add("PE");
+            nomeEstado.add("Pernambuco");
+            //Piauí	PI
+            codigoEstado.add("PI");
+            nomeEstado.add("Piauí");
+            //Rio de Janeiro	RJ
+            codigoEstado.add("RJ");
+            nomeEstado.add("Rio de Janeiro");
+            //Rio Grande do Norte	RN
+            codigoEstado.add("RN");
+            nomeEstado.add("Rio Grande do Norte");
+            //Rio Grande do Sul	RS
+            codigoEstado.add("RS");
+            nomeEstado.add("Rio Grande do Sul");
+            //Rondônia	RO
+            codigoEstado.add("RO");
+            nomeEstado.add("Rondônia");
+            //Roraima	RR
+            codigoEstado.add("RR");
+            nomeEstado.add("Raraima");
+            //Santa Catarina	SC
+            codigoEstado.add("SC");
+            nomeEstado.add("Santa Catarina");
+            //São Paulo	SP
+            codigoEstado.add("SP");
+            nomeEstado.add("São Paulo");
+            //Sergipe	SE
+            codigoEstado.add("SE");
+            nomeEstado.add("Sergipe");
+            //Tocantins	TO
+            codigoEstado.add("TO");
+            nomeEstado.add("Tocantins");
 
-            //Estrutura de repetição para preencher dois arrays list, o primeiro contem o código do estado fornecido pela API
-            //O segundo contem o nome do estado, utilizando estes dois arrays, será possível buscar as cidades do estado
-            for (int i = 0; i < jsonEstados.length(); i++){
-                estado = new JSONObject(jsonEstados.getString(i));
-                codigoEstado.add(estado.getString("geonameId"));
-                nomeEstado.add(estado.getString("toponymName"));
-            }
             ArrayAdapter adapterEstados = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, nomeEstado);
             spnEstados.setAdapter(adapterEstados);
 
         }catch (Exception e){
-            e.getMessage();
+            mostraMensagem("Não foi possível recuperar os estados!");
         }
     }
     private void  preencherCidade(int posicao){
@@ -247,28 +292,24 @@ public class CadastrarVagaActivity extends AppCompatActivity {
     }
     private void montaSpinnerCidade(String cidades){
         try{
-            JSONObject jsonObject = new JSONObject(cidades);
-            JSONArray jsonCidades = jsonObject.getJSONArray("geonames");
-            JSONObject cidade;
-
+            String[] arrayCidades = cidades.split(",");
             codigoCidade = new ArrayList<>();
             nomeCidade = new ArrayList<>();
-
             //Adicionar primeira linha
             codigoCidade.add("0");
             nomeCidade.add("Selecione uma cidade");
 
             //Estrutura de repetição para preencher dois arrays list, o primeiro contem o código da cidade fornecido pela API
             //O segundo contem o nome da cidade
-            for (int i = 0; i < jsonCidades.length(); i++){
-                cidade = new JSONObject(jsonCidades.getString(i));
-                codigoCidade.add(cidade.getString("geonameId"));
-                nomeCidade.add(cidade.getString("toponymName"));
+            for (int i = 0; i < arrayCidades.length; i++){
+                String[]cidade = arrayCidades[i].split(":");
+                codigoCidade.add(cidade[0].replaceAll("\"", ""));
+                nomeCidade.add(cidade[1].replaceAll("\"", ""));
             }
             ArrayAdapter adapterCidades = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, nomeCidade);
-            spnCidades.setAdapter(adapterCidades);
+            txtCidades.setAdapter(adapterCidades);
 
-            spnCidades.setEnabled(true);
+            txtCidades.setEnabled(true);
         }catch (Exception e){
             e.getMessage();
         }

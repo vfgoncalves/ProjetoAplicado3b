@@ -63,14 +63,29 @@ public class VagasEmpresaFragment extends Fragment {
         databaseReference.child(controller.NODE_VAGA).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        tituloVaga.clear();
-                        for(DataSnapshot dados: dataSnapshot.getChildren()){
-                            Vaga vaga = dados.getValue(Vaga.class);
-                            if (idUsuarioLogado.toString().equals(vaga.getIdEmpresa().toString())){
-                                tituloVaga.add(vaga.getTitulo());
+                        try{
+                            tituloVaga.clear();
+                            //loop por estados
+                            for(DataSnapshot estados: dataSnapshot.getChildren()){
+                                //loop por cidades
+                                for(DataSnapshot cidades: estados.getChildren()){
+                                    //loop por cargos
+                                    for(DataSnapshot cargos: cidades.getChildren()){
+                                        //loop por vagas
+                                        for(DataSnapshot vagas: cargos.getChildren()){
+                                            Vaga vaga = vagas.getValue(Vaga.class);
+                                            if (idUsuarioLogado.toString().equals(vaga.getIdEmpresa().toString())){
+                                                tituloVaga.add(vaga.getTitulo());
+                                            }
+                                        }
+                                    }
+                                }
+
                             }
+                            adapter.notifyDataSetChanged();
+                        }catch (Exception e){
+                            e.getMessage();
                         }
-                        adapter.notifyDataSetChanged();
                     }
 
                     @Override

@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.json.JSONObject;
 
 import java.util.Queue;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
@@ -40,7 +41,7 @@ public class Controller {
     public static final String CODIGO_BRASIL = "3469034";//código do brasil para busca na api GeoNames
 
     //URL API GEONAMES
-    public static final String URL_API_GEONAMES = "http://www.geonames.org/childrenJSON?geonameId=";
+    public static final String URL_API_GEONAMES = "http://educacao.dadosabertosbr.com/api/cidades/";
 
     public Controller(Context context) {
         contexto = context;
@@ -76,11 +77,12 @@ public class Controller {
         editor.clear();
         editor.commit();
     }
-    public String montarUrlBuscaEstados(){
-        return URL_API_GEONAMES + CODIGO_BRASIL;
-    }
     public String montarUrlBuscaCidades(String codEst){
         return URL_API_GEONAMES + codEst;
     }
 
+    public String getUUID(){
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
 }
