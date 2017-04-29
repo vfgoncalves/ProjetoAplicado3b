@@ -50,7 +50,15 @@
             <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textCidade"/>
+                android:id="@+id/textCidade"
+                android:hint="Selecionar cidades"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Selecionar habilidades"
+                android:id="@+id/editSelecHab"
+                />
 
             <EditText
                 android:id="@+id/editVagaDescricao"

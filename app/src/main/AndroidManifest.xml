@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--android:label="Projeto Aplicado - UNAJob"-->
+    <!-- android:label="Projeto Aplicado - UNAJob" -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,7 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.EditarUsuarioPerfilActivity"></activity>
+        <activity android:name=".view.activity.EditarUsuarioPerfilActivity" />
+        <activity android:name=".view.activity.ConfiguracoesActivity"></activity>
     </application>
 
 </manifest>

@@ -98,6 +98,9 @@ public class MainEmpresaActivity extends AppCompatActivity {
             case R.id.item_sair:
                 deslogarUsuario();
                 return true;
+            case R.id.item_Configuracoes:
+                direcionarConfiguracoes();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -114,5 +117,10 @@ public class MainEmpresaActivity extends AppCompatActivity {
         finish();
 
         progressDialog.hide();
+    }
+    private void direcionarConfiguracoes(){
+
+        Intent intent = new Intent(MainEmpresaActivity.this, ConfiguracoesActivity.class);
+        startActivity(intent);
     }
 }

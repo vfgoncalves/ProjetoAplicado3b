@@ -38,7 +38,7 @@ public class Controller {
     public static final String NODE_USUARIO = "USUARIO";
     public static final String NODE_EMPRESA = "EMPRESA";
     public static final String NODE_VAGA = "VAGAS";
-    public static final String CODIGO_BRASIL = "3469034";//código do brasil para busca na api GeoNames
+    public static final String NODE_HABILIDADES = "HABILIDADES";
 
     //URL API GEONAMES
     public static final String URL_API_GEONAMES = "http://educacao.dadosabertosbr.com/api/cidades/";
@@ -48,7 +48,6 @@ public class Controller {
         sharedPreferences = context.getSharedPreferences(NOME_ARQUIVO, 0);
     }
     public Controller(){
-
     }
     public DatabaseReference getDatabaseReference(){
         if (databaseReference == null)
@@ -85,4 +84,5 @@ public class Controller {
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }
+
 }

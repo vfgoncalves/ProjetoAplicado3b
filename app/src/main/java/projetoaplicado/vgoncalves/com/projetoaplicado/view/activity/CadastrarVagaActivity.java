@@ -1,8 +1,10 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,6 +23,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,6 +34,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
+import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Habilidades;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Vaga;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
@@ -44,14 +52,21 @@ public class CadastrarVagaActivity extends AppCompatActivity {
     private Spinner spnCargos;
     private Spinner spnEstados;
     private AutoCompleteTextView txtCidades;
+    private EditText editSelecHab;
 
     private ArrayList<String> codigoEstado;
     private ArrayList<String> nomeEstado;
 
     private ArrayList<String> codigoCidade;
     private ArrayList<String> nomeCidade;
+    private ArrayList<String> habilidadesArray;
+    private ArrayList selectedItemsModal;
 
     private ProgressDialog progressDialogCidades;
+
+    private DatabaseReference databaseReference;
+
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +75,8 @@ public class CadastrarVagaActivity extends AppCompatActivity {
 
         controller = new Controller(CadastrarVagaActivity.this);
         idUsuario = controller.getIdUsuario();
-
+        databaseReference = controller.getDatabaseReference();
+        selectedItemsModal = new ArrayList();
         //Inicializar controles
         editVagaTitulo = (EditText) findViewById(R.id.editVagaTitulo);
         editVagaEmailContato = (EditText) findViewById(R.id.editVagaEmailContato);
@@ -69,6 +85,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         spnCargos = (Spinner) findViewById(R.id.spnCargo);
         spnEstados = (Spinner) findViewById(R.id.spnEstado);
         txtCidades = (AutoCompleteTextView) findViewById(R.id.textCidade);
+        editSelecHab = (EditText) findViewById(R.id.editSelecHab);
 
         //Configurar ProgressDialogs
         progressDialogCidades = new ProgressDialog(CadastrarVagaActivity.this);
@@ -87,6 +104,21 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         //Desabilitar spinner de cidades até a seleção de um estado
         txtCidades.setEnabled(false);
 
+        //buscar dados do usuário logado
+        databaseReference.child(controller.NODE_EMPRESA).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Empresa empresa = dataSnapshot.getValue(Empresa.class);
+                if(empresa != null)
+                    editVagaEmailContato.setText(empresa.getEmail());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         floatCadastrarVaga.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +134,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
                         vaga.setCidade(txtCidades.getText().toString());
                         vaga.setEstado(nomeEstado.get(spnEstados.getSelectedItemPosition()).toString());
                         vaga.setCargo(spnCargos.getSelectedItem().toString());
+                        vaga.setHabilidades(editSelecHab.getText().toString());
                         vaga.setIdVaga(controller.getUUID());
                         vaga.salvar();
                         mostraMensagem("Vaga cadastrada com sucesso");
@@ -130,6 +163,25 @@ public class CadastrarVagaActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        configurarModal();
+
+        editSelecHab.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    dialog.show();
+                }else {
+                    dialog.hide();
+                }
+            }
+        });
+        editSelecHab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
             }
         });
     }
@@ -313,5 +365,75 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         }catch (Exception e){
             e.getMessage();
         }
+    }
+    private void configurarModal(){
+        databaseReference.child(controller.NODE_HABILIDADES).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try{
+
+                    if (habilidadesArray == null)
+                        habilidadesArray = new ArrayList<String>();
+
+                    habilidadesArray.clear();
+                    for(DataSnapshot hablidade: dataSnapshot.getChildren()){
+                        Habilidades hab = hablidade.getValue(Habilidades.class);
+                        habilidadesArray.add(hab.getDescricao());
+                    }
+
+                    CharSequence[] items = habilidadesArray.toArray(new CharSequence[habilidadesArray.size()]);
+
+                    //Configuração do Modal
+                    dialog = new AlertDialog.Builder(CadastrarVagaActivity.this)
+                            .setTitle("Select The Difficulty Level")
+                            .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+                                    if (isChecked) {
+                                        selectedItemsModal.add(habilidadesArray.get(indexSelected));
+                                    } else if (selectedItemsModal.contains(indexSelected)) {
+                                        selectedItemsModal.remove(Integer.valueOf(indexSelected));
+                                    }
+                                }
+                            }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    preencherHabilidades();
+                                }
+                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //  Your code when user clicked on Cancel
+                                }
+                            }).create();
+
+                }catch (Exception e){
+                    e.getMessage();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    private void preencherHabilidades(){
+        String hab = null;
+
+        editSelecHab.setText("");
+
+        //Estrutura de repetição nas habilidades selecionadas
+        for (int i = 0; i < selectedItemsModal.size(); i++) {
+            if (hab == null){
+                hab = selectedItemsModal.get(i).toString();
+            }else{
+                hab = hab + "," + selectedItemsModal.get(i).toString();
+            }
+        }
+
+        //Preencher combo de habilidades
+        if (hab != null)
+            editSelecHab.setText(hab);
     }
 }

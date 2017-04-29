@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.CadastrarVagaActivity;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Vaga;
@@ -59,6 +60,7 @@ public class VagasEmpresaFragment extends Fragment {
 
         //Instanciar lista
         listVagas.setAdapter(adapter);
+
 
         databaseReference.child(controller.NODE_VAGA).addValueEventListener(new ValueEventListener() {
                     @Override

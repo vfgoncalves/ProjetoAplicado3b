@@ -17,6 +17,7 @@ public class Vaga {
     private String estado;
     private String cargo;
     private String idVaga;
+    private String habilidades;
 
     private Controller controller;
 
@@ -86,6 +87,14 @@ public class Vaga {
 
     public void setIdVaga(String idVaga) {
         this.idVaga = idVaga;
+    }
+
+    public String getHabilidades() {
+        return habilidades;
+    }
+
+    public void setHabilidades(String habilidades) {
+        this.habilidades = habilidades;
     }
 
     public void salvar(){
