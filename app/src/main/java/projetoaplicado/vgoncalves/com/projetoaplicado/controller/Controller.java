@@ -2,6 +2,7 @@ package projetoaplicado.vgoncalves.com.projetoaplicado.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Base64;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,7 +42,7 @@ public class Controller {
     public static final String NODE_HABILIDADES = "HABILIDADES";
 
     //URL API GEONAMES
-    public static final String URL_API_GEONAMES = "http://educacao.dadosabertosbr.com/api/cidades/";
+    public static final String URL_API_CIDADES = "http://educacao.dadosabertosbr.com/api/cidades/";
 
     public Controller(Context context) {
         contexto = context;
@@ -77,12 +78,16 @@ public class Controller {
         editor.commit();
     }
     public String montarUrlBuscaCidades(String codEst){
-        return URL_API_GEONAMES + codEst;
+        return URL_API_CIDADES + codEst;
     }
 
     public String getUUID(){
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
+    }
+
+    public String geraSenhaLinkedin(String email){
+        return Base64.encodeToString(email.getBytes(), Base64.DEFAULT);
     }
 
 }

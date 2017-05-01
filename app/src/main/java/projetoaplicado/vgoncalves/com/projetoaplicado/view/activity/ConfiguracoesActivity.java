@@ -1,5 +1,6 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,8 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     private AlertDialog dialog;
     private ArrayList<String> habilidadesArray;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +50,18 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         btnCadastrarHab = (Button) findViewById(R.id.btnCadastrarHab);
         btnMostrarHab = (Button) findViewById(R.id.btnMostrarHab);
 
+        //Configurar progress dialog
+        progressDialog = new ProgressDialog(ConfiguracoesActivity.this);
+        progressDialog.setMessage("Cadastrando habilidades...");
+        progressDialog.setCancelable(false);
+
         btnCadastrarHab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(descHab.getText().toString())){
                     Toast.makeText(getApplicationContext(), "Favor informar a descrição da habilidade", Toast.LENGTH_LONG).show();
                 }else{
+                    progressDialog.show();
                     verificarHabilidadeExistente();
                 }
             }
@@ -88,11 +97,14 @@ public class ConfiguracoesActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Habilidade cadastrada com sucesso", Toast.LENGTH_LONG).show();
                         configurarDialog();
                         descHab.setText("");
+                        progressDialog.hide();
                     }else{
                         Toast.makeText(getApplicationContext(), "Erro ao cadastrar habilidade", Toast.LENGTH_LONG).show();
+                        progressDialog.hide();
                     }
                 }else{
                     Toast.makeText(getApplicationContext(), "Habilidade já cadastrada", Toast.LENGTH_LONG).show();
+                    progressDialog.hide();
                 }
 
             }

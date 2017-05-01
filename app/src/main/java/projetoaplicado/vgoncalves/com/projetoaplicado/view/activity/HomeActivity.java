@@ -2,8 +2,13 @@ package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -12,6 +17,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+
+import java.security.MessageDigest;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Usuario;
@@ -63,6 +70,24 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //computePakageHash();
+
+    }
+
+    private void computePakageHash() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "projetoaplicado.vgoncalves.com.projetoaplicado",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (Exception e) {
+            Log.e("TAG",e.getMessage());
+        }
     }
 
     private void verificarUsuarioLogado(){

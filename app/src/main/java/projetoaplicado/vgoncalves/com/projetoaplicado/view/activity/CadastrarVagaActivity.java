@@ -87,6 +87,8 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         txtCidades = (AutoCompleteTextView) findViewById(R.id.textCidade);
         editSelecHab = (EditText) findViewById(R.id.editSelecHab);
 
+
+
         //Configurar ProgressDialogs
         progressDialogCidades = new ProgressDialog(CadastrarVagaActivity.this);
         progressDialogCidades.setTitle("Buscando cidades");
@@ -385,7 +387,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
 
                     //Configuração do Modal
                     dialog = new AlertDialog.Builder(CadastrarVagaActivity.this)
-                            .setTitle("Select The Difficulty Level")
+                            .setTitle("Selecionar Habilidades")
                             .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
