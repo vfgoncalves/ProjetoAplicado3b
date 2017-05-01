@@ -25,11 +25,24 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.linkedin.platform.APIHelper;
+import com.linkedin.platform.LISessionManager;
+import com.linkedin.platform.errors.LIApiError;
+import com.linkedin.platform.errors.LIAuthError;
+import com.linkedin.platform.listeners.ApiListener;
+import com.linkedin.platform.listeners.ApiResponse;
+import com.linkedin.platform.listeners.AuthListener;
+import com.linkedin.platform.utils.Scope;
+
+import org.json.JSONObject;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Usuario;
@@ -44,7 +57,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email;
     private EditText senha;
     private ImageButton imgLoginGoogle;
+    private ImageButton imgLoginLinkedin;
     private ProgressDialog progressDialog;
+    private ProgressDialog progressDialogLinkedin;
 
     //Constantes
     private static final int RC_SIGN_IN = 9001;
@@ -56,6 +71,9 @@ public class LoginActivity extends AppCompatActivity {
     private Empresa empresa;
     private Controller controller;
 
+    private boolean authGoogle = false;
+    private boolean authLinkedin = false;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -64,18 +82,18 @@ public class LoginActivity extends AppCompatActivity {
         lnkCadastrar = (TextView) findViewById(R.id.lnkCadastrar);
         btnLogar = (Button) findViewById(R.id.btnLogin);
         imgLoginGoogle = (ImageButton) findViewById(R.id.imgLoginGoogle);
+        imgLoginLinkedin = (ImageButton) findViewById(R.id.imgLoginLinkedin);
         email = (EditText) findViewById(R.id.editLoginEmail);
         senha = (EditText) findViewById(R.id.editLoginSenha);
 
         //Configurando progressDialog
         progressDialog = new ProgressDialog(LoginActivity.this);
-        progressDialog.setTitle("Efetuando Login");
         progressDialog.setMessage("Efetuando login com a conta Google");
         progressDialog.setCancelable(false);//Configurando progressDialog
-        progressDialog = new ProgressDialog(LoginActivity.this);
-        progressDialog.setTitle("Efetuando Login");
-        progressDialog.setMessage("Efetuando login com a conta Google");
-        progressDialog.setCancelable(false);
+
+        progressDialogLinkedin = new ProgressDialog(LoginActivity.this);
+        progressDialogLinkedin.setMessage("Efetuando login com a conta Linkedin");
+        progressDialogLinkedin.setCancelable(false);
 
         controller = new Controller(LoginActivity.this);
         databaseReference = controller.getDatabaseReference();
@@ -129,7 +147,18 @@ public class LoginActivity extends AppCompatActivity {
         imgLoginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                authGoogle = true;
+                authLinkedin = false;
                 signIn();
+            }
+        });
+
+        imgLoginLinkedin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                authGoogle = false;
+                authLinkedin = true;
+                signInLinkedin();
             }
         });
     }
@@ -156,10 +185,17 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
+        if(authLinkedin){
+            //AUTENTICAÇÃO COM LINKEDIN
 
+            // Add this line to your existing onActivityResult() method
+            progressDialogLinkedin.show();
+            LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
+        }else if(authGoogle){
+            if (requestCode == RC_SIGN_IN) {
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                handleSignInResult(result);
+            }
         }
     }
     private void handleSignInResult(GoogleSignInResult result) {
@@ -238,4 +274,71 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
     }
+
+    /*
+    INÍCIO LOGIN COM LINKEDIN
+     */
+    private void signInLinkedin(){
+
+        LISessionManager.getInstance(getApplicationContext()).init(this, buildScope(), new AuthListener() {
+            @Override
+            public void onAuthSuccess() {
+                buscarInfoPessoal();
+            }
+
+            @Override
+            public void onAuthError(LIAuthError error) {
+                mostraMensagem("Erro ao logar com linkedin");
+                progressDialogLinkedin.hide();
+                Log.d("AuthLinkedin", error.toString());
+            }
+        }, true);
+    }
+    private static Scope buildScope() {
+        return Scope.build(Scope.R_BASICPROFILE, Scope.W_SHARE, Scope.R_EMAILADDRESS);
+    }
+    private void buscarInfoPessoal(){
+        String url = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,public-profile-url,picture-url,email-address)";
+
+        APIHelper apiHelper = APIHelper.getInstance(getApplicationContext());
+        apiHelper.getRequest(this, url, new ApiListener() {
+            @Override
+            public void onApiSuccess(ApiResponse apiResponse) {
+                // Success!
+                try{
+                    cadastrarLinkedin(apiResponse.getResponseDataAsJson());
+                }catch (Exception e){
+                    e.getMessage();
+                }
+            }
+
+            @Override
+            public void onApiError(LIApiError liApiError) {
+                // Error making GET request!
+            }
+        });
+    }
+    private void cadastrarLinkedin(final JSONObject user){
+        try{
+            String senha = controller.geraSenhaLinkedin(user.getString("emailAddress"));
+            autenticador.signInWithEmailAndPassword(user.getString("emailAddress"),senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        abrirTelaPrincipal();
+                        mostraMensagem("Login com a conta Linkedin efetuado com sucesso");
+                        progressDialogLinkedin.hide();
+                    } else {
+                        mostraMensagem("Erro ao logar com a conta google");
+                        progressDialogLinkedin.hide();
+                    }
+                }
+            });
+        }catch (Exception e){
+            mostraMensagem("Erro ao logar com a conta Linkedin");
+            progressDialogLinkedin.hide();
+            e.getMessage();
+        }
+    }
+
 }
