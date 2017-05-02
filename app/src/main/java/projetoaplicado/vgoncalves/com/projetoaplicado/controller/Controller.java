@@ -1,7 +1,12 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.controller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 
 import com.android.volley.Request;
@@ -19,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -88,6 +95,26 @@ public class Controller {
 
     public String geraSenhaLinkedin(String email){
         return Base64.encodeToString(email.getBytes(), Base64.DEFAULT);
+    }
+
+    public static boolean validaPermissoes(int requestCode , Activity activity, String[] permissoes){
+        List<String> listaPermissoes = new ArrayList<String>();
+        if (Build.VERSION.SDK_INT >= 23){
+            //percorrer permissões e verificar se possuir permissão
+            for (String permissao: permissoes){
+                Boolean validaPermissao = ContextCompat.checkSelfPermission(activity, permissao) == PackageManager.PERMISSION_GRANTED;
+                if (!validaPermissao) listaPermissoes.add(permissao);
+            }
+            if (listaPermissoes.isEmpty()) return true;
+
+            String[] novasPermissoes = new String[listaPermissoes.size()];
+            listaPermissoes.toArray(novasPermissoes);
+
+            //Solicita permissão
+            ActivityCompat.requestPermissions(activity, novasPermissoes , requestCode);
+        }
+
+        return true;
     }
 
 }

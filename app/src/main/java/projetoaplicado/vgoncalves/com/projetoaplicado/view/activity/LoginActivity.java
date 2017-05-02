@@ -274,7 +274,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
     }
-
     /*
     INÍCIO LOGIN COM LINKEDIN
      */

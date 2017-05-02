@@ -1,5 +1,6 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -34,11 +35,18 @@ public class HomeActivity extends AppCompatActivity {
     private Usuario usuario;
     private Empresa empresa;
     private Controller controller;
+    private String[] permissoes ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        permissoes = new String[]{
+          Manifest.permission.INTERNET
+        };
+
+        Controller.validaPermissoes(1,this,permissoes);
 
         btnCadastrar = (Button) findViewById(R.id.btnHomeCadastrar);
         btnLogar = (Button) findViewById(R.id.btnHomeLogar);
