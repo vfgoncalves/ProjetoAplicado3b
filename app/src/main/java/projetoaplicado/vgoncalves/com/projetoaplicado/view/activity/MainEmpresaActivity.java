@@ -7,21 +7,28 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
+
+import org.w3c.dom.Text;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Usuario;
 import projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter.TabAdapter;
 import projetoaplicado.vgoncalves.com.projetoaplicado.componente.tabs.SlidingTabLayout;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
+import projetoaplicado.vgoncalves.com.projetoaplicado.componente.transform.CircleTransform;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 
 public class MainEmpresaActivity extends AppCompatActivity {
@@ -35,6 +42,7 @@ public class MainEmpresaActivity extends AppCompatActivity {
     private String idUsuario;
     private Empresa empresa;
     private DatabaseReference databaseReference;
+    private ImageView imgPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +59,14 @@ public class MainEmpresaActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbarEmpresa);
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sltl_abas);
         viewPager = (ViewPager) findViewById(R.id.vp_pagina);
+        imgPerfil = (ImageView) findViewById(R.id.imgPerfil);
 
         controller = new Controller(MainEmpresaActivity.this);
         autenticador = controller.getAutenticador();
         databaseReference = controller.getDatabaseReference();
 
         //Configurar Toolbar
-        toolbar.setTitle("UNAJob");
+        toolbar.setTitle("");
         toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.branco));
         setSupportActionBar(toolbar); //Método de suporte ao ActionBar
 
@@ -75,7 +84,13 @@ public class MainEmpresaActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 empresa = dataSnapshot.getValue(Empresa.class);
-                toolbar.setTitle("UNAJob - Bem Vindo " + empresa.getNome());
+                if(!TextUtils.isEmpty(empresa.getPhotoUrl())){
+                    Picasso.with(MainEmpresaActivity.this).load(empresa.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfil);
+                }else{
+                    Picasso.with(MainEmpresaActivity.this).load(R.drawable.ic_empresa).transform(new CircleTransform()).into(imgPerfil);
+                }
+                toolbar.setTitle("");
+
             }
 
             @Override

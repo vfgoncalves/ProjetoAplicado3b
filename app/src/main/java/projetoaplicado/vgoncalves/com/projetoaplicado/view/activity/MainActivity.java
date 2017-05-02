@@ -7,15 +7,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Usuario;
@@ -23,6 +26,7 @@ import projetoaplicado.vgoncalves.com.projetoaplicado.R;
 import projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter.TabAdapter;
 import projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter.UsuarioTabAdapter;
 import projetoaplicado.vgoncalves.com.projetoaplicado.componente.tabs.SlidingTabLayout;
+import projetoaplicado.vgoncalves.com.projetoaplicado.componente.transform.CircleTransform;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseAuth autenticador;
     private Usuario usuario;
+    private ImageView imgPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +56,17 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbarUsuario);
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sltl_abasUsuario);
         viewPager = (ViewPager) findViewById(R.id.vp_paginaUsuario);
+        imgPerfil = (ImageView) findViewById(R.id.imgPerfil);
+
         controller = new Controller(this);
         databaseReference = controller.getDatabaseReference();
         autenticador = controller.getAutenticador();
 
         //Configurar Toolbar
-        toolbar.setTitle("UNAJob");
+        toolbar.setTitle("");
         toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.branco));
         setSupportActionBar(toolbar); //Método de suporte ao ActionBar
+
 
         //configurar adapter e tabs
         UsuarioTabAdapter tabAdapter = new UsuarioTabAdapter(getSupportFragmentManager());
@@ -74,8 +82,19 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.child(controller.NODE_USUARIO).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                usuario = dataSnapshot.getValue(Usuario.class);
-                toolbar.setTitle("UNAJob - Bem Vindo " + usuario.getNome());
+                try{
+                    usuario = dataSnapshot.getValue(Usuario.class);
+                    if(!TextUtils.isEmpty(usuario.getPhotoUrl())){
+                        Picasso.with(MainActivity.this).load(usuario.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfil);
+                    }else{
+                        Picasso.with(MainActivity.this).load(R.drawable.ic_candidato).into(imgPerfil);
+                    }
+
+                    toolbar.setTitle("");
+
+                }catch (Exception e){
+                    e.getMessage();
+                }
             }
 
             @Override
