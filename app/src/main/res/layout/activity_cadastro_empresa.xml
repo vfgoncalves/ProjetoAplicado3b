@@ -12,37 +12,66 @@
         android:layout_weight="1"
         android:background="@drawable/ic_logo"/>
 
-    <EditText
-        android:id="@+id/editCadNome"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nome da Empresa"
-        android:textColorHint="@android:color/black"
-        android:inputType="textPersonName" />
+        android:theme="@style/FloatLabelBlack">
 
-    <EditText
-        android:id="@+id/editCadEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="E-mail do Contato"
-        android:textColorHint="@android:color/black"
-        android:inputType="textEmailAddress" />
+        <EditText
+            android:id="@+id/editCadNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome da Empresa"
+            android:textColorHint="@android:color/black"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/editCadTel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Telefone do Contato"
-        android:textColorHint="@android:color/black"
-        android:inputType="phone" />
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/editCadSenha"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Senha"
-        android:textColorHint="@android:color/black"
-        android:inputType="textPassword" />
+        android:theme="@style/FloatLabelBlack">
+
+        <EditText
+            android:id="@+id/editCadEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail do Contato"
+            android:textColorHint="@android:color/black"
+            android:inputType="textEmailAddress" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/FloatLabelBlack">
+
+        <EditText
+            android:id="@+id/editCadTel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Telefone do Contato"
+            android:textColorHint="@android:color/black"
+            android:inputType="phone" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/FloatLabelBlack">
+
+        <EditText
+            android:id="@+id/editCadSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Senha"
+            android:textColorHint="@android:color/black"
+            android:inputType="textPassword" />
+
+    </android.support.design.widget.TextInputLayout>
+
 
     <Button
         android:id="@+id/btnCadastrar"

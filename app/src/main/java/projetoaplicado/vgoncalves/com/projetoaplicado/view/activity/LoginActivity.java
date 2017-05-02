@@ -3,6 +3,7 @@ package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -84,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         imgLoginGoogle = (ImageButton) findViewById(R.id.imgLoginGoogle);
         imgLoginLinkedin = (ImageButton) findViewById(R.id.imgLoginLinkedin);
         email = (EditText) findViewById(R.id.editLoginEmail);
+
         senha = (EditText) findViewById(R.id.editLoginSenha);
 
         //Configurando progressDialog

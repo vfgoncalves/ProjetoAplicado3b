@@ -19,21 +19,35 @@
             android:forceHasOverlappingRendering="true"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/editVagaTitulo"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Título da Vaga"
-                android:inputType="textCapSentences" />
+                android:theme="@style/FloatLabelBlack">
 
-            <EditText
-                android:id="@+id/editVagaEmailContato"
+                <EditText
+                    android:id="@+id/editVagaTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Título da Vaga"
+                    android:inputType="textCapSentences" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="E-mail do Contato"
-                android:inputType="textEmailAddress" />
+                android:theme="@style/FloatLabelBlack">
+
+                <EditText
+                    android:id="@+id/editVagaEmailContato"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="E-mail do Contato"
+                    android:inputType="textEmailAddress" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <Spinner
                 android:id="@+id/spnCargo"
@@ -47,26 +61,46 @@
                 android:layout_height="40dp"
                 android:paddingBottom="3dp"></Spinner>
 
-            <AutoCompleteTextView
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textCidade"
-                android:hint="Selecionar cidades"/>
+                android:theme="@style/FloatLabelBlack">
 
-            <EditText
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textCidade"
+                    android:hint="Selecionar cidades"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Selecionar habilidades"
-                android:id="@+id/editSelecHab"
-                />
+                android:theme="@style/FloatLabelBlack">
 
-            <EditText
-                android:id="@+id/editVagaDescricao"
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Selecionar habilidades"
+                    android:id="@+id/editSelecHab"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Descrição da vaga"
-                android:inputType="textMultiLine"
-                android:lines="15" />
+                android:layout_height="wrap_content"
+                android:theme="@style/FloatLabelBlack">
+
+                <EditText
+                    android:id="@+id/editVagaDescricao"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Descrição da vaga"
+                    android:inputType="textMultiLine"
+                    android:lines="15" />
+
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
     </ScrollView>

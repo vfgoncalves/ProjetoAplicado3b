@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:background="@color/colorPrimaryDark"
     android:focusable="true"
@@ -15,23 +16,39 @@
         android:layout_weight="1"
         android:background="@drawable/ic_logo" />
 
-    <EditText
-        android:id="@+id/editLoginEmail"
-        android:layout_width="fill_parent"
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="E-mail"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/branco"
-        android:textColorHint="@color/branco" />
+        android:theme="@style/FloatLabelWhite"
+        android:id="@+id/txtInpEmailLogin">
 
-    <EditText
-        android:id="@+id/editLoginSenha"
-        android:layout_width="fill_parent"
+        <EditText
+            android:id="@+id/editLoginEmail"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/branco"
+            android:textColorHint="@color/branco" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Senha"
-        android:inputType="textPassword"
-        android:textColor="@color/branco"
-        android:textColorHint="@color/branco" />
+        android:theme="@style/FloatLabelWhite">
+
+        <EditText
+            android:id="@+id/editLoginSenha"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Senha"
+            android:inputType="textPassword"
+            android:textColor="@color/branco"
+            android:textColorHint="@color/branco" />
+
+    </android.support.design.widget.TextInputLayout>
+
 
     <Button
         android:id="@+id/btnLogin"

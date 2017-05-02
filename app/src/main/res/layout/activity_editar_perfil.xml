@@ -19,160 +19,162 @@
             android:forceHasOverlappingRendering="false"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nome da Empresa"
-                android:textColor="#372c24" />
+                android:theme="@style/FloatLabelBlack">
 
-            <EditText
-                android:id="@+id/editEmpNome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                <EditText
+                    android:id="@+id/editEmpNome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:hint="Nome da Empresa"/>
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="E-mail do Contato"
-                android:textColor="#372c24" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/editEmpEmail"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textEmailAddress" />
+                android:theme="@style/FloatLabelBlack">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Telefone do Contato"
-                android:textColor="#372c24" />
+                <EditText
+                    android:id="@+id/editEmpEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textEmailAddress"
+                    android:hint="E-mail do Contato"/>
 
-            <EditText
-                android:id="@+id/editEmpTel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="(XX)XXXXX-XXXX"
-                android:inputType="phone" />
+            </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/txtCep"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CEP"
-                android:textColor="#372c24" />
+                android:theme="@style/FloatLabelBlack">
 
-            <EditText
-                android:id="@+id/editEmpCEP"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="number" />
+                <EditText
+                    android:id="@+id/editEmpTel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Telefone do Contato"
+                    android:inputType="phone"/>
 
-            <TextView
-                android:id="@+id/txtPais"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="País"
-                android:textColor="#372c24" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/editEmpPais"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textCapSentences" />
+                android:theme="@style/FloatLabelBlack">
 
-            <TextView
-                android:id="@+id/txtEst"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Estado"
-                android:textColor="#372c24" />
+                <EditText
+                    android:id="@+id/editEmpCEP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="CEP"
+                    android:inputType="number" />
 
-            <EditText
-                android:id="@+id/editEmpEst"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textCapSentences" />
+            </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/txtCid"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cidade"
-                android:textColor="#372c24" />
+                android:theme="@style/FloatLabelBlack">
 
-            <EditText
-                android:id="@+id/editEmpCid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textCapSentences" />
+                <EditText
+                    android:id="@+id/editEmpPais"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Pais"
+                    android:inputType="textCapSentences" />
 
-            <TextView
-                android:id="@+id/txtBairro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bairro"
-                android:textColor="#372c24" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/editEmpBairro"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textCapSentences" />
+                android:theme="@style/FloatLabelBlack">
 
-            <TextView
-                android:id="@+id/txtRua"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Rua"
-                android:textColor="#372c24" />
+                <EditText
+                    android:id="@+id/editEmpEst"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Estado"
+                    android:inputType="textCapSentences" />
 
-            <EditText
-                android:id="@+id/editEmpRua"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textCapSentences" />
+            </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/txtNumero"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Número"
-                android:textColor="#372c24" />
+                android:theme="@style/FloatLabelBlack">
+                <EditText
+                    android:id="@+id/editEmpCid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Cidade"
+                    android:inputType="textCapSentences" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/editEmpNumero"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="number" />
+                android:theme="@style/FloatLabelBlack">
 
-            <TextView
-                android:id="@+id/txtCompl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Complemento"
-                android:textColor="#372c24" />
+                <EditText
+                    android:id="@+id/editEmpBairro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Bairro"
+                    android:inputType="textCapSentences" />
 
-            <EditText
-                android:id="@+id/editEmpCompl"
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textCapSentences" />
+                android:theme="@style/FloatLabelBlack">
+                <EditText
+                    android:id="@+id/editEmpRua"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Rua"
+                    android:inputType="textCapSentences" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/FloatLabelBlack">
+                <EditText
+                    android:id="@+id/editEmpNumero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Número"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/FloatLabelBlack">
+                <EditText
+                    android:id="@+id/editEmpCompl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Complemento"
+                    android:inputType="textCapSentences" />
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
     </ScrollView>

@@ -13,33 +13,54 @@
         android:layout_weight="1"
         android:background="@drawable/ic_logo" />
 
-    <EditText
-        android:id="@+id/editCadNome"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nome"
-        android:inputType="textPersonName"
-        android:singleLine="true"
-        android:textColor="@color/branco"
-        android:textColorHint="@color/branco" />
+        android:theme="@style/FloatLabelWhite">
 
-    <EditText
-        android:id="@+id/editCadEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="E-mail"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/branco"
-        android:textColorHint="@color/branco" />
+        <EditText
+            android:id="@+id/editCadNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome"
+            android:inputType="textPersonName"
+            android:singleLine="true"
+            android:textColor="@color/branco"
+            android:textColorHint="@color/branco" />
 
-    <EditText
-        android:id="@+id/editCadSenha"
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Senha"
-        android:inputType="textPassword"
-        android:textColor="@color/branco"
-        android:textColorHint="@color/branco" />
+        android:theme="@style/FloatLabelWhite">
+
+        <EditText
+            android:id="@+id/editCadEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/branco"
+            android:textColorHint="@color/branco" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/FloatLabelWhite">
+
+        <EditText
+            android:id="@+id/editCadSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Senha"
+            android:inputType="textPassword"
+            android:textColor="@color/branco"
+            android:textColorHint="@color/branco" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/btnCadastrar"

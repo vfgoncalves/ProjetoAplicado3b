@@ -6,4 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:background="@color/colorPrimary"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+</view>
