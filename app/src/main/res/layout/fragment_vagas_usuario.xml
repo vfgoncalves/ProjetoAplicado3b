@@ -2,12 +2,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments.VagasUsuarioFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_below="@+id/linearTitulo">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatFiltrosVaga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/cardview_default_elevation"
+            android:layout_marginRight="23dp"
+            android:layout_marginEnd="23dp"
+            android:layout_marginBottom="21dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:clickable="true"
+            android:backgroundTint="@color/colorPrimaryDark"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_action_filter" >
+
+        </android.support.design.widget.FloatingActionButton>
+
+        <ListView
+            android:id="@+id/listaFragmentVagasUser"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
 
 </FrameLayout>

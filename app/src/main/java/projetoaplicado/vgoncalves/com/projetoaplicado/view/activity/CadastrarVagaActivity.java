@@ -134,7 +134,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
                         vaga.setDescricao(editVagaDescricao.getText().toString());
                         vaga.setIdEmpresa(idUsuario);
                         vaga.setCidade(txtCidades.getText().toString());
-                        vaga.setEstado(nomeEstado.get(spnEstados.getSelectedItemPosition()).toString());
+                        vaga.setEstado(codigoEstado.get(spnEstados.getSelectedItemPosition()).toString());
                         vaga.setCargo(spnCargos.getSelectedItem().toString());
                         vaga.setHabilidades(editSelecHab.getText().toString());
                         vaga.setIdVaga(controller.getUUID());

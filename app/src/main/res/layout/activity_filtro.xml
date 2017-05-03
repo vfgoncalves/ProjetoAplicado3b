@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:forceHasOverlappingRendering="true"
+            android:orientation="vertical">
+            <Spinner
+                android:id="@+id/spnFiltroCargo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingBottom="3dp"></Spinner>
+
+            <Spinner
+                android:id="@+id/spnFiltroEstado"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:paddingBottom="3dp"></Spinner>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/FloatLabelBlack">
+
+                <AutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textFiltroCidade"
+                    android:hint="Selecionar cidades"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/FloatLabelBlack">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Selecionar habilidades"
+                    android:id="@+id/editSelecHabFiltro"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/BtnVermelho"
+                android:text="Aplicar Filtros"
+                android:id="@+id/btnAplicarFiltro"/>
+
+        </LinearLayout>
+</RelativeLayout>

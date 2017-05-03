@@ -28,6 +28,7 @@ public class Usuario {
     private String Rua;
     private String Numero;
     private String Complemento;
+    private String habilidades;
 
     private Controller controller;
 
@@ -164,6 +165,14 @@ public class Usuario {
 
     public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public String getHabilidades() {
+        return habilidades;
+    }
+
+    public void setHabilidades(String habilidades) {
+        this.habilidades = habilidades;
     }
 
     public void salvar(){

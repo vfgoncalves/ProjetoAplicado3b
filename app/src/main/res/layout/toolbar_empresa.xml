@@ -11,6 +11,5 @@
     <ImageView
         android:id="@+id/imgPerfil"
         android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/ic_empresa"/>
+        android:layout_height="40dp"/>
 </view>

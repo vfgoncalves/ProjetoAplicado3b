@@ -27,7 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.EditarUsuarioPerfilActivity" />
-        <activity android:name=".view.activity.ConfiguracoesActivity"></activity>
+        <activity android:name=".view.activity.ConfiguracoesActivity" />
+        <activity android:name=".view.activity.FiltroActivity"></activity>
     </application>
 
 </manifest>
