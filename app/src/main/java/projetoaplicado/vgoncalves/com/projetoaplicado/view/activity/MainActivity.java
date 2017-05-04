@@ -30,7 +30,7 @@ import projetoaplicado.vgoncalves.com.projetoaplicado.componente.transform.Circl
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 
 public class MainActivity extends AppCompatActivity {
-    private ProgressDialog progressDialog;
+    //private ProgressDialog progressDialog;
     private Toolbar toolbar;
     private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
@@ -45,64 +45,45 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        try{
+            //Configurar Progress Dialog
+            /*
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setTitle("Carregando");
+            progressDialog.setMessage("Por favor aguarde, estamos carregando informações do usuário");
+            progressDialog.setCancelable(false);
+             */
 
-        //Configurar Progress Dialog
-        progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setTitle("Carregando");
-        progressDialog.setMessage("Por favor aguarde, estamos carregando informações do usuário");
-        progressDialog.setCancelable(false);
+            //Inicializar controles
+            toolbar = (Toolbar) findViewById(R.id.toolbarUsuario);
+            slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sltl_abasUsuario);
+            viewPager = (ViewPager) findViewById(R.id.vp_paginaUsuario);
+            imgPerfil = (ImageView) findViewById(R.id.imgPerfil);
 
-        //Inicializar controles
-        toolbar = (Toolbar) findViewById(R.id.toolbarUsuario);
-        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sltl_abasUsuario);
-        viewPager = (ViewPager) findViewById(R.id.vp_paginaUsuario);
-        imgPerfil = (ImageView) findViewById(R.id.imgPerfil);
+            controller = new Controller(this);
+            databaseReference = controller.getDatabaseReference();
+            autenticador = controller.getAutenticador();
 
-        controller = new Controller(this);
-        databaseReference = controller.getDatabaseReference();
-        autenticador = controller.getAutenticador();
-
-        //Configurar Toolbar
-        toolbar.setTitle("");
-        toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.branco));
-        setSupportActionBar(toolbar); //Método de suporte ao ActionBar
+            //Configurar Toolbar
+            toolbar.setTitle("UNAJob");
+            toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.branco));
+            setSupportActionBar(toolbar); //Método de suporte ao ActionBar
 
 
-        //configurar adapter e tabs
-        UsuarioTabAdapter tabAdapter = new UsuarioTabAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(tabAdapter);
-        //configura sliding tab
-        slidingTabLayout.setDistributeEvenly(true);
-        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
-        slidingTabLayout.setViewPager(viewPager);
+            //configurar adapter e tabs
+            UsuarioTabAdapter tabAdapter = new UsuarioTabAdapter(getSupportFragmentManager());
+            viewPager.setAdapter(tabAdapter);
+            //configura sliding tab
+            slidingTabLayout.setDistributeEvenly(true);
+            slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
+            slidingTabLayout.setViewPager(viewPager);
 
-        //Armazenar id do usuário logado
-        idUsuario = controller.getIdUsuario();
+            //Armazenar id do usuário logado
+            idUsuario = controller.getIdUsuario();
 
-        databaseReference.child(controller.NODE_USUARIO).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try{
-                    usuario = dataSnapshot.getValue(Usuario.class);
-                    if(!TextUtils.isEmpty(usuario.getPhotoUrl())){
-                        Picasso.with(MainActivity.this).load(usuario.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfil);
-                    }else{
-                        Picasso.with(MainActivity.this).load(R.drawable.ic_candidato).into(imgPerfil);
-                    }
-
-                    toolbar.setTitle("");
-
-                }catch (Exception e){
-                    e.getMessage();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+        }catch (Exception e){
+            e.getMessage();
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void deslogarUsuario(){
-        progressDialog.show();
+        //progressDialog.show();
         autenticador.signOut();
         controller.limpaIdUsuario();
 
@@ -132,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
 
-        progressDialog.hide();
+        //progressDialog.hide();
     }
+
+
 }

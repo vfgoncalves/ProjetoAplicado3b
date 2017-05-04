@@ -56,52 +56,58 @@ public class UsuarioPerfilFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_usuario_perfil, container, false);
+        View view = null;
+        try{
+            view = inflater.inflate(R.layout.fragment_usuario_perfil, container, false);
 
-        controller = new Controller(view.getContext());
-        databaseReference = controller.getDatabaseReference();
-        idUsuario = controller.getIdUsuario();
+            controller = new Controller(view.getContext());
+            databaseReference = controller.getDatabaseReference();
+            idUsuario = controller.getIdUsuario();
 
-        //Instânciar controles da tela
-        editNome = (EditText) view.findViewById(R.id.editUserNome);
-        editEmail = (EditText) view.findViewById(R.id.editUserEmail);
-        editrelefoneCel = (EditText) view.findViewById(R.id.editUserTelCel);
-        editTelefoneResidencial = (EditText) view.findViewById(R.id.editUserTelRes);
-        editCEP = (EditText) view.findViewById(R.id.editUserCEP);
-        editPais = (EditText) view.findViewById(R.id.editUserPais);
-        editEstado = (EditText) view.findViewById(R.id.editUserEst);
-        editCidade = (EditText) view.findViewById(R.id.editUserCid);
-        editBairro = (EditText) view.findViewById(R.id.editUserBairro);
-        editRua = (EditText) view.findViewById(R.id.editUserRua);
-        editNumero = (EditText) view.findViewById(R.id.editUserNumero);
-        editComplemento = (EditText) view.findViewById(R.id.editUserCompl);
-        editarPerfilUsuario = (FloatingActionButton) view.findViewById(R.id.editarPerfilUsuario);
+            //Instânciar controles da tela
+            editNome = (EditText) view.findViewById(R.id.editUserNome);
+            editEmail = (EditText) view.findViewById(R.id.editUserEmail);
+            editrelefoneCel = (EditText) view.findViewById(R.id.editUserTelCel);
+            editTelefoneResidencial = (EditText) view.findViewById(R.id.editUserTelRes);
+            editCEP = (EditText) view.findViewById(R.id.editUserCEP);
+            editPais = (EditText) view.findViewById(R.id.editUserPais);
+            editEstado = (EditText) view.findViewById(R.id.editUserEst);
+            editCidade = (EditText) view.findViewById(R.id.editUserCid);
+            editBairro = (EditText) view.findViewById(R.id.editUserBairro);
+            editRua = (EditText) view.findViewById(R.id.editUserRua);
+            editNumero = (EditText) view.findViewById(R.id.editUserNumero);
+            editComplemento = (EditText) view.findViewById(R.id.editUserCompl);
+            editarPerfilUsuario = (FloatingActionButton) view.findViewById(R.id.editarPerfilUsuario);
 
-        databaseReference.child(controller.NODE_USUARIO).child(idUsuario).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                usuario = dataSnapshot.getValue(Usuario.class);
-                if (usuario != null){
-                    usuario.setID(idUsuario);
-                    preencherCampos();
+            databaseReference.child(controller.NODE_USUARIO).child(idUsuario).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    usuario = dataSnapshot.getValue(Usuario.class);
+                    if (usuario != null){
+                        usuario.setID(idUsuario);
+                        preencherCampos();
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
 
-        editarPerfilUsuario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Navegar até tela de edição de perfil
-                Intent intent = new Intent(getActivity(), EditarUsuarioPerfilActivity.class);
-                startActivity(intent);
-            }
-        });
+            editarPerfilUsuario.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Navegar até tela de edição de perfil
+                    Intent intent = new Intent(getActivity(), EditarUsuarioPerfilActivity.class);
+                    startActivity(intent);
+                }
+            });
 
+
+        }catch (Exception e){
+            e.getMessage();
+        }
         return view;
     }
     private void preencherCampos(){

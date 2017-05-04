@@ -113,11 +113,13 @@ public class HomeActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         usuario = dataSnapshot.getValue(Usuario.class);
                         if (usuario != null){
+                            progressDialog.hide();
+                            progressDialog.dismiss();
                             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             finish();
-                            progressDialog.hide();
+
                         }
                     }
 

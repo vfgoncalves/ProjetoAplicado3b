@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Filtro;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Habilidades;
@@ -39,6 +40,9 @@ import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 public class FiltroActivity extends AppCompatActivity {
 
     private String idUsuario;
+    private String cidadeRecuperada;
+    private boolean selecionouEstado = false;
+
     private Controller controller;
     private Spinner spnCargos;
     private Spinner spnEstados;
@@ -52,6 +56,7 @@ public class FiltroActivity extends AppCompatActivity {
     private ArrayList<String> codigoCidade;
     private ArrayList<String> nomeCidade;
     private ArrayList<String> habilidadesArray;
+    private ArrayList<String> cargos;
     private ArrayList selectedItemsModal;
 
     private ProgressDialog progressDialogCidades;
@@ -92,6 +97,10 @@ public class FiltroActivity extends AppCompatActivity {
         adapterCargos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnCargos.setAdapter(adapterCargos);
 
+        //preenche arraylist de cargos para recuperação de filtro
+        String[] cargo = getResources().getStringArray(R.array.cargos);
+        cargos = new ArrayList<String>(Arrays.asList(cargo));
+
         //Método utilizado para preencher spinner com os estados brasileiros
         preencherEstados();
 
@@ -106,6 +115,7 @@ public class FiltroActivity extends AppCompatActivity {
                     txtCidades.setEnabled(false);
                 }else{
                     //preencher spinner de cidades
+                    selecionouEstado = true;
                     preencherCidade(position);
                     if (!TextUtils.isEmpty(txtCidades.getText()))
                         txtCidades.setText("");
@@ -142,9 +152,17 @@ public class FiltroActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try {
                     Filtro filtro = dataSnapshot.getValue(Filtro.class);
+
+                    if (filtro.getCargo() != null){
+                        if(!TextUtils.isEmpty(filtro.getCargo().toString())){
+                            spnCargos.setSelection(cargos.indexOf(filtro.getCargo().toString()));
+                        }
+                    }
+
                     if (filtro.getEstado() != null){
                         if(!TextUtils.isEmpty(filtro.getEstado().toString())){
                             //preencher estado
+                            spnEstados.setSelection(codigoEstado.indexOf(filtro.getEstado().toString()));
                         }
                     }
 
@@ -152,6 +170,7 @@ public class FiltroActivity extends AppCompatActivity {
                         if(!TextUtils.isEmpty(filtro.getCidade().toString())){
                             txtCidades.setEnabled(true);
                             txtCidades.setText(filtro.getCidade().toString());
+                            cidadeRecuperada = filtro.getCidade().toString();
                         }
                     }
 
@@ -160,6 +179,7 @@ public class FiltroActivity extends AppCompatActivity {
                             editSelecHab.setText(filtro.getHabilidades().toString());
                         }
                     }
+
                 }catch (Exception e){
                     e.getMessage();
                 }
@@ -190,6 +210,18 @@ public class FiltroActivity extends AppCompatActivity {
                 }catch (Exception e){
                     e.getMessage();
                     progressDialog.hide();
+                }
+            }
+        });
+
+        txtCidades.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    txtCidades.setText("");
+                }else{
+                    if(!TextUtils.isEmpty(cidadeRecuperada))
+                        txtCidades.setText(cidadeRecuperada);
                 }
             }
         });
@@ -294,7 +326,7 @@ public class FiltroActivity extends AppCompatActivity {
     private void mostraMensagem(String mensagem){
         Toast.makeText(getApplicationContext(), mensagem, Toast.LENGTH_SHORT).show();
     }
-    private void  preencherCidade(int posicao){
+    private void preencherCidade(int posicao){
         try {
             progressDialogCidades.show();
             String codEst = codigoEstado.get(posicao);
@@ -342,6 +374,8 @@ public class FiltroActivity extends AppCompatActivity {
             txtCidades.setAdapter(adapterCidades);
 
             txtCidades.setEnabled(true);
+            if (!TextUtils.isEmpty(cidadeRecuperada))
+                txtCidades.setText(cidadeRecuperada);
         }catch (Exception e){
             e.getMessage();
         }
@@ -416,4 +450,5 @@ public class FiltroActivity extends AppCompatActivity {
         if (hab != null)
             editSelecHab.setText(hab);
     }
+
 }

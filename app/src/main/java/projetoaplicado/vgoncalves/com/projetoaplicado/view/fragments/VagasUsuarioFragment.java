@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Filtro;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Vaga;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
@@ -70,23 +71,7 @@ public class VagasUsuarioFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try{
-                    tituloVaga.clear();
-                    //loop por estados
-                    for(DataSnapshot estados: dataSnapshot.getChildren()){
-                        //loop por cidades
-                        for(DataSnapshot cidades: estados.getChildren()){
-                            //loop por cargos
-                            for(DataSnapshot cargos: cidades.getChildren()){
-                                //loop por vagas
-                                for(DataSnapshot vagas: cargos.getChildren()){
-                                    Vaga vaga = vagas.getValue(Vaga.class);
-                                    tituloVaga.add(vaga.getTitulo());
-                                }
-                            }
-                        }
-
-                    }
-                    adapter.notifyDataSetChanged();
+                    verificarFiltroAntesPreencher(dataSnapshot);
                 }catch (Exception e){
                     e.getMessage();
                 }
@@ -110,4 +95,79 @@ public class VagasUsuarioFragment extends Fragment {
         return view;
     }
 
+    private void preencheListaVaga(DataSnapshot dataSnapshot){
+        //loop por estados
+        for(DataSnapshot estados: dataSnapshot.getChildren()){
+            //loop por cidades
+            for(DataSnapshot cidades: estados.getChildren()){
+                //loop por cargos
+                for(DataSnapshot cargos: cidades.getChildren()){
+                    //loop por vagas
+                    for(DataSnapshot vagas: cargos.getChildren()){
+                        Vaga vaga = vagas.getValue(Vaga.class);
+                        tituloVaga.add(vaga.getTitulo());
+                    }
+                }
+            }
+
+        }
+    }
+
+    private void preencheListaVagaComFiltro(DataSnapshot dadoslista, Filtro dadosFiltros){
+        //loop por estados
+        for(DataSnapshot estados: dadoslista.getChildren()){
+            if (estados.getKey().toString().equals(dadosFiltros.getEstado().toString())){
+                //loop por cidades
+                for(DataSnapshot cidades: estados.getChildren()){
+                    if (cidades.getKey().toString().equals(dadosFiltros.getCidade().toString())){
+                        //loop por cargos
+                        for(DataSnapshot cargos: cidades.getChildren()){
+                            if (cidades.getKey().toString().equals(dadosFiltros.getCidade().toString())){
+                                //loop por vagas
+                                for(DataSnapshot vagas: cargos.getChildren()){
+                                    Vaga vaga = vagas.getValue(Vaga.class);
+                                    //Filtrar habilidades
+                                    if (dadosFiltros.getHabilidades() != null){
+                                        String[] hab = dadosFiltros.getHabilidades().split(",");
+                                        for (int i = 0; i < hab.length; i++) {
+                                            if (vaga.getHabilidades().contains(hab[i])){
+                                                tituloVaga.add(vaga.getTitulo());
+                                                break;
+                                            }
+                                        }
+                                    }else{
+                                        tituloVaga.add(vaga.getTitulo());
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void verificarFiltroAntesPreencher(final DataSnapshot dadosFullLista){
+        databaseReference.child(controller.NODE_FILTROS).child(idUsuarioLogado).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tituloVaga.clear();
+                Filtro filtro = dataSnapshot.getValue(Filtro.class);
+                if (filtro != null){
+                    //preencher lista com filtros
+                    preencheListaVagaComFiltro(dadosFullLista,filtro);
+                }else{
+                    //preencher lista sem filtros
+                    preencheListaVaga(dadosFullLista);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

@@ -66,7 +66,7 @@ public class MainEmpresaActivity extends AppCompatActivity {
         databaseReference = controller.getDatabaseReference();
 
         //Configurar Toolbar
-        toolbar.setTitle("");
+        toolbar.setTitle("UNAJob");
         toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.branco));
         setSupportActionBar(toolbar); //Método de suporte ao ActionBar
 
@@ -80,6 +80,7 @@ public class MainEmpresaActivity extends AppCompatActivity {
 
         //Armazenar id do usuário logado
         idUsuario = controller.getIdUsuario();
+        /*
         databaseReference.child(controller.NODE_EMPRESA).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -98,6 +99,7 @@ public class MainEmpresaActivity extends AppCompatActivity {
 
             }
         });
+        */
     }
 
     @Override

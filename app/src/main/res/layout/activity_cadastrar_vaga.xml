@@ -115,10 +115,9 @@
         android:layout_marginBottom="21dp"
         android:layout_marginEnd="23dp"
         android:layout_marginRight="23dp"
-        android:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/colorPrimary"
         android:clickable="true"
         android:elevation="@dimen/cardview_default_elevation"
-        app:backgroundTint="@color/cardview_dark_background"
         app:fabSize="normal"
         app:srcCompat="?android:attr/textCheckMark" />
 

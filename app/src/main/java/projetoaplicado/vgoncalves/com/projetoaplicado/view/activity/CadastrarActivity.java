@@ -158,6 +158,7 @@ public class CadastrarActivity extends AppCompatActivity {
                     }catch (Exception e){
                         mostraMensagem("Erro ao cadastrar usuário, tente novamente!");
                     }
+                    progressDialog.hide();
                 }
             }
         });

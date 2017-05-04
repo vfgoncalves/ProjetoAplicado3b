@@ -87,8 +87,6 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         txtCidades = (AutoCompleteTextView) findViewById(R.id.textCidade);
         editSelecHab = (EditText) findViewById(R.id.editSelecHab);
 
-
-
         //Configurar ProgressDialogs
         progressDialogCidades = new ProgressDialog(CadastrarVagaActivity.this);
         progressDialogCidades.setTitle("Buscando cidades");
@@ -311,7 +309,9 @@ public class CadastrarVagaActivity extends AppCompatActivity {
             nomeEstado.add("Tocantins");
 
             ArrayAdapter adapterEstados = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, nomeEstado);
+            adapterEstados.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnEstados.setAdapter(adapterEstados);
+
 
         }catch (Exception e){
             mostraMensagem("Não foi possível recuperar os estados!");
@@ -361,6 +361,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
                 nomeCidade.add(cidade[1].replaceAll("\"", ""));
             }
             ArrayAdapter adapterCidades = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, nomeCidade);
+            adapterCidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             txtCidades.setAdapter(adapterCidades);
 
             txtCidades.setEnabled(true);
