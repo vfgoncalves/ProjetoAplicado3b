@@ -4,11 +4,13 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,11 +26,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
+import projetoaplicado.vgoncalves.com.projetoaplicado.componente.transform.CircleTransform;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 
 public class EditarPerfilActivity extends AppCompatActivity {
@@ -53,6 +57,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
     private Button btnSalvar;
     private final String URL_API_CEP = "https://viacep.com.br/ws/";
     private Controller controller;
+    private ImageView imgPerfilUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +101,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         editEmpEmail= (EditText) findViewById(R.id.editEmpEmail);
         editEmpNome= (EditText) findViewById(R.id.editEmpNome);
         btnSalvar = (Button) findViewById(R.id.btnSalvarPerfil);
+        imgPerfilUser = (ImageView) findViewById(R.id.imgPerfilEmpresa);
 
         //Mascaras
         SimpleMaskFormatter maskTel = new SimpleMaskFormatter("(NN)NNNN-NNNN");
@@ -185,17 +191,23 @@ public class EditarPerfilActivity extends AppCompatActivity {
     }
 
     private void preencherCampos(){
-        editEmpCompl.setText(empresa.getComplemento());
-        editEmpNumero.setText(empresa.getNumero());
-        editEmpRua.setText(empresa.getRua());
-        editEmpBairro.setText(empresa.getBairro());
-        editEmpCid.setText(empresa.getCidade());
-        editEmpEst.setText(empresa.getEstado());
-        editEmpPais.setText(empresa.getPais());
-        editEmpCEP.setText(empresa.getCEP());
-        editEmpTel.setText(empresa.getTelefone());
-        editEmpEmail.setText(empresa.getEmail());
-        editEmpNome.setText(empresa.getNome());
+        try{
+            if (!TextUtils.isEmpty(empresa.getPhotoUrl()))
+                Picasso.with(EditarPerfilActivity.this).load(empresa.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfilUser);
+            editEmpCompl.setText(empresa.getComplemento());
+            editEmpNumero.setText(empresa.getNumero());
+            editEmpRua.setText(empresa.getRua());
+            editEmpBairro.setText(empresa.getBairro());
+            editEmpCid.setText(empresa.getCidade());
+            editEmpEst.setText(empresa.getEstado());
+            editEmpPais.setText(empresa.getPais());
+            editEmpCEP.setText(empresa.getCEP());
+            editEmpTel.setText(empresa.getTelefone());
+            editEmpEmail.setText(empresa.getEmail());
+            editEmpNome.setText(empresa.getNome());
+        }catch (Exception e){
+            e.getMessage();
+        }
     }
     private void preencherCamposEndereco(String json){
         try {

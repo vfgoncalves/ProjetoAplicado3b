@@ -11,7 +11,7 @@ import projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments.VagasUsuari
 
 public class UsuarioTabAdapter extends FragmentStatePagerAdapter {
 
-    private String[] titulosAbas = {"PERFIL","VAGAS"};
+    private String[] titulosAbas = {"VAGAS DISPONÍVEIS"};
 
     public UsuarioTabAdapter(FragmentManager fm) {
         super(fm);
@@ -23,9 +23,6 @@ public class UsuarioTabAdapter extends FragmentStatePagerAdapter {
 
         switch (i){
             case 0:
-                fragment = new UsuarioPerfilFragment();
-                break;
-            case 1:
                 fragment = new VagasUsuarioFragment();
                 break;
         }

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,7 +60,7 @@ public class MainEmpresaActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbarEmpresa);
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sltl_abas);
         viewPager = (ViewPager) findViewById(R.id.vp_pagina);
-        imgPerfil = (ImageView) findViewById(R.id.imgPerfil);
+
 
         controller = new Controller(MainEmpresaActivity.this);
         autenticador = controller.getAutenticador();
@@ -69,6 +70,8 @@ public class MainEmpresaActivity extends AppCompatActivity {
         toolbar.setTitle("UNAJob");
         toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.branco));
         setSupportActionBar(toolbar); //Método de suporte ao ActionBar
+
+        imgPerfil = (ImageView) toolbar.findViewById(R.id.imgPerfil);
 
         //configurar adapter e tabs
         TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager());
@@ -80,18 +83,26 @@ public class MainEmpresaActivity extends AppCompatActivity {
 
         //Armazenar id do usuário logado
         idUsuario = controller.getIdUsuario();
-        /*
+        imgPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                direcionarPerfil();
+            }
+        });
+
         databaseReference.child(controller.NODE_EMPRESA).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 empresa = dataSnapshot.getValue(Empresa.class);
-                if(!TextUtils.isEmpty(empresa.getPhotoUrl())){
-                    Picasso.with(MainEmpresaActivity.this).load(empresa.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfil);
-                }else{
-                    Picasso.with(MainEmpresaActivity.this).load(R.drawable.ic_empresa).transform(new CircleTransform()).into(imgPerfil);
+                if (empresa != null){
+                    if (empresa.getPhotoUrl() != null){
+                        if (!TextUtils.isEmpty(empresa.getPhotoUrl())){
+                            Picasso.with(MainEmpresaActivity.this).load(empresa.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfil);
+                        }else {
+                            Picasso.with(MainEmpresaActivity.this).load(R.drawable.ic_account_circle).into(imgPerfil);
+                        }
+                    }
                 }
-                toolbar.setTitle("");
-
             }
 
             @Override
@@ -99,7 +110,6 @@ public class MainEmpresaActivity extends AppCompatActivity {
 
             }
         });
-        */
     }
 
     @Override
@@ -138,6 +148,10 @@ public class MainEmpresaActivity extends AppCompatActivity {
     private void direcionarConfiguracoes(){
 
         Intent intent = new Intent(MainEmpresaActivity.this, ConfiguracoesActivity.class);
+        startActivity(intent);
+    }
+    private void direcionarPerfil(){
+        Intent intent = new Intent(MainEmpresaActivity.this, EditarPerfilActivity.class);
         startActivity(intent);
     }
 }

@@ -1,13 +1,17 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,11 +27,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
+import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Habilidades;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Usuario;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
+import projetoaplicado.vgoncalves.com.projetoaplicado.componente.transform.CircleTransform;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 
 public class EditarUsuarioPerfilActivity extends AppCompatActivity {
@@ -49,12 +58,19 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
     private EditText editRua;
     private EditText editNumero;
     private EditText editComplemento;
+    private EditText editHabilidades;
+    private ImageView imgPerfilUser;
     private Button btnSalvar;
+    private ArrayList<String> habilidadesArray;
+    private ArrayList selectedItemsModal;
+
 
     //ProgreesDialog
     private ProgressDialog progressDialog;
     private ProgressDialog progressDialogSalvar;
     private ProgressDialog progressDialogCep;
+
+    private AlertDialog dialog;
 
     //IdUsuario
     private String idUsuario;
@@ -70,6 +86,7 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
         controller = new Controller(this);
         databaseReference = controller.getDatabaseReference();
         idUsuario = controller.getIdUsuario();
+        selectedItemsModal = new ArrayList();
 
         editNome = (EditText) findViewById(R.id.editUserEditNome);
         editEmail = (EditText) findViewById(R.id.editUserEditEmail);
@@ -85,6 +102,8 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
         editNumero = (EditText) findViewById(R.id.editUserEditNumero);
         editComplemento = (EditText) findViewById(R.id.editUserEditCompl);
         btnSalvar = (Button) findViewById(R.id.btnSalvarPerfilUsuario);
+        editHabilidades = (EditText) findViewById(R.id.editUserEditHabilidades);
+        imgPerfilUser = (ImageView) findViewById(R.id.imgPerfilUser);
 
         //Mascaras
         SimpleMaskFormatter maskTel = new SimpleMaskFormatter("(NN)NNNNN-NNNN");
@@ -184,6 +203,7 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
                 usuario.setRua(editRua.getText().toString());
                 usuario.setNumero(editNumero.getText().toString());
                 usuario.setComplemento(editComplemento.getText().toString());
+                usuario.setHabilidades(editHabilidades.getText().toString());
                 //Salvar dados do usuario
                 usuario.setController(controller);
                 usuario.salvar();
@@ -194,13 +214,37 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
             }
         });
 
+        configurarModal();
+
+        editHabilidades.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    dialog.show();
+                }else {
+                    dialog.hide();
+                }
+            }
+        });
+        editHabilidades.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
+
     }
 
     private void preencherCampos(){
+        //Importa imagem de perfil
+        if (!TextUtils.isEmpty(usuario.getPhotoUrl()))
+            Picasso.with(EditarUsuarioPerfilActivity.this).load(usuario.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfilUser);
+
         editNome.setText(usuario.getNome());
         editEmail.setText(usuario.getEmail());
         editrelefoneCel.setText(usuario.getTelefoneCel());
         editTelefoneResidencial.setText(usuario.getTelefoneResidencial());
+        editHabilidades.setText(editHabilidades.getText().toString());
         editCEP.setText(usuario.getCEP());
         editPais.setText(usuario.getPais());
         editEstado.setText(usuario.getEstado());
@@ -227,5 +271,76 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Erro ao recuperar cep", Toast.LENGTH_LONG).show();
             progressDialogCep.hide();
         }
+    }
+
+    private void configurarModal(){
+        databaseReference.child(controller.NODE_HABILIDADES).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try{
+
+                    if (habilidadesArray == null)
+                        habilidadesArray = new ArrayList<String>();
+
+                    habilidadesArray.clear();
+                    for(DataSnapshot hablidade: dataSnapshot.getChildren()){
+                        Habilidades hab = hablidade.getValue(Habilidades.class);
+                        habilidadesArray.add(hab.getDescricao());
+                    }
+
+                    CharSequence[] items = habilidadesArray.toArray(new CharSequence[habilidadesArray.size()]);
+
+                    //Configuração do Modal
+                    dialog = new AlertDialog.Builder(EditarUsuarioPerfilActivity.this)
+                            .setTitle("Selecionar Habilidades")
+                            .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+                                    if (isChecked) {
+                                        selectedItemsModal.add(habilidadesArray.get(indexSelected));
+                                    } else if (selectedItemsModal.contains(indexSelected)) {
+                                        selectedItemsModal.remove(Integer.valueOf(indexSelected));
+                                    }
+                                }
+                            }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    preencherHabilidades();
+                                }
+                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //  Your code when user clicked on Cancel
+                                }
+                            }).create();
+
+                }catch (Exception e){
+                    e.getMessage();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    private void preencherHabilidades(){
+        String hab = null;
+
+        editHabilidades.setText("");
+
+        //Estrutura de repetição nas habilidades selecionadas
+        for (int i = 0; i < selectedItemsModal.size(); i++) {
+            if (hab == null){
+                hab = selectedItemsModal.get(i).toString();
+            }else{
+                hab = hab + "," + selectedItemsModal.get(i).toString();
+            }
+        }
+
+        //Preencher combo de habilidades
+        if (hab != null)
+            editHabilidades.setText(hab);
     }
 }

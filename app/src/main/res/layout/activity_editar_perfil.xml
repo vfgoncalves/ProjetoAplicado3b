@@ -19,20 +19,32 @@
             android:forceHasOverlappingRendering="false"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/FloatLabelBlack">
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/ic_account_circle"
+                    android:id="@+id/imgPerfilEmpresa"/>
 
-                <EditText
-                    android:id="@+id/editEmpNome"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:hint="Nome da Empresa"/>
+                    android:theme="@style/FloatLabelBlack">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/editEmpNome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:hint="Nome da Empresa"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

@@ -6,10 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:background="@color/colorPrimary"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    >
 
-    <ImageView
-        android:id="@+id/imgPerfil"
-        android:layout_width="40dp"
-        android:layout_height="40dp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="UNAJob"
+            android:textColor="@color/branco"
+            android:textSize="25dp"
+            android:paddingTop="10dp"/>
+
+        <ImageView
+            android:id="@+id/imgPerfil"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:paddingRight="10dp"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+
 </view>

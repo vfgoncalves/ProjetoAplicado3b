@@ -2,6 +2,7 @@ package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
             toolbar = (Toolbar) findViewById(R.id.toolbarUsuario);
             slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sltl_abasUsuario);
             viewPager = (ViewPager) findViewById(R.id.vp_paginaUsuario);
-            imgPerfil = (ImageView) findViewById(R.id.imgPerfil);
 
             controller = new Controller(this);
             databaseReference = controller.getDatabaseReference();
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.branco));
             setSupportActionBar(toolbar); //Método de suporte ao ActionBar
 
+            imgPerfil = (ImageView) toolbar.findViewById(R.id.imgPerfil);
 
             //configurar adapter e tabs
             UsuarioTabAdapter tabAdapter = new UsuarioTabAdapter(getSupportFragmentManager());
@@ -80,6 +82,35 @@ public class MainActivity extends AppCompatActivity {
 
             //Armazenar id do usuário logado
             idUsuario = controller.getIdUsuario();
+
+            imgPerfil.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    direcionarPerfil();;
+                }
+            });
+
+            databaseReference.child(controller.NODE_USUARIO).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    usuario = dataSnapshot.getValue(Usuario.class);
+                    if (usuario != null){
+                        if (usuario.getPhotoUrl() != null){
+                            if (!TextUtils.isEmpty(usuario.getPhotoUrl())){
+                                Picasso.with(MainActivity.this).load(usuario.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfil);
+                            }else {
+                                Picasso.with(MainActivity.this).load(R.drawable.ic_account_circle).into(imgPerfil);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
 
         }catch (Exception e){
             e.getMessage();
@@ -98,10 +129,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.item_sair:
                 deslogarUsuario();
                 return true;
+            case R.id.item_Configuracoes:
+                direcionarConfiguracoes();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
     private void deslogarUsuario(){
         //progressDialog.show();
         autenticador.signOut();
@@ -115,6 +148,13 @@ public class MainActivity extends AppCompatActivity {
 
         //progressDialog.hide();
     }
+    private void direcionarConfiguracoes(){
 
-
+        Intent intent = new Intent(MainActivity.this, ConfiguracoesActivity.class);
+        startActivity(intent);
+    }
+    private void direcionarPerfil(){
+        Intent intent = new Intent(MainActivity.this, EditarUsuarioPerfilActivity.class);
+        startActivity(intent);
+    }
 }

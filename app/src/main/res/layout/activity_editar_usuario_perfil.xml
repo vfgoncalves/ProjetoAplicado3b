@@ -5,7 +5,9 @@
     android:orientation="vertical"
     android:padding="10dip"
     android:weightSum="1"
-    android:focusable="true">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:forceHasOverlappingRendering="true">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="468dp"
@@ -19,18 +21,31 @@
             android:forceHasOverlappingRendering="false"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/FloatLabelBlack">
-                <EditText
-                    android:id="@+id/editUserEditNome"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/ic_account_circle"
+                    android:id="@+id/imgPerfilUser"/>
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Nome"
-                    android:inputType="textPersonName" />
-            </android.support.design.widget.TextInputLayout>
+                    android:theme="@style/FloatLabelBlack">
+                    <EditText
+                        android:id="@+id/editUserEditNome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Nome"
+                        android:inputType="textPersonName" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,6 +82,19 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Telefone Residencial"
+                    android:inputType="phone" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/FloatLabelBlack">
+                <EditText
+                    android:id="@+id/editUserEditHabilidades"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Habilidades Técnicas"
                     android:inputType="phone" />
             </android.support.design.widget.TextInputLayout>
 
