@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
+import projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter.VagasAdapter;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.CadastrarVagaActivity;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Vaga;
@@ -29,7 +30,7 @@ public class VagasEmpresaFragment extends Fragment {
     private FloatingActionButton btnCadastrarVaga;
     private ListView listVagas;
     private ArrayAdapter adapter;
-    private ArrayList<String> tituloVaga;
+    private ArrayList<Vaga> listaVagas;
     private DatabaseReference databaseReference;
     private String idUsuarioLogado;
     private Controller controller;
@@ -51,12 +52,13 @@ public class VagasEmpresaFragment extends Fragment {
         idUsuarioLogado = controller.getIdUsuario();
 
         //Instanciar objetos
-        tituloVaga = new ArrayList<>();
+        listaVagas = new ArrayList<>();
 
         //inicializar controles de tela
         btnCadastrarVaga = (FloatingActionButton) view.findViewById(R.id.floatCadastrarVaga);
         listVagas = (ListView) view.findViewById(R.id.listaFragmentVagas);
-        adapter = new ArrayAdapter(getActivity(), R.layout.lista_vagas, tituloVaga);
+        //adapter = new ArrayAdapter(getActivity(), R.layout.lista_vagas, tituloVaga);
+        adapter = new VagasAdapter(getActivity(), listaVagas);
 
         //Instanciar lista
         listVagas.setAdapter(adapter);
@@ -66,7 +68,7 @@ public class VagasEmpresaFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         try{
-                            tituloVaga.clear();
+                            listaVagas.clear();
                             //loop por estados
                             for(DataSnapshot estados: dataSnapshot.getChildren()){
                                 //loop por cidades
@@ -77,7 +79,7 @@ public class VagasEmpresaFragment extends Fragment {
                                         for(DataSnapshot vagas: cargos.getChildren()){
                                             Vaga vaga = vagas.getValue(Vaga.class);
                                             if (idUsuarioLogado.toString().equals(vaga.getIdEmpresa().toString())){
-                                                tituloVaga.add(vaga.getTitulo());
+                                                listaVagas.add(vaga);
                                             }
                                         }
                                     }

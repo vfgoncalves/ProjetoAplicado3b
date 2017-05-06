@@ -31,7 +31,10 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
@@ -48,6 +51,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
     private FloatingActionButton floatCadastrarVaga;
     private Vaga vaga;
     private String idUsuario;
+    private String nomeEmpresa;
     private Controller controller;
     private Spinner spnCargos;
     private Spinner spnEstados;
@@ -109,8 +113,10 @@ public class CadastrarVagaActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Empresa empresa = dataSnapshot.getValue(Empresa.class);
-                if(empresa != null)
+                if(empresa != null){
                     editVagaEmailContato.setText(empresa.getEmail());
+                    nomeEmpresa = empresa.getNome();
+                }
             }
 
             @Override
@@ -124,6 +130,9 @@ public class CadastrarVagaActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (validarCampos()){
                     try{
+                        Date date = new Date();
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
                         vaga = new Vaga();
                         //Preencher campos do objeto vaga
                         vaga.setTitulo(editVagaTitulo.getText().toString());
@@ -136,6 +145,8 @@ public class CadastrarVagaActivity extends AppCompatActivity {
                         vaga.setCargo(spnCargos.getSelectedItem().toString());
                         vaga.setHabilidades(editSelecHab.getText().toString());
                         vaga.setIdVaga(controller.getUUID());
+                        vaga.setDataVaga(dateFormat.format(date));
+                        vaga.setNomeEmpresa(nomeEmpresa);
                         vaga.salvar();
                         mostraMensagem("Vaga cadastrada com sucesso");
                         finish();

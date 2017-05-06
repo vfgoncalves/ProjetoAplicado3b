@@ -1,6 +1,9 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.Model;
 
+import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.DatabaseReference;
+
+import java.util.Date;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 
@@ -17,7 +20,9 @@ public class Vaga {
     private String estado;
     private String cargo;
     private String idVaga;
+    private String dataVaga;
     private String habilidades;
+    private String nomeEmpresa;
 
     private Controller controller;
 
@@ -95,6 +100,22 @@ public class Vaga {
 
     public void setHabilidades(String habilidades) {
         this.habilidades = habilidades;
+    }
+
+    public String getDataVaga() {
+        return dataVaga;
+    }
+
+    public void setDataVaga(String dataVaga) {
+        this.dataVaga = dataVaga;
+    }
+
+    public String getNomeEmpresa() {
+        return nomeEmpresa;
+    }
+
+    public void setNomeEmpresa(String nomeEmpresa) {
+        this.nomeEmpresa = nomeEmpresa;
     }
 
     public void salvar(){

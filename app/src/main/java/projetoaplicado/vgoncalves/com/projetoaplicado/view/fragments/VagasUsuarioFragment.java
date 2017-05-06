@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Filtro;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Vaga;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
+import projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter.VagasAdapter;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.CadastrarVagaActivity;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.FiltroActivity;
@@ -33,7 +34,7 @@ public class VagasUsuarioFragment extends Fragment {
     private FloatingActionButton btnFiltro;
     private ListView listVagas;
     private ArrayAdapter adapter;
-    private ArrayList<String> tituloVaga;
+    private ArrayList<Vaga> listaVagas;
     private DatabaseReference databaseReference;
     private String idUsuarioLogado;
     private Controller controller;
@@ -56,12 +57,14 @@ public class VagasUsuarioFragment extends Fragment {
         idUsuarioLogado = controller.getIdUsuario();
 
         //Instanciar objetos
-        tituloVaga = new ArrayList<>();
+        listaVagas = new ArrayList<>();
 
         //inicializar controles de tela
         btnFiltro = (FloatingActionButton) view.findViewById(R.id.floatFiltrosVaga);
         listVagas = (ListView) view.findViewById(R.id.listaFragmentVagasUser);
-        adapter = new ArrayAdapter(getActivity(), R.layout.lista_vagas, tituloVaga);
+        //adapter = new ArrayAdapter(getActivity(), R.layout.lista_vagas, listaVagas);
+        //Configuração do Adapter personalizado par alitar vagas
+        adapter = new VagasAdapter(getActivity(), listaVagas);
 
         //Instanciar lista
         listVagas.setAdapter(adapter);
@@ -105,7 +108,7 @@ public class VagasUsuarioFragment extends Fragment {
                     //loop por vagas
                     for(DataSnapshot vagas: cargos.getChildren()){
                         Vaga vaga = vagas.getValue(Vaga.class);
-                        tituloVaga.add(vaga.getTitulo());
+                        listaVagas.add(vaga);
                     }
                 }
             }
@@ -131,12 +134,12 @@ public class VagasUsuarioFragment extends Fragment {
                                         String[] hab = dadosFiltros.getHabilidades().split(",");
                                         for (int i = 0; i < hab.length; i++) {
                                             if (vaga.getHabilidades().contains(hab[i])){
-                                                tituloVaga.add(vaga.getTitulo());
+                                                listaVagas.add(vaga);
                                                 break;
                                             }
                                         }
                                     }else{
-                                        tituloVaga.add(vaga.getTitulo());
+                                        listaVagas.add(vaga);
                                     }
 
                                 }
@@ -152,7 +155,7 @@ public class VagasUsuarioFragment extends Fragment {
         databaseReference.child(controller.NODE_FILTROS).child(idUsuarioLogado).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                tituloVaga.clear();
+                listaVagas.clear();
                 Filtro filtro = dataSnapshot.getValue(Filtro.class);
                 if (filtro != null){
                     //preencher lista com filtros
