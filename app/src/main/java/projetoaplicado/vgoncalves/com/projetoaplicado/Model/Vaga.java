@@ -132,6 +132,15 @@ public class Vaga{
         }
     }
 
+    public void deletar(){
+        try {
+            DatabaseReference databaseReference = controller.getDatabaseReference();
+            databaseReference.child(controller.NODE_VAGA).child(getEstado()).child(getCidade()).child(getCargo()).child(getIdVaga()).removeValue();
+        }catch (Exception e){
+            e.getMessage();
+        }
+    }
+
     public JSONObject convertToJson(){
         JSONObject jsonObject = new JSONObject();
         try{
@@ -151,7 +160,6 @@ public class Vaga{
         }
         return jsonObject;
     }
-
     public void readJson(JSONObject jsonObject){
         try{
             this.setTitulo(jsonObject.getString("titulo"));
