@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -24,7 +25,10 @@ import projetoaplicado.vgoncalves.com.projetoaplicado.R;
 import projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter.VagasAdapter;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.CadastrarVagaActivity;
+import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.DetalheVagaActivity;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.FiltroActivity;
+import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.LoginActivity;
+import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.

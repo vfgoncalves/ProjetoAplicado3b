@@ -3,11 +3,13 @@ package projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -16,7 +18,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Empresa;
 import projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter.VagasAdapter;
@@ -24,6 +30,7 @@ import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.CadastrarVagaActivity;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Vaga;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
+import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.DetalheVagaActivity;
 
 public class VagasEmpresaFragment extends Fragment {
 
@@ -104,6 +111,24 @@ public class VagasEmpresaFragment extends Fragment {
                 //Navegar até tela de edição de perfil
                 Intent intent = new Intent(getActivity(), CadastrarVagaActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        listVagas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try{
+                    Vaga vaga = listaVagas.get(position);
+                    Intent intent = new Intent(getActivity(), DetalheVagaActivity.class);
+                    //Converter dados da classe em json
+                    JSONObject jsonObject = vaga.convertToJson();
+                    //enviar dados para activity
+                    intent.putExtra("vagaatual", jsonObject.toString());
+
+                    startActivity(intent);
+                }catch (Exception e){
+                    e.getMessage();
+                }
             }
         });
 
