@@ -50,6 +50,76 @@ public class MainEmpresaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_empresa);
 
+        inicializarControlesConfiguracao();
+
+        imgPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                direcionarPerfil();
+            }
+        });
+        databaseReference.child(controller.NODE_EMPRESA).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                empresa = dataSnapshot.getValue(Empresa.class);
+                if (empresa != null){
+                    if (empresa.getPhotoUrl() != null){
+                        if (!TextUtils.isEmpty(empresa.getPhotoUrl())){
+                            Picasso.with(MainEmpresaActivity.this).load(empresa.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfil);
+                        }else {
+                            Picasso.with(MainEmpresaActivity.this).load(R.drawable.ic_account_circle).into(imgPerfil);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main_empresa, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_sair:
+                deslogarUsuario();
+                return true;
+            case R.id.item_Configuracoes:
+                direcionarConfiguracoes();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    private void deslogarUsuario(){
+        progressDialog.show();
+        autenticador.signOut();
+        controller.limpaIdUsuario();
+
+        //Navegar até tela de login
+        Intent intent = new Intent(MainEmpresaActivity.this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+
+        progressDialog.hide();
+    }
+    private void direcionarConfiguracoes(){
+
+        Intent intent = new Intent(MainEmpresaActivity.this, ConfiguracoesActivity.class);
+        startActivity(intent);
+    }
+    private void direcionarPerfil(){
+        Intent intent = new Intent(MainEmpresaActivity.this, EditarPerfilActivity.class);
+        startActivity(intent);
+    }
+    private void inicializarControlesConfiguracao(){
         //Configurar Progress Dialog
         progressDialog = new ProgressDialog(MainEmpresaActivity.this);
         progressDialog.setTitle("Carregando");
@@ -83,75 +153,5 @@ public class MainEmpresaActivity extends AppCompatActivity {
 
         //Armazenar id do usuário logado
         idUsuario = controller.getIdUsuario();
-        imgPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                direcionarPerfil();
-            }
-        });
-
-        databaseReference.child(controller.NODE_EMPRESA).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                empresa = dataSnapshot.getValue(Empresa.class);
-                if (empresa != null){
-                    if (empresa.getPhotoUrl() != null){
-                        if (!TextUtils.isEmpty(empresa.getPhotoUrl())){
-                            Picasso.with(MainEmpresaActivity.this).load(empresa.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfil);
-                        }else {
-                            Picasso.with(MainEmpresaActivity.this).load(R.drawable.ic_account_circle).into(imgPerfil);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main_empresa, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item_sair:
-                deslogarUsuario();
-                return true;
-            case R.id.item_Configuracoes:
-                direcionarConfiguracoes();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void deslogarUsuario(){
-        progressDialog.show();
-        autenticador.signOut();
-        controller.limpaIdUsuario();
-
-        //Navegar até tela de login
-        Intent intent = new Intent(MainEmpresaActivity.this, HomeActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-
-        progressDialog.hide();
-    }
-    private void direcionarConfiguracoes(){
-
-        Intent intent = new Intent(MainEmpresaActivity.this, ConfiguracoesActivity.class);
-        startActivity(intent);
-    }
-    private void direcionarPerfil(){
-        Intent intent = new Intent(MainEmpresaActivity.this, EditarPerfilActivity.class);
-        startActivity(intent);
     }
 }

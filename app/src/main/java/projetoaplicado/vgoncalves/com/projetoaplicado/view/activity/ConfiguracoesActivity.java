@@ -43,18 +43,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracoes);
 
-        controller = new Controller(this);
-        databaseReference = controller.getDatabaseReference();
-
-        descHab = (EditText) findViewById(R.id.editHabilidade);
-        btnCadastrarHab = (Button) findViewById(R.id.btnCadastrarHab);
-        btnMostrarHab = (Button) findViewById(R.id.btnMostrarHab);
-
-        //Configurar progress dialog
-        progressDialog = new ProgressDialog(ConfiguracoesActivity.this);
-        progressDialog.setMessage("Cadastrando habilidades...");
-        progressDialog.setCancelable(false);
-
+        inicializarControlesConfiguracao();
         btnCadastrarHab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +104,6 @@ public class ConfiguracoesActivity extends AppCompatActivity {
             }
         });
     }
-
     private void configurarDialog(){
         databaseReference.child(controller.NODE_HABILIDADES).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -154,5 +142,18 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void inicializarControlesConfiguracao(){
+        controller = new Controller(this);
+        databaseReference = controller.getDatabaseReference();
+
+        descHab = (EditText) findViewById(R.id.editHabilidade);
+        btnCadastrarHab = (Button) findViewById(R.id.btnCadastrarHab);
+        btnMostrarHab = (Button) findViewById(R.id.btnMostrarHab);
+
+        //Configurar progress dialog
+        progressDialog = new ProgressDialog(ConfiguracoesActivity.this);
+        progressDialog.setMessage("Cadastrando habilidades...");
+        progressDialog.setCancelable(false);
     }
 }

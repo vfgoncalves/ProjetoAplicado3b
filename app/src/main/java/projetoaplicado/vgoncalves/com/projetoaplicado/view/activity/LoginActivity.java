@@ -79,27 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Receber controles da Activity
-        lnkCadastrar = (TextView) findViewById(R.id.lnkCadastrar);
-        btnLogar = (Button) findViewById(R.id.btnLogin);
-        imgLoginGoogle = (ImageButton) findViewById(R.id.imgLoginGoogle);
-        imgLoginLinkedin = (ImageButton) findViewById(R.id.imgLoginLinkedin);
-        email = (EditText) findViewById(R.id.editLoginEmail);
-
-        senha = (EditText) findViewById(R.id.editLoginSenha);
-
-        //Configurando progressDialog
-        progressDialog = new ProgressDialog(LoginActivity.this);
-        progressDialog.setMessage("Efetuando login com a conta Google");
-        progressDialog.setCancelable(false);//Configurando progressDialog
-
-        progressDialogLinkedin = new ProgressDialog(LoginActivity.this);
-        progressDialogLinkedin.setMessage("Efetuando login com a conta Linkedin");
-        progressDialogLinkedin.setCancelable(false);
-
-        controller = new Controller(LoginActivity.this);
-        databaseReference = controller.getDatabaseReference();
-        autenticador = controller.getAutenticador();
+        inicializarControlesConfiguracao();
 
         //Método de click no link Cadastrar, levando à próxima activity
         lnkCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -274,7 +254,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
-
     }
     /*
     INÍCIO LOGIN COM LINKEDIN
@@ -341,5 +320,27 @@ public class LoginActivity extends AppCompatActivity {
             e.getMessage();
         }
     }
+    private void inicializarControlesConfiguracao(){
+        //Receber controles da Activity
+        lnkCadastrar = (TextView) findViewById(R.id.lnkCadastrar);
+        btnLogar = (Button) findViewById(R.id.btnLogin);
+        imgLoginGoogle = (ImageButton) findViewById(R.id.imgLoginGoogle);
+        imgLoginLinkedin = (ImageButton) findViewById(R.id.imgLoginLinkedin);
+        email = (EditText) findViewById(R.id.editLoginEmail);
 
+        senha = (EditText) findViewById(R.id.editLoginSenha);
+
+        //Configurando progressDialog
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setMessage("Efetuando login com a conta Google");
+        progressDialog.setCancelable(false);//Configurando progressDialog
+
+        progressDialogLinkedin = new ProgressDialog(LoginActivity.this);
+        progressDialogLinkedin.setMessage("Efetuando login com a conta Linkedin");
+        progressDialogLinkedin.setCancelable(false);
+
+        controller = new Controller(LoginActivity.this);
+        databaseReference = controller.getDatabaseReference();
+        autenticador = controller.getAutenticador();
+    }
 }

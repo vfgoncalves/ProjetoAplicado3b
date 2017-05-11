@@ -85,59 +85,7 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_usuario_perfil);
 
-        controller = new Controller(this);
-        databaseReference = controller.getDatabaseReference();
-        idUsuario = controller.getIdUsuario();
-        selectedItemsModal = new ArrayList();
-
-        editNome = (EditText) findViewById(R.id.editUserEditNome);
-        editEmail = (EditText) findViewById(R.id.editUserEditEmail);
-        editrelefoneCel = (EditText) findViewById(R.id.editUserEditTelCel);
-        editTelefoneResidencial = (EditText) findViewById(R.id.editUserEditTelRes);
-        editCEP = (EditText) findViewById(R.id.editUserEditCEP);
-        editCEP.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        editPais = (EditText) findViewById(R.id.editUserEditPais);
-        editEstado = (EditText) findViewById(R.id.editUserEditEst);
-        editCidade = (EditText) findViewById(R.id.editUserEditCid);
-        editBairro = (EditText) findViewById(R.id.editUserEditBairro);
-        editRua = (EditText) findViewById(R.id.editUserEditRua);
-        editNumero = (EditText) findViewById(R.id.editUserEditNumero);
-        editComplemento = (EditText) findViewById(R.id.editUserEditCompl);
-        btnSalvar = (Button) findViewById(R.id.btnSalvarPerfilUsuario);
-        textUserEditHabilidades = (MultiAutoCompleteTextView) findViewById(R.id.textUserEditHabilidades);
-        imgPerfilUser = (ImageView) findViewById(R.id.imgPerfilUser);
-
-        //Mascaras
-        SimpleMaskFormatter maskTel = new SimpleMaskFormatter("(NN)NNNNN-NNNN");
-        SimpleMaskFormatter maskTelRes = new SimpleMaskFormatter("(NN)NNNN-NNNN");
-        SimpleMaskFormatter maskCep = new SimpleMaskFormatter("NNNNN-NNN");
-
-        //Watcher para edição do texto do controle
-        MaskTextWatcher watcherTel = new MaskTextWatcher(editrelefoneCel, maskTel);
-        MaskTextWatcher watcherTelRes = new MaskTextWatcher(editTelefoneResidencial, maskTelRes);
-        MaskTextWatcher watcherCEP = new MaskTextWatcher(editCEP, maskCep);
-
-        //Aplica mascaras aos devidos controles
-        editrelefoneCel.addTextChangedListener(watcherTel);
-        editTelefoneResidencial.addTextChangedListener(watcherTelRes);
-        editCEP.addTextChangedListener(watcherCEP);
-
-
-        //Configurar Progress Dialog
-        progressDialog = new ProgressDialog(EditarUsuarioPerfilActivity.this);
-        progressDialog.setTitle("Carregando");
-        progressDialog.setMessage("Por favor aguarde, estamos carregando as informações");
-        progressDialog.setCancelable(false);
-
-        progressDialogSalvar = new ProgressDialog(EditarUsuarioPerfilActivity.this);
-        progressDialogSalvar.setTitle("Salvando");
-        progressDialogSalvar.setMessage("Por favor aguarde, estamos salvando as informações");
-        progressDialogSalvar.setCancelable(false);
-
-        progressDialogCep = new ProgressDialog(EditarUsuarioPerfilActivity.this);
-        progressDialogCep.setTitle("Aguarde");
-        progressDialogCep.setMessage("Por favor aguarde, estamos buscando os dados do seu endereço");
-        progressDialogCep.setCancelable(false);
+        inicializarControlesConfiguracao();
 
         databaseReference.child(controller.NODE_USUARIO).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -269,7 +217,6 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
         editNumero.setText(usuario.getNumero());
         editComplemento.setText(usuario.getComplemento());
     }
-
     private void preencherCamposEndereco(String json){
         try {
             JSONObject jsonObject = new JSONObject(json);
@@ -286,5 +233,60 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Erro ao recuperar cep", Toast.LENGTH_LONG).show();
             progressDialogCep.hide();
         }
+    }
+    private void inicializarControlesConfiguracao(){
+        controller = new Controller(this);
+        databaseReference = controller.getDatabaseReference();
+        idUsuario = controller.getIdUsuario();
+        selectedItemsModal = new ArrayList();
+
+        editNome = (EditText) findViewById(R.id.editUserEditNome);
+        editEmail = (EditText) findViewById(R.id.editUserEditEmail);
+        editrelefoneCel = (EditText) findViewById(R.id.editUserEditTelCel);
+        editTelefoneResidencial = (EditText) findViewById(R.id.editUserEditTelRes);
+        editCEP = (EditText) findViewById(R.id.editUserEditCEP);
+        editCEP.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        editPais = (EditText) findViewById(R.id.editUserEditPais);
+        editEstado = (EditText) findViewById(R.id.editUserEditEst);
+        editCidade = (EditText) findViewById(R.id.editUserEditCid);
+        editBairro = (EditText) findViewById(R.id.editUserEditBairro);
+        editRua = (EditText) findViewById(R.id.editUserEditRua);
+        editNumero = (EditText) findViewById(R.id.editUserEditNumero);
+        editComplemento = (EditText) findViewById(R.id.editUserEditCompl);
+        btnSalvar = (Button) findViewById(R.id.btnSalvarPerfilUsuario);
+        textUserEditHabilidades = (MultiAutoCompleteTextView) findViewById(R.id.textUserEditHabilidades);
+        imgPerfilUser = (ImageView) findViewById(R.id.imgPerfilUser);
+
+        //Mascaras
+        SimpleMaskFormatter maskTel = new SimpleMaskFormatter("(NN)NNNNN-NNNN");
+        SimpleMaskFormatter maskTelRes = new SimpleMaskFormatter("(NN)NNNN-NNNN");
+        SimpleMaskFormatter maskCep = new SimpleMaskFormatter("NNNNN-NNN");
+
+        //Watcher para edição do texto do controle
+        MaskTextWatcher watcherTel = new MaskTextWatcher(editrelefoneCel, maskTel);
+        MaskTextWatcher watcherTelRes = new MaskTextWatcher(editTelefoneResidencial, maskTelRes);
+        MaskTextWatcher watcherCEP = new MaskTextWatcher(editCEP, maskCep);
+
+        //Aplica mascaras aos devidos controles
+        editrelefoneCel.addTextChangedListener(watcherTel);
+        editTelefoneResidencial.addTextChangedListener(watcherTelRes);
+        editCEP.addTextChangedListener(watcherCEP);
+
+
+        //Configurar Progress Dialog
+        progressDialog = new ProgressDialog(EditarUsuarioPerfilActivity.this);
+        progressDialog.setTitle("Carregando");
+        progressDialog.setMessage("Por favor aguarde, estamos carregando as informações");
+        progressDialog.setCancelable(false);
+
+        progressDialogSalvar = new ProgressDialog(EditarUsuarioPerfilActivity.this);
+        progressDialogSalvar.setTitle("Salvando");
+        progressDialogSalvar.setMessage("Por favor aguarde, estamos salvando as informações");
+        progressDialogSalvar.setCancelable(false);
+
+        progressDialogCep = new ProgressDialog(EditarUsuarioPerfilActivity.this);
+        progressDialogCep.setTitle("Aguarde");
+        progressDialogCep.setMessage("Por favor aguarde, estamos buscando os dados do seu endereço");
+        progressDialogCep.setCancelable(false);
     }
 }

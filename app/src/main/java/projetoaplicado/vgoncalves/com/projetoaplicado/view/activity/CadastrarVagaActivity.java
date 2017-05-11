@@ -76,36 +76,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_vaga);
 
-        controller = new Controller(CadastrarVagaActivity.this);
-        idUsuario = controller.getIdUsuario();
-        databaseReference = controller.getDatabaseReference();
-        selectedItemsModal = new ArrayList();
-        //Inicializar controles
-        editVagaTitulo = (EditText) findViewById(R.id.editVagaTitulo);
-        editVagaEmailContato = (EditText) findViewById(R.id.editVagaEmailContato);
-        editVagaDescricao = (EditText) findViewById(R.id.editVagaDescricao);
-        floatCadastrarVaga = (FloatingActionButton) findViewById(R.id.floatCadastrarVaga);
-        spnCargos = (Spinner) findViewById(R.id.spnCargo);
-        spnEstados = (Spinner) findViewById(R.id.spnEstado);
-        txtCidades = (AutoCompleteTextView) findViewById(R.id.textCidade);
-        textSelecHab = (MultiAutoCompleteTextView) findViewById(R.id.textSelecHab);
-
-        //Configurar ProgressDialogs
-        progressDialogCidades = new ProgressDialog(CadastrarVagaActivity.this);
-        progressDialogCidades.setTitle("Buscando cidades");
-        progressDialogCidades.setMessage("Carregando cidades...");
-        progressDialogCidades.setCancelable(false);
-
-        //Instancia do adapter para preencher spinner de cargos
-        ArrayAdapter<CharSequence> adapterCargos = ArrayAdapter.createFromResource(this,R.array.cargos, android.R.layout.simple_spinner_item);
-        adapterCargos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnCargos.setAdapter(adapterCargos);
-
-        //Método utilizado para preencher spinner com os estados brasileiros
-        preencherEstados();
-
-        //Desabilitar spinner de cidades até a seleção de um estado
-        txtCidades.setEnabled(false);
+        incializarControlesConfiguracao();
 
         //buscar dados do usuário logado
         databaseReference.child(controller.NODE_EMPRESA).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -175,8 +146,6 @@ public class CadastrarVagaActivity extends AppCompatActivity {
 
             }
         });
-
-
         databaseReference.child(controller.NODE_HABILIDADES).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -205,8 +174,6 @@ public class CadastrarVagaActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private boolean validarCampos(){
@@ -229,6 +196,10 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         }
         if (TextUtils.isEmpty(txtCidades.getText())){
             mostraMensagem("Favor selecionar a cidade em que a vaga está disponível");
+            return false;
+        }
+        if (TextUtils.isEmpty(textSelecHab.getText())){
+            mostraMensagem("Favor preencher o pelo menos uma habilidade técnica!");
             return false;
         }
         if (TextUtils.isEmpty(editVagaDescricao.getText())){
@@ -391,5 +362,37 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         }catch (Exception e){
             e.getMessage();
         }
+    }
+    private void incializarControlesConfiguracao(){
+        controller = new Controller(CadastrarVagaActivity.this);
+        idUsuario = controller.getIdUsuario();
+        databaseReference = controller.getDatabaseReference();
+        selectedItemsModal = new ArrayList();
+        //Inicializar controles
+        editVagaTitulo = (EditText) findViewById(R.id.editVagaTitulo);
+        editVagaEmailContato = (EditText) findViewById(R.id.editVagaEmailContato);
+        editVagaDescricao = (EditText) findViewById(R.id.editVagaDescricao);
+        floatCadastrarVaga = (FloatingActionButton) findViewById(R.id.floatCadastrarVaga);
+        spnCargos = (Spinner) findViewById(R.id.spnCargo);
+        spnEstados = (Spinner) findViewById(R.id.spnEstado);
+        txtCidades = (AutoCompleteTextView) findViewById(R.id.textCidade);
+        textSelecHab = (MultiAutoCompleteTextView) findViewById(R.id.textSelecHab);
+
+        //Configurar ProgressDialogs
+        progressDialogCidades = new ProgressDialog(CadastrarVagaActivity.this);
+        progressDialogCidades.setTitle("Buscando cidades");
+        progressDialogCidades.setMessage("Carregando cidades...");
+        progressDialogCidades.setCancelable(false);
+
+        //Instancia do adapter para preencher spinner de cargos
+        ArrayAdapter<CharSequence> adapterCargos = ArrayAdapter.createFromResource(this,R.array.cargos, android.R.layout.simple_spinner_item);
+        adapterCargos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnCargos.setAdapter(adapterCargos);
+
+        //Método utilizado para preencher spinner com os estados brasileiros
+        preencherEstados();
+
+        //Desabilitar spinner de cidades até a seleção de um estado
+        txtCidades.setEnabled(false);
     }
 }

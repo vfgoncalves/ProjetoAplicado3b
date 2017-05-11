@@ -71,32 +71,7 @@ public class CadastroEmpresaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_empresa);
 
-        nome = (EditText) findViewById(R.id.editCadNome);
-        email = (EditText) findViewById(R.id.editCadEmail);
-        telefone = (EditText) findViewById(R.id.editCadTel);
-        senha = (EditText) findViewById(R.id.editCadSenha);
-        btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
-        imgSignGoogleEmp = (ImageButton) findViewById(R.id.imgSignGoogleEmp);
-        imgSignLinkedinEmp = (ImageButton) findViewById(R.id.imgSignLinkedinEmp);
-
-        //Mascaras
-        SimpleMaskFormatter maskTel = new SimpleMaskFormatter("(NN)NNNN-NNNN");
-        MaskTextWatcher watcherTel = new MaskTextWatcher(telefone, maskTel);
-
-        //Aplica mascaras aos devidos controles
-        telefone.addTextChangedListener(watcherTel);
-
-        //Configurando progressDialog
-        progressDialog = new ProgressDialog(CadastroEmpresaActivity.this);
-        progressDialog.setMessage("Aguarde, estamos efetuando o cadastro");
-        progressDialog.setCancelable(false);
-
-        progressDialogLinkedin = new ProgressDialog(CadastroEmpresaActivity.this);
-        progressDialogLinkedin.setMessage("Aguarde, estamos efetuando o cadastro com a conta Linkedin");
-        progressDialogLinkedin.setCancelable(false);
-
-        controller = new Controller(CadastroEmpresaActivity.this);
-        autenticacao = controller.getAutenticador();
+        incializarControlesConfiguracao();
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -363,5 +338,32 @@ public class CadastroEmpresaActivity extends AppCompatActivity {
             e.getMessage();
         }
     }
+    private void incializarControlesConfiguracao(){
+        nome = (EditText) findViewById(R.id.editCadNome);
+        email = (EditText) findViewById(R.id.editCadEmail);
+        telefone = (EditText) findViewById(R.id.editCadTel);
+        senha = (EditText) findViewById(R.id.editCadSenha);
+        btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
+        imgSignGoogleEmp = (ImageButton) findViewById(R.id.imgSignGoogleEmp);
+        imgSignLinkedinEmp = (ImageButton) findViewById(R.id.imgSignLinkedinEmp);
 
+        //Mascaras
+        SimpleMaskFormatter maskTel = new SimpleMaskFormatter("(NN)NNNN-NNNN");
+        MaskTextWatcher watcherTel = new MaskTextWatcher(telefone, maskTel);
+
+        //Aplica mascaras aos devidos controles
+        telefone.addTextChangedListener(watcherTel);
+
+        //Configurando progressDialog
+        progressDialog = new ProgressDialog(CadastroEmpresaActivity.this);
+        progressDialog.setMessage("Aguarde, estamos efetuando o cadastro");
+        progressDialog.setCancelable(false);
+
+        progressDialogLinkedin = new ProgressDialog(CadastroEmpresaActivity.this);
+        progressDialogLinkedin.setMessage("Aguarde, estamos efetuando o cadastro com a conta Linkedin");
+        progressDialogLinkedin.setCancelable(false);
+
+        controller = new Controller(CadastroEmpresaActivity.this);
+        autenticacao = controller.getAutenticador();
+    }
 }

@@ -42,24 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        permissoes = new String[]{
-          Manifest.permission.INTERNET
-        };
-
-        Controller.validaPermissoes(1,this,permissoes);
-
-        btnCadastrar = (Button) findViewById(R.id.btnHomeCadastrar);
-        btnLogar = (Button) findViewById(R.id.btnHomeLogar);
-
-        //Configurar Progress Dialog
-        progressDialog = new ProgressDialog(HomeActivity.this);
-        progressDialog.setTitle("Identificando usuário logado");
-        progressDialog.setMessage("Por favor aguarde, estamos identificando o usuário logado");
-        progressDialog.setCancelable(false);
-
-        controller = new Controller(HomeActivity.this);
-        autenticador = controller.getAutenticador();
-        databaseReference = controller.getDatabaseReference();
+        inicializarControlesConfiguracao();
 
         verificarUsuarioLogado();
 
@@ -79,32 +62,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        //computePakageHash();
-
     }
-
-    private void computePakageHash() {
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "projetoaplicado.vgoncalves.com.projetoaplicado",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (Exception e) {
-            Log.e("TAG",e.getMessage());
-        }
-    }
-
     private void verificarUsuarioLogado(){
         if (autenticador.getCurrentUser() != null){
             progressDialog.show();
             abrirTelaPrincipal();
         }
     }
-
     private void abrirTelaPrincipal(){
         controller.salvarPrefIdUsuario(autenticador.getCurrentUser().getUid());
 
@@ -147,5 +111,25 @@ public class HomeActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+    private void inicializarControlesConfiguracao(){
+        permissoes = new String[]{
+                Manifest.permission.INTERNET
+        };
+
+        Controller.validaPermissoes(1,this,permissoes);
+
+        btnCadastrar = (Button) findViewById(R.id.btnHomeCadastrar);
+        btnLogar = (Button) findViewById(R.id.btnHomeLogar);
+
+        //Configurar Progress Dialog
+        progressDialog = new ProgressDialog(HomeActivity.this);
+        progressDialog.setTitle("Identificando usuário logado");
+        progressDialog.setMessage("Por favor aguarde, estamos identificando o usuário logado");
+        progressDialog.setCancelable(false);
+
+        controller = new Controller(HomeActivity.this);
+        autenticador = controller.getAutenticador();
+        databaseReference = controller.getDatabaseReference();
     }
 }

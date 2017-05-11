@@ -64,56 +64,7 @@ public class EditarPerfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
 
-        //Receber instância do Firebase
-        controller = new Controller(EditarPerfilActivity.this);
-        databaseReference = controller.getDatabaseReference();
-
-        //Configurar Progress Dialog
-        progressDialog = new ProgressDialog(EditarPerfilActivity.this);
-        progressDialog.setTitle("Carregando");
-        progressDialog.setMessage("Por favor aguarde, estamos carregando as informações");
-        progressDialog.setCancelable(false);
-
-        progressDialogSalvar = new ProgressDialog(EditarPerfilActivity.this);
-        progressDialogSalvar.setTitle("Salvando");
-        progressDialogSalvar.setMessage("Por favor aguarde, estamos salvando as informações");
-        progressDialogSalvar.setCancelable(false);
-
-        progressDialogCep = new ProgressDialog(EditarPerfilActivity.this);
-        progressDialogCep.setTitle("Aguarde");
-        progressDialogCep.setMessage("Por favor aguarde, estamos buscando os dados do seu endereço");
-        progressDialogCep.setCancelable(false);
-
-        //Armazenar id do usuário logado
-        idEmpresa = controller.getIdUsuario();
-
-        //Inicializar controle
-        editEmpCompl = (EditText) findViewById(R.id.editEmpCompl);
-        editEmpNumero= (EditText) findViewById(R.id.editEmpNumero);
-        editEmpRua= (EditText) findViewById(R.id.editEmpRua);
-        editEmpBairro= (EditText) findViewById(R.id.editEmpBairro);
-        editEmpCid= (EditText) findViewById(R.id.editEmpCid);
-        editEmpEst= (EditText) findViewById(R.id.editEmpEst);
-        editEmpPais= (EditText) findViewById(R.id.editEmpPais);
-        editEmpCEP= (EditText) findViewById(R.id.editEmpCEP);
-        editEmpCEP.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        editEmpTel= (EditText) findViewById(R.id.editEmpTel);
-        editEmpEmail= (EditText) findViewById(R.id.editEmpEmail);
-        editEmpNome= (EditText) findViewById(R.id.editEmpNome);
-        btnSalvar = (Button) findViewById(R.id.btnSalvarPerfil);
-        imgPerfilUser = (ImageView) findViewById(R.id.imgPerfilEmpresa);
-
-        //Mascaras
-        SimpleMaskFormatter maskTel = new SimpleMaskFormatter("(NN)NNNN-NNNN");
-        SimpleMaskFormatter maskCep = new SimpleMaskFormatter("NNNNN-NNN");
-
-        //Watcher para edição do texto do controle
-        MaskTextWatcher watcherTel = new MaskTextWatcher(editEmpTel, maskTel);
-        MaskTextWatcher watcherCEP = new MaskTextWatcher(editEmpCEP, maskCep);
-
-        //Aplica mascaras aos devidos controles
-        editEmpTel.addTextChangedListener(watcherTel);
-        editEmpCEP.addTextChangedListener(watcherCEP);
+        inicializarControlesConfiguracao();
 
         databaseReference.child(controller.NODE_EMPRESA).child(idEmpresa).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -225,6 +176,58 @@ public class EditarPerfilActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Erro ao recuperar cep", Toast.LENGTH_LONG).show();
             progressDialogCep.hide();
         }
+    }
+    private void inicializarControlesConfiguracao(){
+        //Receber instância do Firebase
+        controller = new Controller(EditarPerfilActivity.this);
+        databaseReference = controller.getDatabaseReference();
+
+        //Configurar Progress Dialog
+        progressDialog = new ProgressDialog(EditarPerfilActivity.this);
+        progressDialog.setTitle("Carregando");
+        progressDialog.setMessage("Por favor aguarde, estamos carregando as informações");
+        progressDialog.setCancelable(false);
+
+        progressDialogSalvar = new ProgressDialog(EditarPerfilActivity.this);
+        progressDialogSalvar.setTitle("Salvando");
+        progressDialogSalvar.setMessage("Por favor aguarde, estamos salvando as informações");
+        progressDialogSalvar.setCancelable(false);
+
+        progressDialogCep = new ProgressDialog(EditarPerfilActivity.this);
+        progressDialogCep.setTitle("Aguarde");
+        progressDialogCep.setMessage("Por favor aguarde, estamos buscando os dados do seu endereço");
+        progressDialogCep.setCancelable(false);
+
+        //Armazenar id do usuário logado
+        idEmpresa = controller.getIdUsuario();
+
+        //Inicializar controle
+        editEmpCompl = (EditText) findViewById(R.id.editEmpCompl);
+        editEmpNumero= (EditText) findViewById(R.id.editEmpNumero);
+        editEmpRua= (EditText) findViewById(R.id.editEmpRua);
+        editEmpBairro= (EditText) findViewById(R.id.editEmpBairro);
+        editEmpCid= (EditText) findViewById(R.id.editEmpCid);
+        editEmpEst= (EditText) findViewById(R.id.editEmpEst);
+        editEmpPais= (EditText) findViewById(R.id.editEmpPais);
+        editEmpCEP= (EditText) findViewById(R.id.editEmpCEP);
+        editEmpCEP.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        editEmpTel= (EditText) findViewById(R.id.editEmpTel);
+        editEmpEmail= (EditText) findViewById(R.id.editEmpEmail);
+        editEmpNome= (EditText) findViewById(R.id.editEmpNome);
+        btnSalvar = (Button) findViewById(R.id.btnSalvarPerfil);
+        imgPerfilUser = (ImageView) findViewById(R.id.imgPerfilEmpresa);
+
+        //Mascaras
+        SimpleMaskFormatter maskTel = new SimpleMaskFormatter("(NN)NNNN-NNNN");
+        SimpleMaskFormatter maskCep = new SimpleMaskFormatter("NNNNN-NNN");
+
+        //Watcher para edição do texto do controle
+        MaskTextWatcher watcherTel = new MaskTextWatcher(editEmpTel, maskTel);
+        MaskTextWatcher watcherCEP = new MaskTextWatcher(editEmpCEP, maskCep);
+
+        //Aplica mascaras aos devidos controles
+        editEmpTel.addTextChangedListener(watcherTel);
+        editEmpCEP.addTextChangedListener(watcherCEP);
     }
 
 }

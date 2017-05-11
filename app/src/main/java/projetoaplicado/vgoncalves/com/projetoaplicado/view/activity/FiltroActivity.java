@@ -69,40 +69,7 @@ public class FiltroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtro);
 
-        controller = new Controller(FiltroActivity.this);
-        idUsuario = controller.getIdUsuario();
-        databaseReference = controller.getDatabaseReference();
-
-        //Inicializar controles
-        spnCargos = (Spinner) findViewById(R.id.spnFiltroCargo);
-        spnEstados = (Spinner) findViewById(R.id.spnFiltroEstado);
-        txtCidades = (AutoCompleteTextView) findViewById(R.id.textFiltroCidade);
-        textSelecHabFiltro = (MultiAutoCompleteTextView) findViewById(R.id.textSelecHabFiltro);
-        btnAplicarFiltro = (Button) findViewById(R.id.btnAplicarFiltro);
-
-        progressDialogCidades = new ProgressDialog(FiltroActivity.this);
-        progressDialogCidades.setTitle("Buscando cidades");
-        progressDialogCidades.setMessage("Carregando cidades...");
-        progressDialogCidades.setCancelable(false);
-
-        progressDialog = new ProgressDialog(FiltroActivity.this);
-        progressDialog.setMessage("Salvando filtros...");
-        progressDialog.setCancelable(false);
-
-        //Instancia do adapter para preencher spinner de cargos
-        ArrayAdapter<CharSequence> adapterCargos = ArrayAdapter.createFromResource(this,R.array.cargos, android.R.layout.simple_spinner_item);
-        adapterCargos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnCargos.setAdapter(adapterCargos);
-
-        //preenche arraylist de cargos para recuperação de filtro
-        String[] cargo = getResources().getStringArray(R.array.cargos);
-        cargos = new ArrayList<String>(Arrays.asList(cargo));
-
-        //Método utilizado para preencher spinner com os estados brasileiros
-        preencherEstados();
-
-        //Desabilitar spinner de cidades até a seleção de um estado
-        //txtCidades.setEnabled(false);
+        inicializarControlesConfiguracao();
 
         spnEstados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -124,7 +91,6 @@ public class FiltroActivity extends AppCompatActivity {
 
             }
         });
-
         databaseReference.child(controller.NODE_HABILIDADES).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -154,7 +120,6 @@ public class FiltroActivity extends AppCompatActivity {
 
             }
         });
-
         databaseReference.child(controller.NODE_FILTROS).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -198,7 +163,6 @@ public class FiltroActivity extends AppCompatActivity {
 
             }
         });
-
         btnAplicarFiltro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,7 +185,6 @@ public class FiltroActivity extends AppCompatActivity {
                 }
             }
         });
-
         txtCidades.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -388,5 +351,40 @@ public class FiltroActivity extends AppCompatActivity {
             e.getMessage();
         }
     }
+    private void inicializarControlesConfiguracao(){
+        controller = new Controller(FiltroActivity.this);
+        idUsuario = controller.getIdUsuario();
+        databaseReference = controller.getDatabaseReference();
 
+        //Inicializar controles
+        spnCargos = (Spinner) findViewById(R.id.spnFiltroCargo);
+        spnEstados = (Spinner) findViewById(R.id.spnFiltroEstado);
+        txtCidades = (AutoCompleteTextView) findViewById(R.id.textFiltroCidade);
+        textSelecHabFiltro = (MultiAutoCompleteTextView) findViewById(R.id.textSelecHabFiltro);
+        btnAplicarFiltro = (Button) findViewById(R.id.btnAplicarFiltro);
+
+        progressDialogCidades = new ProgressDialog(FiltroActivity.this);
+        progressDialogCidades.setTitle("Buscando cidades");
+        progressDialogCidades.setMessage("Carregando cidades...");
+        progressDialogCidades.setCancelable(false);
+
+        progressDialog = new ProgressDialog(FiltroActivity.this);
+        progressDialog.setMessage("Salvando filtros...");
+        progressDialog.setCancelable(false);
+
+        //Instancia do adapter para preencher spinner de cargos
+        ArrayAdapter<CharSequence> adapterCargos = ArrayAdapter.createFromResource(this,R.array.cargos, android.R.layout.simple_spinner_item);
+        adapterCargos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnCargos.setAdapter(adapterCargos);
+
+        //preenche arraylist de cargos para recuperação de filtro
+        String[] cargo = getResources().getStringArray(R.array.cargos);
+        cargos = new ArrayList<String>(Arrays.asList(cargo));
+
+        //Método utilizado para preencher spinner com os estados brasileiros
+        preencherEstados();
+
+        //Desabilitar spinner de cidades até a seleção de um estado
+        //txtCidades.setEnabled(false);
+    }
 }

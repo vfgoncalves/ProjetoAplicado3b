@@ -48,40 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         try{
-            //Configurar Progress Dialog
-            /*
-            progressDialog = new ProgressDialog(MainActivity.this);
-            progressDialog.setTitle("Carregando");
-            progressDialog.setMessage("Por favor aguarde, estamos carregando informações do usuário");
-            progressDialog.setCancelable(false);
-             */
-
-            //Inicializar controles
-            toolbar = (Toolbar) findViewById(R.id.toolbarUsuario);
-            slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sltl_abasUsuario);
-            viewPager = (ViewPager) findViewById(R.id.vp_paginaUsuario);
-
-            controller = new Controller(this);
-            databaseReference = controller.getDatabaseReference();
-            autenticador = controller.getAutenticador();
-
-            //Configurar Toolbar
-            toolbar.setTitle("UNAJob");
-            toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.branco));
-            setSupportActionBar(toolbar); //Método de suporte ao ActionBar
-
-            imgPerfil = (ImageView) toolbar.findViewById(R.id.imgPerfil);
-
-            //configurar adapter e tabs
-            UsuarioTabAdapter tabAdapter = new UsuarioTabAdapter(getSupportFragmentManager());
-            viewPager.setAdapter(tabAdapter);
-            //configura sliding tab
-            slidingTabLayout.setDistributeEvenly(true);
-            slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
-            slidingTabLayout.setViewPager(viewPager);
-
-            //Armazenar id do usuário logado
-            idUsuario = controller.getIdUsuario();
+            inicializarControleConfiguracao();
 
             imgPerfil.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -89,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                     direcionarPerfil();;
                 }
             });
-
             databaseReference.child(controller.NODE_USUARIO).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -112,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-
-
         }catch (Exception e){
             e.getMessage();
         }
@@ -124,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_main_empresa, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -158,5 +121,41 @@ public class MainActivity extends AppCompatActivity {
     private void direcionarPerfil(){
         Intent intent = new Intent(MainActivity.this, EditarUsuarioPerfilActivity.class);
         startActivity(intent);
+    }
+    private void inicializarControleConfiguracao(){
+        //Configurar Progress Dialog
+            /*
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setTitle("Carregando");
+            progressDialog.setMessage("Por favor aguarde, estamos carregando informações do usuário");
+            progressDialog.setCancelable(false);
+             */
+
+        //Inicializar controles
+        toolbar = (Toolbar) findViewById(R.id.toolbarUsuario);
+        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sltl_abasUsuario);
+        viewPager = (ViewPager) findViewById(R.id.vp_paginaUsuario);
+
+        controller = new Controller(this);
+        databaseReference = controller.getDatabaseReference();
+        autenticador = controller.getAutenticador();
+
+        //Configurar Toolbar
+        toolbar.setTitle("UNAJob");
+        toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.branco));
+        setSupportActionBar(toolbar); //Método de suporte ao ActionBar
+
+        imgPerfil = (ImageView) toolbar.findViewById(R.id.imgPerfil);
+
+        //configurar adapter e tabs
+        UsuarioTabAdapter tabAdapter = new UsuarioTabAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(tabAdapter);
+        //configura sliding tab
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
+        slidingTabLayout.setViewPager(viewPager);
+
+        //Armazenar id do usuário logado
+        idUsuario = controller.getIdUsuario();
     }
 }

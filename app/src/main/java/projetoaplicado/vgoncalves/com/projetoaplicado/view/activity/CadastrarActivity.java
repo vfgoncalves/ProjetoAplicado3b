@@ -69,24 +69,7 @@ public class CadastrarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar);
 
-        nome = (EditText) findViewById(R.id.editCadNome);
-        email = (EditText) findViewById(R.id.editCadEmail);
-        senha = (EditText) findViewById(R.id.editCadSenha);
-        btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
-        imgSignGoogle = (ImageButton) findViewById(R.id.imgSignGoogle);
-        imgSignLinkedin = (ImageButton) findViewById(R.id.imgSignLinkedin);
-
-        //Configurando progressDialog
-        progressDialog = new ProgressDialog(CadastrarActivity.this);
-        progressDialog.setMessage("Aguarde, estamos efetuando o cadastro");
-        progressDialog.setCancelable(false);
-
-        progressDialogLinkedin = new ProgressDialog(CadastrarActivity.this);
-        progressDialogLinkedin.setMessage("Aguarde, estamos efetuando o cadastro com a conta Linkedin");
-        progressDialogLinkedin.setCancelable(false);
-
-        controller = new Controller(CadastrarActivity.this);
-        autenticacao = controller.getAutenticador();
+        inicializarControlesConfiguracao();
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -337,5 +320,24 @@ public class CadastrarActivity extends AppCompatActivity {
             e.getMessage();
         }
     }
+    private void inicializarControlesConfiguracao(){
+        nome = (EditText) findViewById(R.id.editCadNome);
+        email = (EditText) findViewById(R.id.editCadEmail);
+        senha = (EditText) findViewById(R.id.editCadSenha);
+        btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
+        imgSignGoogle = (ImageButton) findViewById(R.id.imgSignGoogle);
+        imgSignLinkedin = (ImageButton) findViewById(R.id.imgSignLinkedin);
 
+        //Configurando progressDialog
+        progressDialog = new ProgressDialog(CadastrarActivity.this);
+        progressDialog.setMessage("Aguarde, estamos efetuando o cadastro");
+        progressDialog.setCancelable(false);
+
+        progressDialogLinkedin = new ProgressDialog(CadastrarActivity.this);
+        progressDialogLinkedin.setMessage("Aguarde, estamos efetuando o cadastro com a conta Linkedin");
+        progressDialogLinkedin.setCancelable(false);
+
+        controller = new Controller(CadastrarActivity.this);
+        autenticacao = controller.getAutenticador();
+    }
 }
