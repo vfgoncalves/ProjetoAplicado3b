@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -56,7 +57,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
     private Spinner spnCargos;
     private Spinner spnEstados;
     private AutoCompleteTextView txtCidades;
-    private EditText editSelecHab;
+    private MultiAutoCompleteTextView textSelecHab;
 
     private ArrayList<String> codigoEstado;
     private ArrayList<String> nomeEstado;
@@ -69,8 +70,6 @@ public class CadastrarVagaActivity extends AppCompatActivity {
     private ProgressDialog progressDialogCidades;
 
     private DatabaseReference databaseReference;
-
-    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +88,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         spnCargos = (Spinner) findViewById(R.id.spnCargo);
         spnEstados = (Spinner) findViewById(R.id.spnEstado);
         txtCidades = (AutoCompleteTextView) findViewById(R.id.textCidade);
-        editSelecHab = (EditText) findViewById(R.id.editSelecHab);
+        textSelecHab = (MultiAutoCompleteTextView) findViewById(R.id.textSelecHab);
 
         //Configurar ProgressDialogs
         progressDialogCidades = new ProgressDialog(CadastrarVagaActivity.this);
@@ -143,7 +142,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
                         vaga.setCidade(txtCidades.getText().toString());
                         vaga.setEstado(codigoEstado.get(spnEstados.getSelectedItemPosition()).toString());
                         vaga.setCargo(spnCargos.getSelectedItem().toString());
-                        vaga.setHabilidades(editSelecHab.getText().toString());
+                        vaga.setHabilidades(textSelecHab.getText().toString());
                         vaga.setIdVaga(controller.getUUID());
                         vaga.setDataVaga(dateFormat.format(date));
                         vaga.setNomeEmpresa(nomeEmpresa);
@@ -177,24 +176,37 @@ public class CadastrarVagaActivity extends AppCompatActivity {
             }
         });
 
-        configurarModal();
 
-        editSelecHab.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        databaseReference.child(controller.NODE_HABILIDADES).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    dialog.show();
-                }else {
-                    dialog.hide();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try{
+                    if (habilidadesArray == null)
+                        habilidadesArray = new ArrayList<String>();
+
+                    habilidadesArray.clear();
+                    for(DataSnapshot hablidade: dataSnapshot.getChildren()){
+                        Habilidades hab = hablidade.getValue(Habilidades.class);
+                        habilidadesArray.add(hab.getDescricao());
+                    }
+                    String[] items = habilidadesArray.toArray(new String[habilidadesArray.size()]);
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(CadastrarVagaActivity.this,android.R.layout.simple_dropdown_item_1line, items);
+                    textSelecHab.setAdapter(adapter);
+                    textSelecHab.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+                }catch (Exception e){
+                    e.getMessage();
                 }
             }
-        });
-        editSelecHab.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                dialog.show();
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
+
+
     }
 
     private boolean validarCampos(){
@@ -379,75 +391,5 @@ public class CadastrarVagaActivity extends AppCompatActivity {
         }catch (Exception e){
             e.getMessage();
         }
-    }
-    private void configurarModal(){
-        databaseReference.child(controller.NODE_HABILIDADES).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try{
-
-                    if (habilidadesArray == null)
-                        habilidadesArray = new ArrayList<String>();
-
-                    habilidadesArray.clear();
-                    for(DataSnapshot hablidade: dataSnapshot.getChildren()){
-                        Habilidades hab = hablidade.getValue(Habilidades.class);
-                        habilidadesArray.add(hab.getDescricao());
-                    }
-
-                    CharSequence[] items = habilidadesArray.toArray(new CharSequence[habilidadesArray.size()]);
-
-                    //Configuração do Modal
-                    dialog = new AlertDialog.Builder(CadastrarVagaActivity.this)
-                            .setTitle("Selecionar Habilidades")
-                            .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
-                                    if (isChecked) {
-                                        selectedItemsModal.add(habilidadesArray.get(indexSelected));
-                                    } else if (selectedItemsModal.contains(indexSelected)) {
-                                        selectedItemsModal.remove(Integer.valueOf(indexSelected));
-                                    }
-                                }
-                            }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    preencherHabilidades();
-                                }
-                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    //  Your code when user clicked on Cancel
-                                }
-                            }).create();
-
-                }catch (Exception e){
-                    e.getMessage();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-    private void preencherHabilidades(){
-        String hab = null;
-
-        editSelecHab.setText("");
-
-        //Estrutura de repetição nas habilidades selecionadas
-        for (int i = 0; i < selectedItemsModal.size(); i++) {
-            if (hab == null){
-                hab = selectedItemsModal.get(i).toString();
-            }else{
-                hab = hab + "," + selectedItemsModal.get(i).toString();
-            }
-        }
-
-        //Preencher combo de habilidades
-        if (hab != null)
-            editSelecHab.setText(hab);
     }
 }

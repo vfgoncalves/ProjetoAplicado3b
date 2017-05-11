@@ -89,13 +89,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/FloatLabelBlack">
-                <EditText
-                    android:id="@+id/editUserEditHabilidades"
+
+                <MultiAutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
                     android:hint="Habilidades Técnicas"
-                    android:inputType="phone" />
+                    android:id="@+id/textUserEditHabilidades"/>
+
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

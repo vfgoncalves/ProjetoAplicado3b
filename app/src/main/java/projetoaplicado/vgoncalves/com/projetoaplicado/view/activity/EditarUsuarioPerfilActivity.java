@@ -9,9 +9,11 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,7 +60,7 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
     private EditText editRua;
     private EditText editNumero;
     private EditText editComplemento;
-    private EditText editHabilidades;
+    private MultiAutoCompleteTextView textUserEditHabilidades;
     private ImageView imgPerfilUser;
     private Button btnSalvar;
     private ArrayList<String> habilidadesArray;
@@ -102,7 +104,7 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
         editNumero = (EditText) findViewById(R.id.editUserEditNumero);
         editComplemento = (EditText) findViewById(R.id.editUserEditCompl);
         btnSalvar = (Button) findViewById(R.id.btnSalvarPerfilUsuario);
-        editHabilidades = (EditText) findViewById(R.id.editUserEditHabilidades);
+        textUserEditHabilidades = (MultiAutoCompleteTextView) findViewById(R.id.textUserEditHabilidades);
         imgPerfilUser = (ImageView) findViewById(R.id.imgPerfilUser);
 
         //Mascaras
@@ -203,7 +205,7 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
                 usuario.setRua(editRua.getText().toString());
                 usuario.setNumero(editNumero.getText().toString());
                 usuario.setComplemento(editComplemento.getText().toString());
-                usuario.setHabilidades(editHabilidades.getText().toString());
+                usuario.setHabilidades(textUserEditHabilidades.getText().toString());
                 //Salvar dados do usuario
                 usuario.setController(controller);
                 usuario.salvar();
@@ -214,24 +216,37 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
             }
         });
 
-        configurarModal();
-
-        editHabilidades.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        databaseReference.child(controller.NODE_HABILIDADES).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    dialog.show();
-                }else {
-                    dialog.hide();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try{
+
+                    if (habilidadesArray == null)
+                        habilidadesArray = new ArrayList<String>();
+
+                    habilidadesArray.clear();
+                    for(DataSnapshot hablidade: dataSnapshot.getChildren()){
+                        Habilidades hab = hablidade.getValue(Habilidades.class);
+                        habilidadesArray.add(hab.getDescricao());
+                    }
+
+                    String[] items = habilidadesArray.toArray(new String[habilidadesArray.size()]);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditarUsuarioPerfilActivity.this,android.R.layout.simple_dropdown_item_1line, items);
+                    textUserEditHabilidades.setAdapter(adapter);
+                    textUserEditHabilidades.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+                }catch (Exception e){
+                    e.getMessage();
                 }
             }
-        });
-        editHabilidades.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                dialog.show();
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
+
+
 
     }
 
@@ -244,7 +259,7 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
         editEmail.setText(usuario.getEmail());
         editrelefoneCel.setText(usuario.getTelefoneCel());
         editTelefoneResidencial.setText(usuario.getTelefoneResidencial());
-        editHabilidades.setText(editHabilidades.getText().toString());
+        textUserEditHabilidades.setText(textUserEditHabilidades.getText().toString());
         editCEP.setText(usuario.getCEP());
         editPais.setText(usuario.getPais());
         editEstado.setText(usuario.getEstado());
@@ -271,76 +286,5 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Erro ao recuperar cep", Toast.LENGTH_LONG).show();
             progressDialogCep.hide();
         }
-    }
-
-    private void configurarModal(){
-        databaseReference.child(controller.NODE_HABILIDADES).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try{
-
-                    if (habilidadesArray == null)
-                        habilidadesArray = new ArrayList<String>();
-
-                    habilidadesArray.clear();
-                    for(DataSnapshot hablidade: dataSnapshot.getChildren()){
-                        Habilidades hab = hablidade.getValue(Habilidades.class);
-                        habilidadesArray.add(hab.getDescricao());
-                    }
-
-                    CharSequence[] items = habilidadesArray.toArray(new CharSequence[habilidadesArray.size()]);
-
-                    //Configuração do Modal
-                    dialog = new AlertDialog.Builder(EditarUsuarioPerfilActivity.this)
-                            .setTitle("Selecionar Habilidades")
-                            .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
-                                    if (isChecked) {
-                                        selectedItemsModal.add(habilidadesArray.get(indexSelected));
-                                    } else if (selectedItemsModal.contains(indexSelected)) {
-                                        selectedItemsModal.remove(Integer.valueOf(indexSelected));
-                                    }
-                                }
-                            }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    preencherHabilidades();
-                                }
-                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    //  Your code when user clicked on Cancel
-                                }
-                            }).create();
-
-                }catch (Exception e){
-                    e.getMessage();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-    private void preencherHabilidades(){
-        String hab = null;
-
-        editHabilidades.setText("");
-
-        //Estrutura de repetição nas habilidades selecionadas
-        for (int i = 0; i < selectedItemsModal.size(); i++) {
-            if (hab == null){
-                hab = selectedItemsModal.get(i).toString();
-            }else{
-                hab = hab + "," + selectedItemsModal.get(i).toString();
-            }
-        }
-
-        //Preencher combo de habilidades
-        if (hab != null)
-            editHabilidades.setText(hab);
     }
 }

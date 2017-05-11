@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -47,7 +48,7 @@ public class FiltroActivity extends AppCompatActivity {
     private Spinner spnCargos;
     private Spinner spnEstados;
     private AutoCompleteTextView txtCidades;
-    private EditText editSelecHab;
+    private MultiAutoCompleteTextView textSelecHabFiltro;
     private Button btnAplicarFiltro;
 
     private ArrayList<String> codigoEstado;
@@ -57,14 +58,11 @@ public class FiltroActivity extends AppCompatActivity {
     private ArrayList<String> nomeCidade;
     private ArrayList<String> habilidadesArray;
     private ArrayList<String> cargos;
-    private ArrayList selectedItemsModal;
 
     private ProgressDialog progressDialogCidades;
     private ProgressDialog progressDialog;
 
     private DatabaseReference databaseReference;
-
-    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +72,12 @@ public class FiltroActivity extends AppCompatActivity {
         controller = new Controller(FiltroActivity.this);
         idUsuario = controller.getIdUsuario();
         databaseReference = controller.getDatabaseReference();
-        selectedItemsModal = new ArrayList();
 
         //Inicializar controles
         spnCargos = (Spinner) findViewById(R.id.spnFiltroCargo);
         spnEstados = (Spinner) findViewById(R.id.spnFiltroEstado);
         txtCidades = (AutoCompleteTextView) findViewById(R.id.textFiltroCidade);
-        editSelecHab = (EditText) findViewById(R.id.editSelecHabFiltro);
+        textSelecHabFiltro = (MultiAutoCompleteTextView) findViewById(R.id.textSelecHabFiltro);
         btnAplicarFiltro = (Button) findViewById(R.id.btnAplicarFiltro);
 
         progressDialogCidades = new ProgressDialog(FiltroActivity.this);
@@ -128,22 +125,33 @@ public class FiltroActivity extends AppCompatActivity {
             }
         });
 
-        configurarModal();
-
-        editSelecHab.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        databaseReference.child(controller.NODE_HABILIDADES).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    dialog.show();
-                }else {
-                    dialog.hide();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try{
+
+                    if (habilidadesArray == null)
+                        habilidadesArray = new ArrayList<String>();
+
+                    habilidadesArray.clear();
+                    for(DataSnapshot hablidade: dataSnapshot.getChildren()){
+                        Habilidades hab = hablidade.getValue(Habilidades.class);
+                        habilidadesArray.add(hab.getDescricao());
+                    }
+
+                    String[] items = habilidadesArray.toArray(new String[habilidadesArray.size()]);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(FiltroActivity.this,android.R.layout.simple_dropdown_item_1line, items);
+                    textSelecHabFiltro.setAdapter(adapter);
+                    textSelecHabFiltro.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+                }catch (Exception e){
+                    e.getMessage();
                 }
             }
-        });
-        editSelecHab.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                dialog.show();
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
@@ -176,7 +184,7 @@ public class FiltroActivity extends AppCompatActivity {
 
                     if (filtro.getHabilidades() != null){
                         if(!TextUtils.isEmpty(filtro.getHabilidades().toString())){
-                            editSelecHab.setText(filtro.getHabilidades().toString());
+                            textSelecHabFiltro.setText(filtro.getHabilidades().toString());
                         }
                     }
 
@@ -200,7 +208,7 @@ public class FiltroActivity extends AppCompatActivity {
                     filtro.setCargo(spnCargos.getSelectedItem().toString());
                     filtro.setEstado(codigoEstado.get(spnEstados.getSelectedItemPosition()).toString());
                     filtro.setCidade(txtCidades.getText().toString());
-                    filtro.setHabilidades(editSelecHab.getText().toString());
+                    filtro.setHabilidades(textSelecHabFiltro.getText().toString());
                     filtro.setIdUsuario(idUsuario);
                     filtro.salvar();
                     progressDialog.hide();
@@ -379,76 +387,6 @@ public class FiltroActivity extends AppCompatActivity {
         }catch (Exception e){
             e.getMessage();
         }
-    }
-    private void configurarModal(){
-        databaseReference.child(controller.NODE_HABILIDADES).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try{
-
-                    if (habilidadesArray == null)
-                        habilidadesArray = new ArrayList<String>();
-
-                    habilidadesArray.clear();
-                    for(DataSnapshot hablidade: dataSnapshot.getChildren()){
-                        Habilidades hab = hablidade.getValue(Habilidades.class);
-                        habilidadesArray.add(hab.getDescricao());
-                    }
-
-                    CharSequence[] items = habilidadesArray.toArray(new CharSequence[habilidadesArray.size()]);
-
-                    //Configuração do Modal
-                    dialog = new AlertDialog.Builder(FiltroActivity.this)
-                            .setTitle("Selecionar Habilidades")
-                            .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
-                                    if (isChecked) {
-                                        selectedItemsModal.add(habilidadesArray.get(indexSelected));
-                                    } else if (selectedItemsModal.contains(indexSelected)) {
-                                        selectedItemsModal.remove(Integer.valueOf(indexSelected));
-                                    }
-                                }
-                            }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    preencherHabilidades();
-                                }
-                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    //  Your code when user clicked on Cancel
-                                }
-                            }).create();
-
-                }catch (Exception e){
-                    e.getMessage();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-    private void preencherHabilidades(){
-        String hab = null;
-
-        editSelecHab.setText("");
-
-        //Estrutura de repetição nas habilidades selecionadas
-        for (int i = 0; i < selectedItemsModal.size(); i++) {
-            if (hab == null){
-                hab = selectedItemsModal.get(i).toString();
-            }else{
-                hab = hab + "," + selectedItemsModal.get(i).toString();
-            }
-        }
-
-        //Preencher combo de habilidades
-        if (hab != null)
-            editSelecHab.setText(hab);
     }
 
 }

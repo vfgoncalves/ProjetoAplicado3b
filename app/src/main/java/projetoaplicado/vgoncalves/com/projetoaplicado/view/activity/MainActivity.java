@@ -101,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
                             }else {
                                 Picasso.with(MainActivity.this).load(R.drawable.ic_account_circle).into(imgPerfil);
                             }
+                        }else{
+                            Picasso.with(MainActivity.this).load(R.drawable.ic_account_circle).into(imgPerfil);
                         }
                     }
                 }
