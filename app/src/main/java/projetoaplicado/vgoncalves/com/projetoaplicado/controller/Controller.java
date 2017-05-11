@@ -126,4 +126,8 @@ public class Controller {
         return true;
     }
 
+    public Double calcularPorcentagem(int qtdTotal, int qtdHabUser){
+        return Double.valueOf((qtdHabUser*100)/qtdTotal);
+    }
+
 }

@@ -1,5 +1,6 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -60,6 +61,23 @@ public class DetalheVagaActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     vaga.deletar();
                     finish();
+                }
+            });
+
+            btnBuscarCandidato.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try{
+                        Intent intent = new Intent(DetalheVagaActivity.this, BuscaCandidatoActivity.class);
+                        //Converter dados da classe em json
+                        JSONObject jsonObject = vaga.convertToJson();
+                        //enviar dados para activity
+                        intent.putExtra("vagaatual", jsonObject.toString());
+
+                        startActivity(intent);
+                    }catch (Exception e){
+                        e.getMessage();
+                    }
                 }
             });
 

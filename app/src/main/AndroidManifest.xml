@@ -29,9 +29,18 @@
         <activity android:name=".view.activity.EditarUsuarioPerfilActivity" />
         <activity android:name=".view.activity.ConfiguracoesActivity" />
         <activity android:name=".view.activity.FiltroActivity" />
-        <activity android:name=".view.activity.DetalheVagaActivity"
+        <activity
+            android:name=".view.activity.DetalheVagaActivity"
             android:parentActivityName=".view.activity.MainEmpresaActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".view.activity.MainEmpresaActivity"></meta-data>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activity.MainEmpresaActivity" />
+        </activity>
+        <activity android:name=".view.activity.BuscaCandidatoActivity"
+            android:parentActivityName=".view.activity.DetalheVagaActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activity.DetalheVagaActivity" />
         </activity>
     </application>
 

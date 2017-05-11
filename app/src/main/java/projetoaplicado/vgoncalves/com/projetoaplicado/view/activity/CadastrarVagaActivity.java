@@ -113,7 +113,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
                         vaga.setCidade(txtCidades.getText().toString());
                         vaga.setEstado(codigoEstado.get(spnEstados.getSelectedItemPosition()).toString());
                         vaga.setCargo(spnCargos.getSelectedItem().toString());
-                        vaga.setHabilidades(textSelecHab.getText().toString());
+                        vaga.setHabilidades(textSelecHab.getText().toString().trim().substring(0,textSelecHab.getText().toString().trim().length() -1));
                         vaga.setIdVaga(controller.getUUID());
                         vaga.setDataVaga(dateFormat.format(date));
                         vaga.setNomeEmpresa(nomeEmpresa);
@@ -163,6 +163,7 @@ public class CadastrarVagaActivity extends AppCompatActivity {
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(CadastrarVagaActivity.this,android.R.layout.simple_dropdown_item_1line, items);
                     textSelecHab.setAdapter(adapter);
                     textSelecHab.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
 
                 }catch (Exception e){
                     e.getMessage();
