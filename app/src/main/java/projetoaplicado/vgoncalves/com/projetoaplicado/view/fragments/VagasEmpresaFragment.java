@@ -64,6 +64,8 @@ public class VagasEmpresaFragment extends Fragment {
         //inicializar controles de tela
         btnCadastrarVaga = (FloatingActionButton) view.findViewById(R.id.floatCadastrarVaga);
         listVagas = (ListView) view.findViewById(R.id.listaFragmentVagas);
+        listVagas.setDivider(null);
+        listVagas.setDividerHeight(0);
         //adapter = new ArrayAdapter(getActivity(), R.layout.lista_vagas, tituloVaga);
         adapter = new VagasAdapter(getActivity(), listaVagas);
 

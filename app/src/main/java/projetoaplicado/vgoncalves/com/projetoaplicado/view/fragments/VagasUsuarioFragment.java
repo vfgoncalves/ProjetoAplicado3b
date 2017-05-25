@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Filtro;
@@ -87,6 +89,20 @@ public class VagasUsuarioFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        listVagas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                Vaga vaga = listaVagas.get(position);
+                Intent detalharVaga = new Intent(getActivity(), DetalheVagaActivity.class);
+                //Converter dados da classe em json
+                JSONObject jsonObject = vaga.convertToJson();
+                //enviar dados para activity
+                detalharVaga.putExtra("vagaatual", jsonObject.toString());
+
+                startActivity(detalharVaga);
             }
         });
 

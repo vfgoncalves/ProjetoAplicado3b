@@ -70,6 +70,8 @@ public class BuscaCandidatoActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
 
             listCandidatos = (ListView) findViewById(R.id.listCandidatos);
+            listCandidatos.setDivider(null);
+            listCandidatos.setDividerHeight(0);
 
             controller = new Controller(BuscaCandidatoActivity.this);
             databaseReference = controller.getDatabaseReference();
