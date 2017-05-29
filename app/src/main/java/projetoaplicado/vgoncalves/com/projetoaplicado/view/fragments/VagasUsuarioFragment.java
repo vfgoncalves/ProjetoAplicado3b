@@ -28,6 +28,7 @@ import projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter.VagasAd
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.CadastrarVagaActivity;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.DetalheVagaActivity;
+import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.Detalhes_vaga_usuario;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.FiltroActivity;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.LoginActivity;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.MainActivity;
@@ -96,7 +97,7 @@ public class VagasUsuarioFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Vaga vaga = listaVagas.get(position);
-                Intent detalharVaga = new Intent(getActivity(), DetalheVagaActivity.class);
+                Intent detalharVaga = new Intent(getActivity(), Detalhes_vaga_usuario.class);
                 //Converter dados da classe em json
                 JSONObject jsonObject = vaga.convertToJson();
                 //enviar dados para activity

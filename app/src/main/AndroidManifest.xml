@@ -36,12 +36,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activity.MainEmpresaActivity" />
         </activity>
-        <activity android:name=".view.activity.BuscaCandidatoActivity"
+        <activity
+            android:name=".view.activity.BuscaCandidatoActivity"
             android:parentActivityName=".view.activity.DetalheVagaActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activity.DetalheVagaActivity" />
         </activity>
+        <activity android:name=".view.activity.Detalhes_vaga_usuario"></activity>
     </application>
 
 </manifest>

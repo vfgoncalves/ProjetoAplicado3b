@@ -1,7 +1,0 @@
-#Thu May 25 19:15:25 BRT 2017
-base.0=C\:\\Users\\vgoncalves\\Desktop\\ProjetoAplicado\\eventsapp\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_81c64c0cf0cecde6f7137f5051121ba45bb4cf11
-renamed.1=classes2.dex
-renamed.0=classes.dex
-file.1=C\:\\Users\\vgoncalves\\Desktop\\ProjetoAplicado\\eventsapp\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_d27040973454d59556ef3bb4c53fa764a8e723bc\\classes.dex
-base.1=C\:\\Users\\vgoncalves\\Desktop\\ProjetoAplicado\\eventsapp\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_d27040973454d59556ef3bb4c53fa764a8e723bc
-file.0=C\:\\Users\\vgoncalves\\Desktop\\ProjetoAplicado\\eventsapp\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_81c64c0cf0cecde6f7137f5051121ba45bb4cf11\\classes.dex
