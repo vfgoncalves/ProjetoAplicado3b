@@ -1,6 +1,7 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.view.activity;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,8 +22,8 @@ public class DetalheVagaActivity extends AppCompatActivity {
     private String stringJson;
     private JSONObject jsonObject;
 
-    private Button btnRemover;
-    private Button btnBuscarCandidato;
+    private com.github.clans.fab.FloatingActionButton btnRemover;
+    private com.github.clans.fab.FloatingActionButton btnBuscarCandidato;
 
     private EditText editDetVagaEmailContato;
     private EditText editDetCargo;
@@ -48,7 +49,7 @@ public class DetalheVagaActivity extends AppCompatActivity {
                 vaga = new Vaga();
                 vaga.readJson(jsonObject);
             }
-            toolbar = (Toolbar) findViewById(R.id.tb_vaga);
+            toolbar = (Toolbar) findViewById(R.id.tb_vagaEmp);
             toolbar.setTitle(vaga.getTitulo());
             toolbar.setNavigationIcon(R.drawable.ic_action_arrow_left);
             setSupportActionBar(toolbar);
@@ -88,14 +89,14 @@ public class DetalheVagaActivity extends AppCompatActivity {
 
     private void  inicializarControles(){
 
-        btnRemover = (Button) findViewById(R.id.btnDetRemoverVaga);
-        btnBuscarCandidato = (Button) findViewById(R.id.btnDetBuscaCand);
-        editDetVagaEmailContato = (EditText) findViewById(R.id.editDetVagaEmailContato);
-        editDetCargo = (EditText) findViewById(R.id.editDetCargo);
-        editDetEstado = (EditText) findViewById(R.id.editDetEstado);
-        editDetCidade = (EditText) findViewById(R.id.editDetCidade);
-        editDetSelecHab = (EditText) findViewById(R.id.editDetSelecHab);
-        editDetVagaDescricao = (EditText) findViewById(R.id.editDetVagaDescricao);
+        btnRemover = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.item_Remover);
+        btnBuscarCandidato = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.item_BuscarCandidatos);
+        editDetVagaEmailContato = (EditText) findViewById(R.id.editDetVagaEmailContatoEmp);
+        editDetCargo = (EditText) findViewById(R.id.editDetCargoEmp);
+        editDetEstado = (EditText) findViewById(R.id.editDetEstadoEmp);
+        editDetCidade = (EditText) findViewById(R.id.editDetCidadeEmp);
+        editDetSelecHab = (EditText) findViewById(R.id.editDetSelecHabEmp);
+        editDetVagaDescricao = (EditText) findViewById(R.id.editDetVagaDescricaoEmp);
 
     }
     private void preencherCampos(){

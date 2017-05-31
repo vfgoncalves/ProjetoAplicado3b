@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "C:\\StudioProjects\\ProjetoAplicado3b\\eventsapp\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-w720dp-v13\\values-w720dp-v13.xml",
+        "outputFile": "C:\\Users\\vgoncalves\\Desktop\\ProjetoAplicado\\eventsapp\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-w720dp-v13\\values-w720dp-v13.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 127
                 },
                 "from": {
-                    "file": "C:\\Users\\Lívia\\.android\\build-cache\\7564a40da659978cb261b57b48e0971f2fad8003\\output\\res\\values-w720dp\\values.xml",
+                    "file": "C:\\Users\\vgoncalves\\.android\\build-cache\\f7ef6c4568f0f0669ea242b683a175f9ee35d8c7\\output\\res\\values-w720dp\\values.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,

@@ -26,19 +26,18 @@ import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Vaga;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
 import projetoaplicado.vgoncalves.com.projetoaplicado.componente.adapter.VagasAdapter;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
-import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.CadastrarVagaActivity;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.DetalheVagaActivity;
-import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.Detalhes_vaga_usuario;
+import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.DetalhesVagaUserActivity;
 import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.FiltroActivity;
-import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.LoginActivity;
-import projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class VagasUsuarioFragment extends Fragment {
 
-    private FloatingActionButton btnFiltro;
+    private com.github.clans.fab.FloatingActionButton btnRemoverFiltro;
+    private com.github.clans.fab.FloatingActionButton btnEditFiltro;
+
     private ListView listVagas;
     private ArrayAdapter adapter;
     private ArrayList<Vaga> listaVagas;
@@ -67,7 +66,9 @@ public class VagasUsuarioFragment extends Fragment {
         listaVagas = new ArrayList<>();
 
         //inicializar controles de tela
-        btnFiltro = (FloatingActionButton) view.findViewById(R.id.floatFiltrosVaga);
+        btnEditFiltro = (com.github.clans.fab.FloatingActionButton) view.findViewById(R.id.item_Filtro);
+        btnRemoverFiltro = (com.github.clans.fab.FloatingActionButton) view.findViewById(R.id.item_RemoverFiltro);
+
         listVagas = (ListView) view.findViewById(R.id.listaFragmentVagasUser);
         //adapter = new ArrayAdapter(getActivity(), R.layout.lista_vagas, listaVagas);
         //Configuração do Adapter personalizado par alitar vagas
@@ -76,43 +77,36 @@ public class VagasUsuarioFragment extends Fragment {
         //Instanciar lista
         listVagas.setAdapter(adapter);
 
+        carregarFiltros();
 
-        databaseReference.child(controller.NODE_VAGA).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try{
-                    verificarFiltroAntesPreencher(dataSnapshot);
-                }catch (Exception e){
-                    e.getMessage();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         listVagas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Vaga vaga = listaVagas.get(position);
-                Intent detalharVaga = new Intent(getActivity(), Detalhes_vaga_usuario.class);
+                Intent detalharVaga = new Intent(getActivity(), DetalhesVagaUserActivity.class);
                 //Converter dados da classe em json
                 JSONObject jsonObject = vaga.convertToJson();
                 //enviar dados para activity
                 detalharVaga.putExtra("vagaatual", jsonObject.toString());
-
                 startActivity(detalharVaga);
             }
         });
 
-        btnFiltro.setOnClickListener(new View.OnClickListener() {
+        btnEditFiltro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Iniciar tela para aplicar filtros nas vagas
                 Intent intent = new Intent(getActivity(), FiltroActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btnRemoverFiltro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseReference.child(controller.NODE_FILTROS).child(idUsuarioLogado).removeValue();
+                carregarFiltros();
             }
         });
 
@@ -186,6 +180,24 @@ public class VagasUsuarioFragment extends Fragment {
                     preencheListaVaga(dadosFullLista);
                 }
                 adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void carregarFiltros(){
+        databaseReference.child(controller.NODE_VAGA).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try{
+                    verificarFiltroAntesPreencher(dataSnapshot);
+                }catch (Exception e){
+                    e.getMessage();
+                }
             }
 
             @Override

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -7,8 +7,14 @@
     android:layout_height="match_parent"
     tools:context="projetoaplicado.vgoncalves.com.projetoaplicado.view.activity.DetalheVagaActivity">
 
-    <include layout="@layout/toolbar_vaga"
-        android:id="@+id/tb_vaga"></include>
+    <include android:id="@+id/tb_vagaEmp" layout="@layout/toolbar_vaga"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tb_vagaEmp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,7 +36,7 @@
                 android:theme="@style/FloatLabelBlack">
 
                 <EditText
-                    android:id="@+id/editDetVagaEmailContato"
+                    android:id="@+id/editDetVagaEmailContatoEmp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -45,7 +51,7 @@
                 android:theme="@style/FloatLabelBlack">
 
                 <EditText
-                    android:id="@+id/editDetCargo"
+                    android:id="@+id/editDetCargoEmp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -60,7 +66,7 @@
                 android:theme="@style/FloatLabelBlack">
 
                 <EditText
-                    android:id="@+id/editDetEstado"
+                    android:id="@+id/editDetEstadoEmp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -75,7 +81,7 @@
                 android:theme="@style/FloatLabelBlack">
 
                 <EditText
-                    android:id="@+id/editDetCidade"
+                    android:id="@+id/editDetCidadeEmp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -93,7 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Habilidades técnicas"
-                    android:id="@+id/editDetSelecHab"/>
+                    android:id="@+id/editDetSelecHabEmp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -103,7 +109,7 @@
                 android:theme="@style/FloatLabelBlack">
 
                 <EditText
-                    android:id="@+id/editDetVagaDescricao"
+                    android:id="@+id/editDetVagaDescricaoEmp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Descrição da vaga"
@@ -114,7 +120,7 @@
 
         </LinearLayout>
     </ScrollView>
-
+<!--
     <LinearLayout android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
@@ -133,6 +139,75 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="REMOVER VAGA" />
+    </LinearLayout>-->
+
     </LinearLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            app:menu_fab_size="normal"
+            app:menu_showShadow="true"
+            app:menu_shadowColor="@android:color/black"
+            app:menu_shadowRadius="4dp"
+            app:menu_shadowXOffset="1dp"
+            app:menu_shadowYOffset="3dp"
+            app:menu_colorNormal="@color/colorPrimary"
+            app:menu_colorPressed="@color/colorPrimary"
+            app:menu_colorRipple="@color/branco"
+            app:menu_animationDelayPerItem="50"
+            app:menu_icon="@drawable/fab_add"
+            app:menu_buttonSpacing="0dp"
+            app:menu_labels_margin="0dp"
+            app:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+            app:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+            app:menu_labels_paddingTop="4dp"
+            app:menu_labels_paddingRight="8dp"
+            app:menu_labels_paddingBottom="4dp"
+            app:menu_labels_paddingLeft="8dp"
+            app:menu_labels_padding="8dp"
+            app:menu_labels_textColor="#FFFFFF"
+            app:menu_labels_textSize="14sp"
+            app:menu_labels_cornerRadius="3dp"
+            app:menu_labels_colorNormal="#333333"
+            app:menu_labels_colorPressed="#444444"
+            app:menu_labels_colorRipple="#66FFFFFF"
+            app:menu_labels_showShadow="true"
+            app:menu_labels_singleLine="false"
+            app:menu_labels_ellipsize="none"
+            app:menu_labels_maxLines="-1"
+            app:menu_labels_position="left"
+            app:menu_openDirection="up"
+            app:menu_backgroundColor="@android:color/transparent">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/item_BuscarCandidatos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_search"
+                app:fab_size="mini"
+                app:fab_label="Buscar candidatos" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/item_Remover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_delete"
+                app:fab_size="mini"
+                app:fab_label="Remover vaga" />
+
+        </com.github.clans.fab.FloatingActionMenu>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
