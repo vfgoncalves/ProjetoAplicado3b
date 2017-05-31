@@ -56,6 +56,7 @@ public class Controller {
     public static final String NODE_VAGA = "VAGAS";
     public static final String NODE_HABILIDADES = "HABILIDADES";
     public static final String NODE_FILTROS = "FILTROS";
+    public static final String NODE_CANDIDATURAS = "CANDIDATURAS";
 
     //URL API GEONAMES
     public static final String URL_API_CIDADES = "http://educacao.dadosabertosbr.com/api/cidades/";

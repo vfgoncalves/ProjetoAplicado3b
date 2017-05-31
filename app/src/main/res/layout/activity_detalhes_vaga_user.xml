@@ -117,29 +117,14 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <Button android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ENVIAR CANDIDATURA"
+                    style="@style/BtnVermelho"
+                    android:id="@+id/btnEnviarCandidatura"/>
+
             </LinearLayout>
         </ScrollView>
-        <!--
-            <LinearLayout android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
-                <Button android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="BUSCAR CANDIDATOS"
-                    style="@style/BtnVermelho"
-                    android:id="@+id/btnDetBuscaCand"/>
-
-                <Button
-                    android:id="@+id/btnDetRemoverVaga"
-                    style="@style/BtnBranco"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="REMOVER VAGA" />
-            </LinearLayout>-->
-
     </LinearLayout>
 
 
