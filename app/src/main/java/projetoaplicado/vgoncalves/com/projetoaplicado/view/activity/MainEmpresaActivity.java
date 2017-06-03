@@ -69,6 +69,8 @@ public class MainEmpresaActivity extends AppCompatActivity {
                         }else {
                             Picasso.with(MainEmpresaActivity.this).load(R.drawable.ic_account_circle).into(imgPerfil);
                         }
+                    }else{
+                        Picasso.with(MainEmpresaActivity.this).load(R.drawable.ic_account_circle).into(imgPerfil);
                     }
                 }
             }

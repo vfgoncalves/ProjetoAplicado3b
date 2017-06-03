@@ -24,6 +24,7 @@ public class DetalheVagaActivity extends AppCompatActivity {
 
     private com.github.clans.fab.FloatingActionButton btnRemover;
     private com.github.clans.fab.FloatingActionButton btnBuscarCandidato;
+    private com.github.clans.fab.FloatingActionButton item_Candidaturas;
 
     private EditText editDetVagaEmailContato;
     private EditText editDetCargo;
@@ -82,6 +83,23 @@ public class DetalheVagaActivity extends AppCompatActivity {
                 }
             });
 
+            item_Candidaturas.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try{
+                        Intent intent = new Intent(DetalheVagaActivity.this, CandidaturasActivity.class);
+                        //Converter dados da classe em json
+                        JSONObject jsonObject = vaga.convertToJson();
+                        //enviar dados para activity
+                        intent.putExtra("vagaatual", jsonObject.toString());
+
+                        startActivity(intent);
+                    }catch (Exception e){
+                        e.getMessage();
+                    }
+                }
+            });
+
         }catch (Exception e){
             e.getMessage();
         }
@@ -91,6 +109,7 @@ public class DetalheVagaActivity extends AppCompatActivity {
 
         btnRemover = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.item_Remover);
         btnBuscarCandidato = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.item_BuscarCandidatos);
+        item_Candidaturas = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.item_Candidaturas);
         editDetVagaEmailContato = (EditText) findViewById(R.id.editDetVagaEmailContatoEmp);
         editDetCargo = (EditText) findViewById(R.id.editDetCargoEmp);
         editDetEstado = (EditText) findViewById(R.id.editDetEstadoEmp);

@@ -190,6 +190,14 @@
             app:menu_backgroundColor="@android:color/transparent">
 
             <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/item_Candidaturas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_myplaces"
+                app:fab_size="mini"
+                app:fab_label="Visualizar Candidaturas" />
+
+            <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/item_BuscarCandidatos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

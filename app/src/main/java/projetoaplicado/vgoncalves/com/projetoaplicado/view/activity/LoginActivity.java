@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     private ImageButton imgLoginLinkedin;
     private ProgressDialog progressDialog;
     private ProgressDialog progressDialogLinkedin;
+    private ProgressDialog progressDialogComum;
 
     //Constantes
     private static final int RC_SIGN_IN = 9001;
@@ -94,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validarCampos()){
+                    progressDialogComum.show();
                     autenticador.signInWithEmailAndPassword(
                             email.getText().toString(),
                             senha.getText().toString()
@@ -102,8 +104,10 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
                                 mostraMensagem("Login efetuado com sucesso");
+                                progressDialogComum.hide();
                                 abrirTelaPrincipal();
                             }else{
+                                progressDialogComum.hide();
                                 mostraMensagem("Erro ao fazer login");
                             }
                         }
@@ -334,6 +338,10 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setMessage("Efetuando login com a conta Google");
         progressDialog.setCancelable(false);//Configurando progressDialog
+
+        progressDialogComum = new ProgressDialog(LoginActivity.this);
+        progressDialogComum.setMessage("Efetuando login! Aguarde...");
+        progressDialogComum.setCancelable(false);
 
         progressDialogLinkedin = new ProgressDialog(LoginActivity.this);
         progressDialogLinkedin.setMessage("Efetuando login com a conta Linkedin");

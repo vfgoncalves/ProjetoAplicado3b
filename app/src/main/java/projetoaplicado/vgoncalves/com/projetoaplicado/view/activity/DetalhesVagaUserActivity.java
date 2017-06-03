@@ -16,6 +16,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
 
+import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Candidatura;
+import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Usuario;
 import projetoaplicado.vgoncalves.com.projetoaplicado.Model.Vaga;
 import projetoaplicado.vgoncalves.com.projetoaplicado.R;
 import projetoaplicado.vgoncalves.com.projetoaplicado.controller.Controller;
@@ -70,7 +72,7 @@ public class DetalhesVagaUserActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     candidatarAVaga();
-                    Toast.makeText(DetalhesVagaUserActivity.this, "Candidatura enviada com sucesso!", Toast.LENGTH_LONG);
+                    Toast.makeText(DetalhesVagaUserActivity.this, "Candidatura enviada com sucesso!", Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -110,18 +112,32 @@ public class DetalhesVagaUserActivity extends AppCompatActivity {
     }
     private void candidatarAVaga(){
         try{
-            //Adiciona candidatura na vaga
-            databaseReference.child(controller.NODE_VAGA)
-                    .child(vaga.getEstado())
-                    .child(vaga.getCidade())
-                    .child(vaga.getCargo())
-                    .child(vaga.getIdVaga())
-                    .child(controller.NODE_CANDIDATURAS).child(idUsuario).setValue(idUsuario);
+            databaseReference.child(controller.NODE_USUARIO).child(idUsuario).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    try{
 
-            desabilitarBotao();
+                        Candidatura candidatura = new Candidatura();
+                        candidatura.setIdUsuario(idUsuario);
+                        candidatura.setCandidato(dataSnapshot.getValue(Usuario.class));
+                        candidatura.salvar(vaga);
+                        desabilitarBotao();
+
+                    }catch (Exception e){
+                        e.getMessage();
+                        Toast.makeText(DetalhesVagaUserActivity.this, "Não foi possível efetuar a candidatura! Tente novamente", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
 
         }catch (Exception e){
-            Toast.makeText(this, "Não foi possível efetuar a candidatura, tente novamente!", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Não foi possível efetuar a candidatura, tente novamente!", Toast.LENGTH_LONG).show();
             e.getMessage();
         }
     }
@@ -130,6 +146,7 @@ public class DetalhesVagaUserActivity extends AppCompatActivity {
             //Altera botão de candidatura para que não seja possível se candidatar duas vezes
             btnCandidatar.setText("VOCÊ JÁ É CANDIDATO DESTA VAGA");
             btnCandidatar.setEnabled(false);
+            btnCandidatar.setBackgroundColor(getResources().getColor(R.color.verde));
         }catch (Exception e){
             e.getMessage();
         }
@@ -137,7 +154,7 @@ public class DetalhesVagaUserActivity extends AppCompatActivity {
     private void verificarCandidatura(){
         try {
 
-            databaseReference.child(controller.NODE_VAGA)
+                    databaseReference.child(controller.NODE_VAGA)
                     .child(vaga.getEstado())
                     .child(vaga.getCidade())
                     .child(vaga.getCargo())
@@ -156,6 +173,8 @@ public class DetalhesVagaUserActivity extends AppCompatActivity {
 
                 }
             });
+
+
         }catch (Exception e){
             e.getMessage();
         }

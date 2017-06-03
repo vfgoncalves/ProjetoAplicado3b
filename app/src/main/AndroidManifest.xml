@@ -43,7 +43,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activity.DetalheVagaActivity" />
         </activity>
-        <activity android:name=".view.activity.DetalhesVagaUserActivity"></activity>
+        <activity android:name=".view.activity.DetalhesVagaUserActivity" />
+        <activity android:name=".view.activity.CandidaturasActivity"></activity>
     </application>
 
 </manifest>
