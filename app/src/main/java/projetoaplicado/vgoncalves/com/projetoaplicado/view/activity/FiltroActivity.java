@@ -29,6 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -169,10 +171,23 @@ public class FiltroActivity extends AppCompatActivity {
                 try{
                     progressDialog.show();
                     Filtro filtro = new Filtro(FiltroActivity.this);
-                    filtro.setCargo(spnCargos.getSelectedItem().toString());
-                    filtro.setEstado(codigoEstado.get(spnEstados.getSelectedItemPosition()).toString());
-                    filtro.setCidade(txtCidades.getText().toString());
-                    filtro.setHabilidades(textSelecHabFiltro.getText().toString());
+
+                    //Preencher cargos
+                    if(spnCargos.getSelectedItemPosition() != 0)
+                        filtro.setCargo(spnCargos.getSelectedItem().toString());
+
+                    //Preencher Estado
+                    if(spnEstados.getSelectedItemPosition() != 0)
+                        filtro.setEstado(codigoEstado.get(spnEstados.getSelectedItemPosition()).toString());
+
+                    //Preencher Cidade
+                    if(!TextUtils.isEmpty(txtCidades.getText().toString()))
+                        filtro.setCidade(txtCidades.getText().toString());
+
+                    //Preencher Habilidades
+                    if(!TextUtils.isEmpty(textSelecHabFiltro.getText().toString()))
+                        filtro.setHabilidades(textSelecHabFiltro.getText().toString());
+
                     filtro.setIdUsuario(idUsuario);
                     filtro.salvar();
                     progressDialog.hide();

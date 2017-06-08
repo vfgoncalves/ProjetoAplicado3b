@@ -44,12 +44,12 @@
         "source": "C:\\Users\\vgoncalves\\.android\\build-cache\\f7ef6c4568f0f0669ea242b683a175f9ee35d8c7\\output\\res\\drawable-mdpi\\abc_spinner_ab_disabled_holo_dark.9.png"
     },
     {
-        "merged": "C:\\Users\\vgoncalves\\Desktop\\ProjetoAplicado\\eventsapp\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\abc_ic_voice_search.png",
-        "source": "C:\\Users\\vgoncalves\\.android\\build-cache\\f7ef6c4568f0f0669ea242b683a175f9ee35d8c7\\output\\res\\drawable-mdpi\\abc_ic_voice_search.png"
-    },
-    {
         "merged": "C:\\Users\\vgoncalves\\Desktop\\ProjetoAplicado\\eventsapp\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\abc_tab_unselected_pressed_holo.9.png",
         "source": "C:\\Users\\vgoncalves\\.android\\build-cache\\f7ef6c4568f0f0669ea242b683a175f9ee35d8c7\\output\\res\\drawable-mdpi\\abc_tab_unselected_pressed_holo.9.png"
+    },
+    {
+        "merged": "C:\\Users\\vgoncalves\\Desktop\\ProjetoAplicado\\eventsapp\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\abc_ic_voice_search.png",
+        "source": "C:\\Users\\vgoncalves\\.android\\build-cache\\f7ef6c4568f0f0669ea242b683a175f9ee35d8c7\\output\\res\\drawable-mdpi\\abc_ic_voice_search.png"
     },
     {
         "merged": "C:\\Users\\vgoncalves\\Desktop\\ProjetoAplicado\\eventsapp\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\abc_menu_dropdown_panel_holo_dark.9.png",

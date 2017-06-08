@@ -1,10 +1,12 @@
 package projetoaplicado.vgoncalves.com.projetoaplicado.view.fragments;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +46,7 @@ public class VagasUsuarioFragment extends Fragment {
     private DatabaseReference databaseReference;
     private String idUsuarioLogado;
     private Controller controller;
+    private ProgressDialog progressDialog;
 
     public VagasUsuarioFragment() {
         // Required empty public constructor
@@ -76,6 +79,10 @@ public class VagasUsuarioFragment extends Fragment {
 
         //Instanciar lista
         listVagas.setAdapter(adapter);
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Carregando vagas e aplicando filtros...");
+        progressDialog.setCancelable(false);
 
         carregarFiltros();
 
@@ -132,38 +139,69 @@ public class VagasUsuarioFragment extends Fragment {
     }
 
     private void preencheListaVagaComFiltro(DataSnapshot dadoslista, Filtro dadosFiltros){
-        //loop por estados
-        for(DataSnapshot estados: dadoslista.getChildren()){
-            if (estados.getKey().toString().equals(dadosFiltros.getEstado().toString())){
-                //loop por cidades
-                for(DataSnapshot cidades: estados.getChildren()){
-                    if (cidades.getKey().toString().equals(dadosFiltros.getCidade().toString())){
-                        //loop por cargos
-                        for(DataSnapshot cargos: cidades.getChildren()){
-                            if (cidades.getKey().toString().equals(dadosFiltros.getCidade().toString())){
-                                //loop por vagas
-                                for(DataSnapshot vagas: cargos.getChildren()){
-                                    Vaga vaga = vagas.getValue(Vaga.class);
-                                    //Filtrar habilidades
-                                    if (dadosFiltros.getHabilidades() != null){
-                                        String[] hab = dadosFiltros.getHabilidades().split(",");
-                                        for (int i = 0; i < hab.length; i++) {
-                                            if (vaga.getHabilidades().contains(hab[i].trim().replace(",",""))){
-                                                listaVagas.add(vaga);
-                                                break;
-                                            }
-                                        }
-                                    }else{
-                                        listaVagas.add(vaga);
-                                    }
+        //Filtro por Estados
+        boolean filtroEstado = !(dadosFiltros.getEstado() == null || TextUtils.isEmpty(dadosFiltros.getEstado().toString()));
+        //Filtro por Cidades
+        boolean filtroCidade = !(dadosFiltros.getCidade() == null || TextUtils.isEmpty(dadosFiltros.getCidade().toString()));
+        //Filtro por Cargos
+        boolean filtroCargos = !(dadosFiltros.getCargo() == null || TextUtils.isEmpty(dadosFiltros.getCargo().toString()));
+        //Filtro por Habilidade
+        boolean filtroHabilidade = !(dadosFiltros.getHabilidades() == null || TextUtils.isEmpty(dadosFiltros.getHabilidades().toString()));
 
+        //Aplicar filtros em todas as vagas
+        for(DataSnapshot estados: dadoslista.getChildren()){
+            for(DataSnapshot cidades: estados.getChildren()){
+                for(DataSnapshot cargos: cidades.getChildren()){
+                    for(DataSnapshot vagas: cargos.getChildren()){
+                        Vaga vaga = vagas.getValue(Vaga.class);
+
+                        //Aplica filtro por estado
+                        if(filtroEstado && !listaVagas.contains(vaga)){
+                            if (vaga.getEstado().equals(dadosFiltros.getEstado()))
+                                listaVagas.add(vaga);
+                        }
+                        //Aplica filtro por cidade
+                        if(filtroCidade && !listaVagas.contains(vaga)){
+                            if (vaga.getCidade().equals(dadosFiltros.getCidade()))
+                                listaVagas.add(vaga);
+                        }
+                        //Aplica filtro por cargo
+                        if(filtroCargos && !listaVagas.contains(vaga)){
+                            if (vaga.getCargo().equals(dadosFiltros.getCargo()))
+                                listaVagas.add(vaga);
+                        }
+                        //Aplica filtro por habilidade
+                        if (filtroHabilidade && !listaVagas.contains(vaga)){
+                            String[] hab = dadosFiltros.getHabilidades().split(",");
+                            for (int i = 0; i < hab.length; i++) {
+                                if (vaga.getHabilidades().contains(hab[i].trim().replace(",",""))){
+                                    listaVagas.add(vaga);
+                                    break;
                                 }
                             }
                         }
+                        /*
+                        if (dadosFiltros.getHabilidades() != null){
+                            String[] hab = dadosFiltros.getHabilidades().split(",");
+                            for (int i = 0; i < hab.length; i++) {
+                                if (vaga.getHabilidades().contains(hab[i].trim().replace(",",""))){
+                                    listaVagas.add(vaga);
+                                    break;
+                                }
+                            }
+                        }else{
+                            listaVagas.add(vaga);
+                        }
+                        */
+
                     }
                 }
             }
         }
+
+
+
+
     }
 
     private void verificarFiltroAntesPreencher(final DataSnapshot dadosFullLista){
@@ -179,6 +217,7 @@ public class VagasUsuarioFragment extends Fragment {
                     //preencher lista sem filtros
                     preencheListaVaga(dadosFullLista);
                 }
+                progressDialog.hide();
                 adapter.notifyDataSetChanged();
             }
 
@@ -190,6 +229,8 @@ public class VagasUsuarioFragment extends Fragment {
     }
 
     private void carregarFiltros(){
+        progressDialog.show();
+
         databaseReference.child(controller.NODE_VAGA).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
