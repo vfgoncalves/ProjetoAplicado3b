@@ -143,8 +143,12 @@ public class EditarPerfilActivity extends AppCompatActivity {
 
     private void preencherCampos(){
         try{
-            if (!TextUtils.isEmpty(empresa.getPhotoUrl()))
+            if (!TextUtils.isEmpty(empresa.getPhotoUrl())){
                 Picasso.with(EditarPerfilActivity.this).load(empresa.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfilUser);
+            }else{
+                Picasso.with(EditarPerfilActivity.this).load(empresa.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfilUser);
+            }
+
             editEmpCompl.setText(empresa.getComplemento());
             editEmpNumero.setText(empresa.getNumero());
             editEmpRua.setText(empresa.getRua());

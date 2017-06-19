@@ -58,10 +58,10 @@ public class CandidatoAdapter extends ArrayAdapter<Usuario> {
                     if (!TextUtils.isEmpty(usuario.getPhotoUrl())){
                         Picasso.with(context).load(usuario.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfil);
                     }else{
-                        Picasso.with(context).load(R.drawable.ic_account_circle).transform(new CircleTransform()).into(imgPerfil);
+                        Picasso.with(context).load(R.drawable.ic_usuario_new).transform(new CircleTransform()).into(imgPerfil);
                     }
                 }else{
-                    Picasso.with(context).load(R.drawable.ic_account_circle).transform(new CircleTransform()).into(imgPerfil);
+                    Picasso.with(context).load(R.drawable.ic_usuario_new).transform(new CircleTransform()).into(imgPerfil);
                 }
 
                 nomeUsuario.setText(usuario.getNome().toString());

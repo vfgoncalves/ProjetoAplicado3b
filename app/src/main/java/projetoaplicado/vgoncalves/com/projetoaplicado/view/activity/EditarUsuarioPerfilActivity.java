@@ -200,8 +200,12 @@ public class EditarUsuarioPerfilActivity extends AppCompatActivity {
 
     private void preencherCampos(){
         //Importa imagem de perfil
-        if (!TextUtils.isEmpty(usuario.getPhotoUrl()))
+        if (!TextUtils.isEmpty(usuario.getPhotoUrl())){
             Picasso.with(EditarUsuarioPerfilActivity.this).load(usuario.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfilUser);
+        }else{
+            Picasso.with(EditarUsuarioPerfilActivity.this).load(R.drawable.ic_empresa_new).transform(new CircleTransform()).into(imgPerfilUser);
+        }
+
 
         editNome.setText(usuario.getNome());
         editEmail.setText(usuario.getEmail());

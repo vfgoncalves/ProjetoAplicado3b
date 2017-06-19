@@ -180,20 +180,6 @@ public class VagasUsuarioFragment extends Fragment {
                                 }
                             }
                         }
-                        /*
-                        if (dadosFiltros.getHabilidades() != null){
-                            String[] hab = dadosFiltros.getHabilidades().split(",");
-                            for (int i = 0; i < hab.length; i++) {
-                                if (vaga.getHabilidades().contains(hab[i].trim().replace(",",""))){
-                                    listaVagas.add(vaga);
-                                    break;
-                                }
-                            }
-                        }else{
-                            listaVagas.add(vaga);
-                        }
-                        */
-
                     }
                 }
             }

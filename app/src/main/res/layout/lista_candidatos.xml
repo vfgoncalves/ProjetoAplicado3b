@@ -24,8 +24,7 @@
                 android:id="@+id/tv_busca_ImgPerfil"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:background="@drawable/ic_account_circle"/>
+                android:layout_gravity="center"/>
 
             <LinearLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content"

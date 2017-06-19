@@ -65,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
                             if (!TextUtils.isEmpty(usuario.getPhotoUrl())){
                                 Picasso.with(MainActivity.this).load(usuario.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfil);
                             }else {
-                                Picasso.with(MainActivity.this).load(R.drawable.ic_account_circle).into(imgPerfil);
+                                Picasso.with(MainActivity.this).load(R.drawable.ic_perfil_user_new).into(imgPerfil);
                             }
                         }else{
-                            Picasso.with(MainActivity.this).load(R.drawable.ic_account_circle).into(imgPerfil);
+                            Picasso.with(MainActivity.this).load(R.drawable.ic_perfil_user_new).into(imgPerfil);
                         }
                     }
                 }

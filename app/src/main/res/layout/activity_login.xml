@@ -93,18 +93,18 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_linkedin"
+            android:background="@drawable/ic_linkedin_new"
             android:id="@+id/imgLoginLinkedin" />
 
         <ImageButton
             android:id="@+id/imgLoginGoogle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_googleplus" />
+            android:background="@drawable/ic_googleplus_new" />
     </LinearLayout>
 
 </LinearLayout>

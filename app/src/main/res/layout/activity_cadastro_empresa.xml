@@ -95,17 +95,17 @@
         android:layout_gravity="center_horizontal">
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_linkedin_red"
+            android:background="@drawable/ic_linkedin_new"
             android:id="@+id/imgSignLinkedinEmp"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_googleplus_red"
+            android:background="@drawable/ic_googleplus_new"
             android:id="@+id/imgSignGoogleEmp"/>
     </LinearLayout>
 </LinearLayout>

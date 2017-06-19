@@ -67,10 +67,10 @@ public class MainEmpresaActivity extends AppCompatActivity {
                         if (!TextUtils.isEmpty(empresa.getPhotoUrl())){
                             Picasso.with(MainEmpresaActivity.this).load(empresa.getPhotoUrl()).transform(new CircleTransform()).into(imgPerfil);
                         }else {
-                            Picasso.with(MainEmpresaActivity.this).load(R.drawable.ic_account_circle).into(imgPerfil);
+                            Picasso.with(MainEmpresaActivity.this).load(R.drawable.ic_empresa_new).into(imgPerfil);
                         }
                     }else{
-                        Picasso.with(MainEmpresaActivity.this).load(R.drawable.ic_account_circle).into(imgPerfil);
+                        Picasso.with(MainEmpresaActivity.this).load(R.drawable.ic_empresa_new).into(imgPerfil);
                     }
                 }
             }
